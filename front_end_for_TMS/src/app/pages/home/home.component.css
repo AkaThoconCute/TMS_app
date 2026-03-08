@@ -1,0 +1,15 @@
+.home-container {
+  text-align: center;
+  max-width: 600px;
+}
+
+.home-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.home-subtitle {
+  color: #6b7280;
+  font-size: 1.1rem;
+}
