@@ -1,0 +1,79 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2 class="register-title">Create account</h2>
+    <p class="register-subtitle">Join us today to get started.</p>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage" class="alert alert-error" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Success Alert -->
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="handleSubmit()" #registerForm="ngForm">
+      <div class="form-group">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input
+          id="fullName"
+          name="fullName"
+          class="form-input"
+          placeholder="John Doe"
+          [(ngModel)]="fullName"
+          [disabled]="isLoading"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          class="form-input"
+          placeholder="john@example.com"
+          [(ngModel)]="email"
+          [disabled]="isLoading"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          class="form-input"
+          placeholder="Min. 6 characters"
+          [(ngModel)]="password"
+          [disabled]="isLoading"
+          required
+          minlength="6"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          class="form-input"
+          placeholder="Re-enter your password"
+          [(ngModel)]="confirmPassword"
+          [disabled]="isLoading"
+          required
+          minlength="6"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+        {{ isLoading ? 'Creating Account...' : 'Get Started' }}
+      </button>
+    </form>
+  </div>
+</div>
