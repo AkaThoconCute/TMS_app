@@ -7,9 +7,9 @@ using System.Text;
 
 namespace back_end_for_TMS.Infrastructure.Security;
 
-public static class SecurityExtensions
+public static class AuthNExtensions
 {
-    public static IServiceCollection AddSecurityServices(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddAuthNServices(this IServiceCollection services, IConfiguration config)
     {
         // 1. Identity Configuration
         services.AddIdentity<AppUser, IdentityRole>(options =>
@@ -42,12 +42,6 @@ public static class SecurityExtensions
                 ValidAlgorithms = [SecurityAlgorithms.HmacSha512],
                 ClockSkew = TimeSpan.Zero // Standard practice: remove the default 5 min grace period for tokens
             };
-        });
-
-        // 3. Authorization Policies
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
         });
 
         return services;
