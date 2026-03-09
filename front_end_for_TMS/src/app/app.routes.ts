@@ -1,9 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
-import { LayoutComponent } from './layout/layout.component';
+import { LayoutComponent } from './shell/layout/layout.compo';
 
 export const routes: Routes = [
   {
@@ -12,19 +8,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent
+        loadChildren: () => import('./features/home/home.routes').then(m => m.HOME_ROUTES)
       },
       {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegisterComponent
-      },
-      {
-        path: 'reset-password',
-        component: ResetPasswordComponent
+        path: '',
+        loadChildren: () => import('./features/account/account.routes').then(m => m.ACCOUNT_ROUTES)
       }
     ]
   }

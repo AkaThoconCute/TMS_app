@@ -10,17 +10,17 @@ import {
   UserProfile,
   ApiResponse
 } from '../models/auth.models';
-import { AppConfigService } from '../../../shared/services/app-config.service';
+import { ConfigService } from '../../../infra/env/env.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountApiService {
+export class AccountService {
   private readonly apiUrl: string;
 
   constructor(
     private http: HttpClient,
-    private configService: AppConfigService
+    private configService: ConfigService
   ) {
     this.apiUrl = this.configService.getApiUrl('/api/Account');
   }

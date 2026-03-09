@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountApiService } from '../../features/account/services/account-api.service';
-import { RegisterDto } from '../../features/account/models/auth.models';
+import { AccountService } from '../../services/account.service';
+import { RegisterDto } from '../../models/auth.models';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  templateUrl: './register.page.html',
+  styleUrl: './register.page.css'
 })
-export class RegisterComponent {
+export class RegisterPage {
   fullName = '';
   email = '';
   password = '';
@@ -22,7 +22,7 @@ export class RegisterComponent {
   successMessage = '';
 
   constructor(
-    private accountApiService: AccountApiService,
+    private accountApiService: AccountService,
     private router: Router
   ) { }
 

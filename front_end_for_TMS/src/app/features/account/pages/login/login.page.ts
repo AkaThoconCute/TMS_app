@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AccountApiService } from '../../features/account/services/account-api.service';
-import { LoginDto } from '../../features/account/models/auth.models';
+import { AccountService } from '../../services/account.service';
+import { LoginDto } from '../../models/auth.models';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './login.page.html',
+  styleUrl: './login.page.css'
 })
-export class LoginComponent {
+export class LoginPage {
   email = '';
   password = '';
   isLoading = false;
@@ -20,7 +20,7 @@ export class LoginComponent {
   successMessage = '';
 
   constructor(
-    private accountApiService: AccountApiService,
+    private accountApiService: AccountService,
     private router: Router
   ) { }
 

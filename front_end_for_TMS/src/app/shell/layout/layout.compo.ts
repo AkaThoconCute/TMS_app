@@ -6,8 +6,8 @@ import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
   selector: 'app-layout',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterOutlet, RouterLinkActive],
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css'
+  templateUrl: './layout.compo.html',
+  styleUrl: './layout.compo.css'
 })
 export class LayoutComponent {
   exactMatch = { exact: true };

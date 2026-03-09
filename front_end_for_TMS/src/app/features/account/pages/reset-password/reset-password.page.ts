@@ -6,10 +6,10 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-reset-password',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+  templateUrl: './reset-password.page.html',
+  styleUrl: './reset-password.page.css'
 })
-export class ResetPasswordComponent {
+export class ResetPasswordPage {
   email = '';
 
   handleSubmit(): void {
