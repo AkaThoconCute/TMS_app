@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigService {
+export class EnvService {
   readonly apiUrl = environment.apiUrl;
   readonly production = environment.production;
 

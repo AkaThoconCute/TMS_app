@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountService } from '../../services/account.service';
-import { RegisterDto } from '../../models/auth.models';
+import { AuthService } from '../../../../platform/auth/auth.service';
+import { RegisterDto } from '../../../../platform/auth/auth.models';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +22,7 @@ export class RegisterPage {
   successMessage = '';
 
   constructor(
-    private accountApiService: AccountService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -60,7 +60,7 @@ export class RegisterPage {
       password: this.password
     };
 
-    this.accountApiService.register(userData).subscribe({
+    this.authService.register(userData).subscribe({
       next: (result) => {
         this.isLoading = false;
 

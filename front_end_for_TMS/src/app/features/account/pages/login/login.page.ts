@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AccountService } from '../../services/account.service';
-import { LoginDto } from '../../models/auth.models';
+import { AuthService } from '../../../../platform/auth/auth.service';
+import { LoginDto } from '../../../../platform/auth/auth.models';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginPage {
   successMessage = '';
 
   constructor(
-    private accountApiService: AccountService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -47,16 +47,12 @@ export class LoginPage {
       password: this.password
     };
 
-    this.accountApiService.login(credentials).subscribe({
+    this.authService.login(credentials).subscribe({
       next: (result) => {
         this.isLoading = false;
 
         if (result.success) {
           this.successMessage = 'Login successful!';
-
-          // Store tokens in localStorage
-          localStorage.setItem('token', result.token);
-          localStorage.setItem('refreshToken', result.refreshToken);
 
           // Clear form
           this.email = '';
