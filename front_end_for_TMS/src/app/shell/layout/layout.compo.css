@@ -44,3 +44,7 @@
   align-items: flex-start;
   padding-top: 4rem;
 }
+
+.flex-1 {
+  flex: 1 1 0%;
+}

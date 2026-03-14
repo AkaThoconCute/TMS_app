@@ -1,21 +1,18 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
-import { routes } from './app.routes';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { appRoutes } from './app.routes';
 import { authInterceptor } from './platform/auth/auth.interceptor';
+import { providePrimeNG } from 'primeng/config';
+import { appPrimeNG } from './app.prime';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(appRoutes),
     provideHttpClient(
-      // Add auth interceptor using function-based approach
       withInterceptors([authInterceptor]),
-      // Configure XSRF protection
-      // withXsrfConfiguration({
-      //   cookieName: 'X-CSRF-TOKEN',
-      //   headerName: 'X-CSRF-TOKEN'
-      // })
-    )
+    ),
+    providePrimeNG(appPrimeNG),
   ]
 };
