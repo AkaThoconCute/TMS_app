@@ -1,31 +1,39 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
-import { LayoutComponent } from './layout/layout.component';
+import { LayoutComponent } from './shell/layout/layout.compo';
 
-export const routes: Routes = [
+export const appRoutes: Routes = [
+  // {
+  //   path: 'button-demo',
+  //   loadComponent: () => import('./common/button/button-demo.component').then(m => m.ButtonDemo)
+  // },
   {
     path: '',
     component: LayoutComponent,
     children: [
       {
+        path: 'button-demo',
+        loadComponent: () => import('./common/button/button-demo.component').then(m => m.ButtonDemo)
+      },
+      {
         path: '',
-        component: HomeComponent
+        loadChildren: () => import('./features/home/home.routes').then(m => m.HOME_ROUTES)
       },
       {
-        path: 'login',
-        component: LoginComponent
+        path: '',
+        loadChildren: () => import('./features/account/account.routes').then(m => m.ACCOUNT_ROUTES)
       },
       {
-        path: 'register',
-        component: RegisterComponent
+        path: 'trucks',
+        loadChildren: () => import('./features/truck/truck.routes').then(m => m.TRUCK_ROUTES)
       },
       {
-        path: 'reset-password',
-        component: ResetPasswordComponent
-      }
+        path: 'under-development',
+        loadComponent: () => import('./common/development/development.page').then(m => m.DevelopmentPage)
+      },
+      {
+        path: '**',
+        redirectTo: 'under-development'
+      },
     ]
   }
 ];

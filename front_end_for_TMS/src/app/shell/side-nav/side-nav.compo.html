@@ -1,0 +1,79 @@
+<aside
+  [class.w-72]="isOpen()"
+  [class.w-20]="!isOpen()"
+  class="flex flex-col h-full bg-white border-r border-gray-100 transition-all duration-300 ease-in-out shadow-sm overflow-hidden"
+>
+  <!-- <div class="p-5 flex items-center gap-3 min-h-20">
+    <div
+      class="shrink-0 w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-green-100"
+    >
+      M
+    </div>
+    <span
+      *ngIf="isOpen()"
+      class="font-bold text-gray-800 text-lg whitespace-nowrap transition-opacity duration-300"
+    >
+      EasyTMS
+    </span>
+  </div> -->
+
+  <div class="flex-1 overflow-y-auto overflow-x-hidden px-3">
+    <div
+      *ngIf="isOpen()"
+      class="px-4 py-4 text-[11px] font-bold text-gray-400 tracking-[0.15em] uppercase"
+    >
+      Management
+    </div>
+
+    <div class="space-y-1">
+      <div *ngFor="let group of menuGroups">
+        <details *ngIf="isOpen()" class="group" [attr.open]="true">
+          <summary
+            class="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-gray-50 list-none transition-colors"
+          >
+            <div class="flex items-center gap-4">
+              <i class="text-gray-500 text-xl" [class]="group.icon"></i>
+              <span class="text-sm font-semibold text-gray-700">{{ group.label }}</span>
+            </div>
+            <svg
+              class="w-4 h-4 text-gray-400 group-open:rotate-180 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </summary>
+
+          <div class="ml-8 mt-1 border-l-2 border-gray-100 space-y-1">
+            <a
+              *ngFor="let item of group.items"
+              [routerLink]="item.route"
+              routerLinkActive="!text-blue-600 !border-blue-600 font-bold"
+              class="block py-2 px-6 text-sm text-gray-500 hover:text-gray-800 transition-all relative before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-3 before:h-px before:bg-gray-200"
+            >
+              {{ item.label }}
+            </a>
+          </div>
+        </details>
+
+        <div
+          *ngIf="!isOpen()"
+          class="flex justify-center p-3 cursor-pointer hover:bg-gray-50 rounded-xl transition-colors group relative"
+        >
+          <i class="text-gray-500 text-xl" [class]="group.icon"></i>
+          <div
+            class="absolute left-full ml-4 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50"
+          >
+            {{ group.label }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
