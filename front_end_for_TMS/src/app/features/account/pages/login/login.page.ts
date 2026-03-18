@@ -60,7 +60,7 @@ export class LoginPage {
 
           // Redirect to home/dashboard after a short delay
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
           }, 1000);
         } else {
           this.errorMessage = result.errors?.[0] || 'Login failed';

@@ -36,3 +36,7 @@ Yarn
       //   headerName: 'X-CSRF-TOKEN'
       // })
 ```
+
+Angular
+ - ng g c Name
+ - ng generate component Name

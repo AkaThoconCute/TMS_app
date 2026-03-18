@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, catchError, map, take, filter } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import {
@@ -48,8 +48,6 @@ export class AuthService {
 
     this.isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
     this.currentUser$ = this.currentUserSubject.asObservable();
-
-    this.checkAuthStatus();
   }
 
   /**
@@ -64,6 +62,31 @@ export class AuthService {
    */
   get currentUser(): UserProfile | null {
     return this.currentUserSubject.value;
+  }
+
+  initAuth(): Observable<UserProfile | null> {
+    if (this.isTokenValid()) {
+      return this.loadCurrentUser().pipe(
+        catchError(() => {
+          this.clearAuth();
+          return of(null);
+        })
+      );
+    }
+    return of(null);
+  }
+
+  /**
+   * Check authentication status on app initialization
+   */
+  private checkAuthStatus(): void {
+    if (this.isTokenValid()) {
+      this.isAuthenticatedSubject.next(true);
+      // Load user profile in background
+      this.loadCurrentUser().subscribe({
+        error: () => this.clearAuth()
+      });
+    }
   }
 
   /**
@@ -283,19 +306,6 @@ export class AuthService {
     this.cookieService.deleteCookie(this.REFRESH_TOKEN_KEY);
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
-  }
-
-  /**
-   * Check authentication status on app initialization
-   */
-  private checkAuthStatus(): void {
-    if (this.isTokenValid()) {
-      this.isAuthenticatedSubject.next(true);
-      // Load user profile in background
-      this.loadCurrentUser().subscribe({
-        error: () => this.clearAuth()
-      });
-    }
   }
 
   /**

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { authGuard, notAuthGuard } from '../../platform/auth/auth.guard';
 
 export const TRUCK_ROUTES: Routes = [
   {
@@ -8,12 +7,10 @@ export const TRUCK_ROUTES: Routes = [
       {
         path: 'list',
         loadComponent: () => import('./pages/truck-list/truck-list.page').then(m => m.TruckListPage),
-        canActivate: [notAuthGuard]
       },
       {
         path: 'maintenance',
         loadComponent: () => import('./pages/truck-maintenance/truck-maintenance.page').then(m => m.TruckMaintenancePage),
-        canActivate: [notAuthGuard]
       }
     ]
   }

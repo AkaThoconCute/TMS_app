@@ -1,14 +1,15 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 @Component({
   selector: 'app-side-nav',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
-  templateUrl: './side-nav.compo.html',
-  // styleUrl: './side-nav.compo.css'
+  templateUrl: './navbar.html',
+  styleUrl: './navbar.css'
 })
-export class SideNavCompo {
+export class Navbar {
   isOpen = input<boolean>(true);
   toggleNav = output<void>();
 
@@ -33,8 +34,8 @@ export class SideNavCompo {
       label: 'Demo',
       icon: 'person',
       items: [
-        { label: 'Button', route: '/button-demo' },
-        { label: 'Upcoming', route: '/upcoming' }
+        { label: 'Button', route: '/demo/button' },
+        { label: 'Upcoming', route: '/demo/upcoming' }
       ]
     }
   ];

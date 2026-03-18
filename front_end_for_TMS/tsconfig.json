@@ -16,9 +16,10 @@
     "module": "preserve",
     "baseUrl": "./",
     "paths": {
-      "@infra/*": ["src/app/platform/*"],
+      "@platform/*": ["src/app/platform/*"],
       "@features/*": ["src/app/features/*"],
-      "@shared/*": ["src/app/shared/*"],
+      "@common/*": ["src/app/common/*"],
+      "@app/*": ["src/app/*"],
       "@env/*": ["src/environments/*"]
     }
   },
