@@ -17,10 +17,8 @@ export const authGuard: CanActivateFn = (
     return true;
   }
 
-  // Store the attempted URL for use after login
   sessionStorage.setItem('returnUrl', state.url);
 
-  // Redirect to login
   router.navigate(['/account/login']);
   return false;
 };
@@ -40,7 +38,6 @@ export const notAuthGuard: CanActivateFn = (
     return true;
   }
 
-  // Already authenticated, redirect to home
-  router.navigate(['/']);
+  router.navigate(['/home']);
   return false;
 };

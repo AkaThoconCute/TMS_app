@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, notAuthGuard } from '@infra/auth/auth.guard';
+import { authGuard, notAuthGuard } from '@platform/auth/auth.guard';
 import { PublicLayout } from './shell/public-layout/public-layout';
 import { PrivateLayout } from './shell/private-layout/private-layout';
 

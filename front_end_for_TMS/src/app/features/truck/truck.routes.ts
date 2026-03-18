@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { authGuard, notAuthGuard } from '../../platform/auth/auth.guard';
 
 export const TRUCK_ROUTES: Routes = [
   {
