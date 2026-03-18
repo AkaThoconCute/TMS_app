@@ -1,0 +1,33 @@
+<!-- <p>public-layout works!</p> -->
+<div class="layout-container">
+  <nav class="navbar">
+    <div class="brand">EasyTMS</div>
+    <div class="nav-links">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="exactMatch"
+        title="Home"
+        >Home</a
+      >
+      <a
+        routerLink="/login"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="exactMatch"
+        title="Login"
+        >Login</a
+      >
+      <a
+        routerLink="/register"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="exactMatch"
+        title="Register"
+        >Register</a
+      >
+    </div>
+  </nav>
+
+  <main class="main-content flex-1">
+    <router-outlet></router-outlet>
+  </main>
+</div>

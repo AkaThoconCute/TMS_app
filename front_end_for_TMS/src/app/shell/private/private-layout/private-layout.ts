@@ -1,16 +1,16 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
-import { Navbar } from '../navbar/Navbar';
+import { Navbar } from '../../navbar/Navbar';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'app-private-layout',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, RouterLinkActive, Navbar],
-  templateUrl: './layout.compo.html',
-  styleUrl: './layout.compo.css'
+  imports: [CommonModule, RouterOutlet, Navbar],
+  templateUrl: './private-layout.html',
+  styleUrl: './private-layout.css',
 })
-export class LayoutComponent {
+export class PrivateLayout {
   exactMatch = { exact: true };
 
   isSidebarOpen = signal(true);
