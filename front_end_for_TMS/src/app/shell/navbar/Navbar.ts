@@ -6,8 +6,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   selector: 'app-side-nav',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
-  templateUrl: './Navbar.html',
-  styleUrl: './Navbar.css'
+  templateUrl: './navbar.html',
+  styleUrl: './navbar.css'
 })
 export class Navbar {
   isOpen = input<boolean>(true);

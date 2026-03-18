@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './shell/layout/layout.compo';
-import { PublicLayout } from './shell/public/public-layout/public-layout';
-import { PrivateLayout } from './shell/private/private-layout/private-layout';
 import { authGuard, notAuthGuard } from '@infra/auth/auth.guard';
+import { PublicLayout } from './shell/public-layout/public-layout';
+import { PrivateLayout } from './shell/private-layout/private-layout';
 
 export const appRoutes: Routes = [
   {
