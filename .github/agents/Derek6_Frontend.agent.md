@@ -146,3 +146,8 @@ src/app/
 - Use path aliases (`@platform/`, `@features/`, etc.) for imports
 - Follow existing patterns — match the style of `truck/` feature as reference
 - Always verify the build compiles after changes
+
+## Coding Rules
+
+- Use --exact flag when adding dependencies with Yarn. Goal is to avoid unintentional updates that could break the build.
+
