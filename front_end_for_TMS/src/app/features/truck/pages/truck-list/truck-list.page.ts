@@ -39,31 +39,30 @@ const OWNERSHIP_MAP: Record<number, string> = {
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './truck-list.page.html',
-  styleUrl: './truck-list.page.css',
 })
 export class TruckListPage {
   private readonly truckService = inject(TruckService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
-  // Table state
+  // Table states
   trucks = signal<TruckDto[]>([]);
   totalRecords = signal(0);
   loading = signal(true);
-  rows = signal(3);
+  rows = signal(2);
   first = signal(0);
   readonly rowsPerPageOptions = [2, 3, 4];
 
-  // Dialog state
+  // Dialog states
   formDialogVisible = signal(false);
   editingTruck = signal<TruckDto | null>(null);
   submitting = signal(false);
 
-  // ─── Table ────────────────────────────────────────────
+  // Table handlers
   loadTrucks(event: TableLazyLoadEvent): void {
     this.loading.set(true);
-    const page = Math.floor((event.first ?? 0) / (event.rows ?? this.rows())) + 1;
     const size = event.rows ?? this.rows();
+    const page = Math.floor((event.first ?? 0) / size) + 1;
 
     this.truckService.list(page, size).subscribe({
       next: (res) => {
@@ -82,7 +81,7 @@ export class TruckListPage {
     this.loadTrucks({ first: this.first(), rows: this.rows() });
   }
 
-  // ─── Status helpers ───────────────────────────────────
+  // Status helpers
   getStatusLabel(status: number): string {
     return STATUS_MAP[status]?.label ?? 'Unknown';
   }
@@ -95,7 +94,7 @@ export class TruckListPage {
     return OWNERSHIP_MAP[type] ?? 'Unknown';
   }
 
-  // ─── Form dialog ─────────────────────────────────────
+  // Form dialog handlers
   onAdd(): void {
     this.editingTruck.set(null);
     this.formDialogVisible.set(true);
@@ -115,7 +114,7 @@ export class TruckListPage {
       ? this.truckService.update(editTruck.truckId, payload)
       : this.truckService.create(payload);
 
-    this.formDialogVisible.set(false);
+    this.formDialogVisible.set(false); // !
     this.editingTruck.set(null);
     this.loading.set(true);
 
@@ -143,7 +142,7 @@ export class TruckListPage {
     });
   }
 
-   onFormClosed(event: { hadUnsavedChanges: boolean }): void {
+  onFormClosed(event: { hadUnsavedChanges: boolean }): void {
     if (event.hadUnsavedChanges) {
       this.messageService.add({
         severity: 'info',
@@ -156,7 +155,7 @@ export class TruckListPage {
     this.editingTruck.set(null);
   }
 
-  // ─── Delete ───────────────────────────────────────────
+  // Delete handlers
   onDelete(truck: TruckDto): void {
     this.confirmationService.confirm({
       message: `Are you sure you want to delete truck <b>${truck.licensePlate}</b>?`,

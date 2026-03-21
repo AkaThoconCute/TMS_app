@@ -38,24 +38,19 @@ const TRUCK_TYPE_OPTIONS = [
   templateUrl: './truck-form-dialog.html',
 })
 export class TruckFormDialog implements OnChanges {
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
-  /** The truck to edit, or null for create mode. */
   truck = input<TruckDto | null>(null);
-  /** Controls dialog visibility from parent. */
   visible = input(false);
-  /** Whether a submit is in progress (blocks the button). */
   submitting = input(false);
 
-  /** Emits the form payload when user submits. */
   saved = output<Partial<TruckDto>>();
-  /** Emits when user closes/cancels — includes whether unsaved changes existed. */
   closed = output<{ hadUnsavedChanges: boolean }>();
 
   readonly ownershipOptions = OWNERSHIP_OPTIONS;
   readonly truckTypeOptions = TRUCK_TYPE_OPTIONS;
 
-  form: FormGroup = this.fb.group({
+  form: FormGroup = this.formBuilder.group({
     licensePlate: ['', Validators.required],
     vinNumber: [''],
     engineNumber: [''],
