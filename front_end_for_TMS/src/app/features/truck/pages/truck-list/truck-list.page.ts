@@ -11,7 +11,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { TruckService } from '@features/truck/services/truck.service';
 import { TruckDto } from '@features/truck/models/truck.models';
 
@@ -57,14 +58,16 @@ const OWNERSHIP_MAP: Record<number, string> = {
     SelectModule,
     DatePickerModule,
     ToastModule,
+    ConfirmDialogModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './truck-list.page.html',
   styleUrl: './truck-list.page.css',
 })
 export class TruckListPage {
   private readonly truckService = inject(TruckService);
   private readonly messageService = inject(MessageService);
+  private readonly confirmationService = inject(ConfirmationService);
   private readonly fb = inject(FormBuilder);
 
   // Table state
@@ -245,7 +248,36 @@ export class TruckListPage {
     });
   }
 
-  onDelete(_truck: TruckDto): void {
-    // no-logic placeholder
+  onDelete(truck: TruckDto): void {
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete truck <b>${truck.licensePlate}</b>?`,
+      header: 'Confirm Delete',
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: { label: 'Cancel', severity: 'secondary', text: true },
+      acceptButtonProps: { label: 'Delete', severity: 'danger' },
+      accept: () => {
+        this.loading.set(true);
+        this.truckService.delete(truck.truckId).subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Deleted',
+              detail: `Truck ${truck.licensePlate} deleted.`,
+              life: 3000,
+            });
+            this.refreshTable();
+          },
+          error: () => {
+            this.loading.set(false);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Delete failed. Please try again.',
+              life: 5000,
+            });
+          },
+        });
+      },
+    });
   }
 }
