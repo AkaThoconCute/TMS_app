@@ -151,7 +151,6 @@ export class TruckListPage {
         life: 3000,
       });
     }
-    this.formDialogVisible.set(false);
     this.editingTruck.set(null);
   }
 
