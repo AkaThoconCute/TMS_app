@@ -1,20 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TableModule, TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { SelectModule } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { TruckService } from '@features/truck/services/truck.service';
 import { TruckDto } from '@features/truck/models/truck.models';
+import { TruckFormDialog } from '@features/truck/components/truck-form-dialog/truck-form-dialog';
 
 const STATUS_MAP: Record<number, { label: string; severity: 'success' | 'info' | 'warn' | 'danger' | 'secondary' }> = {
   1: { label: 'Available', severity: 'success' },
@@ -23,19 +18,6 @@ const STATUS_MAP: Record<number, { label: string; severity: 'success' | 'info' |
   4: { label: 'Broken Down', severity: 'danger' },
   5: { label: 'Retired', severity: 'secondary' },
 };
-
-const OWNERSHIP_OPTIONS = [
-  { label: 'Owned', value: 1 },
-  { label: 'Leased', value: 2 },
-];
-
-const TRUCK_TYPE_OPTIONS = [
-  { label: 'Thùng kín', value: 'Thùng kín' },
-  { label: 'Mui bạt', value: 'Mui bạt' },
-  { label: 'Bồn', value: 'Bồn' },
-  { label: 'Cẩu', value: 'Cẩu' },
-  { label: 'Tự đổ', value: 'Tự đổ' },
-];
 
 const OWNERSHIP_MAP: Record<number, string> = {
   1: 'Owned',
@@ -47,18 +29,13 @@ const OWNERSHIP_MAP: Record<number, string> = {
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     TableModule,
     ButtonModule,
     TagModule,
     TooltipModule,
-    DialogModule,
-    InputTextModule,
-    InputNumberModule,
-    SelectModule,
-    DatePickerModule,
     ToastModule,
     ConfirmDialogModule,
+    TruckFormDialog,
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './truck-list.page.html',
@@ -68,7 +45,6 @@ export class TruckListPage {
   private readonly truckService = inject(TruckService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
-  private readonly fb = inject(FormBuilder);
 
   // Table state
   trucks = signal<TruckDto[]>([]);
@@ -79,36 +55,9 @@ export class TruckListPage {
   readonly rowsPerPageOptions = [2, 3, 4];
 
   // Dialog state
-  dialogVisible = signal(false);
+  formDialogVisible = signal(false);
   editingTruck = signal<TruckDto | null>(null);
   submitting = signal(false);
-
-  readonly ownershipOptions = OWNERSHIP_OPTIONS;
-  readonly truckTypeOptions = TRUCK_TYPE_OPTIONS;
-
-  // Form
-  form: FormGroup = this.fb.group({
-    licensePlate: ['', Validators.required],
-    vinNumber: [''],
-    engineNumber: [''],
-    brand: [''],
-    modelYear: [null as number | null],
-    purchaseDate: [null as Date | null],
-    truckType: [null as string | null],
-    maxPayloadKg: [null as number | null],
-    lengthMm: [null as number | null],
-    widthMm: [null as number | null],
-    heightMm: [null as number | null],
-    ownershipType: [1],
-  });
-
-  get isEditMode(): boolean {
-    return this.editingTruck() !== null;
-  }
-
-  get dialogTitle(): string {
-    return this.isEditMode ? 'Edit Truck' : 'Add New Truck';
-  }
 
   // ─── Table ────────────────────────────────────────────
   loadTrucks(event: TableLazyLoadEvent): void {
@@ -146,82 +95,28 @@ export class TruckListPage {
     return OWNERSHIP_MAP[type] ?? 'Unknown';
   }
 
-  // ─── Dialog open / close ──────────────────────────────
+  // ─── Form dialog ─────────────────────────────────────
   onAdd(): void {
     this.editingTruck.set(null);
-    this.form.reset({ ownershipType: 1 });
-    this.dialogVisible.set(true);
+    this.formDialogVisible.set(true);
   }
 
   onEdit(truck: TruckDto): void {
     this.editingTruck.set(truck);
-    this.form.patchValue({
-      licensePlate: truck.licensePlate,
-      vinNumber: truck.vinNumber ?? '',
-      engineNumber: truck.engineNumber ?? '',
-      brand: truck.brand ?? '',
-      modelYear: truck.modelYear ?? null,
-      purchaseDate: truck.purchaseDate ? new Date(truck.purchaseDate) : null,
-      truckType: truck.truckType ?? null,
-      maxPayloadKg: truck.maxPayloadKg ?? null,
-      lengthMm: truck.lengthMm ?? null,
-      widthMm: truck.widthMm ?? null,
-      heightMm: truck.heightMm ?? null,
-      ownershipType: truck.ownershipType,
-    });
-    this.form.markAsPristine();
-    this.dialogVisible.set(true);
+    this.formDialogVisible.set(true);
   }
 
-  onDialogHide(): void {
-    // If currently submitting, let submit flow handle everything
-    if (this.submitting()) return;
-
-    if (this.form.dirty) {
-      this.messageService.add({
-        severity: 'info',
-        summary: 'Not Saved',
-        detail: 'Changes were discarded.',
-        life: 3000,
-      });
-    }
-    this.resetDialog();
-  }
-
-  private resetDialog(): void {
-    this.editingTruck.set(null);
-    this.form.reset({ ownershipType: 1 });
-  }
-
-  // ─── Submit ───────────────────────────────────────────
-  onSubmit(): void {
-    if (this.form.invalid || this.submitting()) return;
+  onFormSaved(payload: Partial<TruckDto>): void {
     this.submitting.set(true);
 
-    const raw = this.form.getRawValue();
-    const payload: Partial<TruckDto> = {
-      licensePlate: raw.licensePlate,
-      vinNumber: raw.vinNumber || undefined,
-      engineNumber: raw.engineNumber || undefined,
-      brand: raw.brand || undefined,
-      modelYear: raw.modelYear ?? undefined,
-      purchaseDate: raw.purchaseDate ? (raw.purchaseDate as Date).toISOString() : undefined,
-      truckType: raw.truckType ?? undefined,
-      maxPayloadKg: raw.maxPayloadKg ?? undefined,
-      lengthMm: raw.lengthMm ?? undefined,
-      widthMm: raw.widthMm ?? undefined,
-      heightMm: raw.heightMm ?? undefined,
-      ownershipType: raw.ownershipType,
-    };
-
-    const isEdit = this.isEditMode;
+    const editTruck = this.editingTruck();
+    const isEdit = editTruck !== null;
     const op$ = isEdit
-      ? this.truckService.update(this.editingTruck()!.truckId, payload)
+      ? this.truckService.update(editTruck.truckId, payload)
       : this.truckService.create(payload);
 
-    // Close dialog immediately — table shows loading until refresh completes
-    this.dialogVisible.set(false);
-    this.resetDialog();
+    this.formDialogVisible.set(false);
+    this.editingTruck.set(null);
     this.loading.set(true);
 
     op$.subscribe({
@@ -248,6 +143,20 @@ export class TruckListPage {
     });
   }
 
+   onFormClosed(event: { hadUnsavedChanges: boolean }): void {
+    if (event.hadUnsavedChanges) {
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Not Saved',
+        detail: 'Changes were discarded.',
+        life: 3000,
+      });
+    }
+    this.formDialogVisible.set(false);
+    this.editingTruck.set(null);
+  }
+
+  // ─── Delete ───────────────────────────────────────────
   onDelete(truck: TruckDto): void {
     this.confirmationService.confirm({
       message: `Are you sure you want to delete truck <b>${truck.licensePlate}</b>?`,

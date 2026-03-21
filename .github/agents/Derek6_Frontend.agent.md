@@ -147,6 +147,16 @@ src/app/
 - Follow existing patterns — match the style of `truck/` feature as reference
 - Always verify the build compiles after changes
 
+## Component Thinking
+
+Apply component decomposition as a **practical best practice** — not as over-engineering:
+
+- **Pages are orchestrators**: A page manages data flow, coordinates child components, and handles service calls. It should NOT contain form markup, complex UI blocks, or template logic that can live in a child component.
+- **Extract when there is a clear boundary**: If a piece of UI has its own form, its own state, or its own responsibility (e.g., a create/edit dialog, a filter bar, a detail card), it belongs in a child component under `features/xxx/components/`.
+- **Communicate via `input()` / `output()`**: Parent passes data down via inputs, child emits events up via outputs. Keep the API surface small.
+- **Don't extract for extraction's sake**: Table column templates, small inline displays, or simple layout blocks that have no independent logic should stay in the page template. Only extract when the component encapsulates a **distinct responsibility**.
+- **Practical rule of thumb**: If a section of a page template exceeds ~50 lines of markup AND has its own form/state, extract it.
+
 ## Coding Rules
 
 - Use --exact flag when adding dependencies with Yarn. Goal is to avoid unintentional updates that could break the build.
