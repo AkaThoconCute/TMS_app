@@ -96,7 +96,7 @@
 <!-- Create / Edit Dialog -->
 <app-truck-form-dialog
   [truck]="editingTruck()"
-  [visible]="formDialogVisible()"
+  [(visible)]="formDialogVisible"
   [submitting]="submitting()"
   (saved)="onFormSaved($event)"
   (closed)="onFormClosed($event)"

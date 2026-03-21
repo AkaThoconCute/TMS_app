@@ -1,4 +1,4 @@
-import { Component, inject, input, output, signal, OnChanges } from '@angular/core';
+import { Component, effect, inject, input, model, output, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
@@ -37,25 +37,20 @@ const TRUCK_TYPE_OPTIONS = [
   ],
   templateUrl: './truck-form-dialog.html',
 })
-export class TruckFormDialog implements OnChanges {
-  private readonly fb = inject(FormBuilder);
+export class TruckFormDialog {
+  private readonly formBuilder = inject(FormBuilder);
 
-  /** The truck to edit, or null for create mode. */
+  visible = model(false);
   truck = input<TruckDto | null>(null);
-  /** Controls dialog visibility from parent. */
-  visible = input(false);
-  /** Whether a submit is in progress (blocks the button). */
   submitting = input(false);
 
-  /** Emits the form payload when user submits. */
   saved = output<Partial<TruckDto>>();
-  /** Emits when user closes/cancels — includes whether unsaved changes existed. */
   closed = output<{ hadUnsavedChanges: boolean }>();
 
   readonly ownershipOptions = OWNERSHIP_OPTIONS;
   readonly truckTypeOptions = TRUCK_TYPE_OPTIONS;
 
-  form: FormGroup = this.fb.group({
+  form: FormGroup = this.formBuilder.group({
     licensePlate: ['', Validators.required],
     vinNumber: [''],
     engineNumber: [''],
@@ -70,8 +65,6 @@ export class TruckFormDialog implements OnChanges {
     ownershipType: [1],
   });
 
-  dialogVisible = signal(false);
-
   get isEditMode(): boolean {
     return this.truck() !== null;
   }
@@ -80,32 +73,34 @@ export class TruckFormDialog implements OnChanges {
     return this.isEditMode ? 'Edit Truck' : 'Add New Truck';
   }
 
-  ngOnChanges(): void {
-    if (this.visible()) {
-      this.dialogVisible.set(true);
-      const t = this.truck();
-      if (t) {
-        this.form.patchValue({
-          licensePlate: t.licensePlate,
-          vinNumber: t.vinNumber ?? '',
-          engineNumber: t.engineNumber ?? '',
-          brand: t.brand ?? '',
-          modelYear: t.modelYear ?? null,
-          purchaseDate: t.purchaseDate ? new Date(t.purchaseDate) : null,
-          truckType: t.truckType ?? null,
-          maxPayloadKg: t.maxPayloadKg ?? null,
-          lengthMm: t.lengthMm ?? null,
-          widthMm: t.widthMm ?? null,
-          heightMm: t.heightMm ?? null,
-          ownershipType: t.ownershipType,
-        });
-        this.form.markAsPristine();
-      } else {
-        this.form.reset({ ownershipType: 1 });
+  constructor() {
+    let previouslyVisible = false;
+    effect(() => {
+      const isVisible = this.visible();
+      if (isVisible && !previouslyVisible) {
+        const t = untracked(() => this.truck());
+        if (t) {
+          this.form.patchValue({
+            licensePlate: t.licensePlate,
+            vinNumber: t.vinNumber ?? '',
+            engineNumber: t.engineNumber ?? '',
+            brand: t.brand ?? '',
+            modelYear: t.modelYear ?? null,
+            purchaseDate: t.purchaseDate ? new Date(t.purchaseDate) : null,
+            truckType: t.truckType ?? null,
+            maxPayloadKg: t.maxPayloadKg ?? null,
+            lengthMm: t.lengthMm ?? null,
+            widthMm: t.widthMm ?? null,
+            heightMm: t.heightMm ?? null,
+            ownershipType: t.ownershipType,
+          });
+          this.form.markAsPristine();
+        } else {
+          this.form.reset({ ownershipType: 1 });
+        }
       }
-    } else {
-      this.dialogVisible.set(false);
-    }
+      previouslyVisible = isVisible;
+    });
   }
 
   onSubmit(): void {

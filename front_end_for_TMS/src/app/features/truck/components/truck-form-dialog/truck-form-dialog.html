@@ -1,6 +1,6 @@
 <p-dialog
   [header]="dialogTitle"
-  [(visible)]="dialogVisible"
+  [(visible)]="visible"
   [modal]="true"
   [closable]="true"
   [draggable]="false"
@@ -151,7 +151,7 @@
         label="Cancel"
         severity="secondary"
         [text]="true"
-        (onClick)="dialogVisible.set(false)"
+        (onClick)="visible.set(false)"
       />
       <p-button
         [label]="isEditMode ? 'Update' : 'Create'"
