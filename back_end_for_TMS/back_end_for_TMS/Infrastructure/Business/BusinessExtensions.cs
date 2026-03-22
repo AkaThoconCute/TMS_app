@@ -1,6 +1,7 @@
 ﻿using back_end_for_TMS.Business;
 using back_end_for_TMS.Infrastructure.Mapper;
 using back_end_for_TMS.Infrastructure.Response;
+using back_end_for_TMS.Models.Repository;
 
 namespace back_end_for_TMS.Infrastructure.Business;
 
@@ -14,6 +15,10 @@ public static class BusinessExtensions
 
     services.AddAutoMapper(typeof(AppMapperProfile).Assembly);
 
+    // Repositories
+    services.AddScoped<TruckRepo>();
+
+    // Services
     services.AddScoped<TokenService>();
 
     services.AddScoped<AccountService>();

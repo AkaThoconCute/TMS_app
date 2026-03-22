@@ -32,9 +32,6 @@ public class UpdateTruckDto
   public int? WidthMm { get; set; }
   public int? HeightMm { get; set; }
   public int? OwnershipType { get; set; }
-  public int? CurrentStatus { get; set; }
-  public decimal? OdometerReading { get; set; }
-  public DateTime? LastMaintenanceDate { get; set; }
 }
 
 // DTO for returning truck information
@@ -58,16 +55,6 @@ public class TruckDto
   public DateTime? LastMaintenanceDate { get; set; }
   public DateTimeOffset CreatedAt { get; set; }
   public DateTimeOffset? UpdatedAt { get; set; }
-}
-
-// DTO for paginated list response
-public class PaginatedTrucksDto
-{
-  public List<TruckDto> Data { get; set; } = [];
-  public int TotalCount { get; set; }
-  public int PageSize { get; set; }
-  public int PageNumber { get; set; }
-  public int TotalPages => (TotalCount + PageSize - 1) / PageSize;
 }
 
 // DTO for updating odometer

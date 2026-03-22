@@ -10,6 +10,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { TruckService } from '@features/truck/services/truck.service';
 import { TruckDto } from '@features/truck/models/truck.models';
 import { TruckFormDialog } from '@features/truck/components/truck-form-dialog/truck-form-dialog';
+import { take } from 'rxjs';
 
 const STATUS_MAP: Record<number, { label: string; severity: 'success' | 'info' | 'warn' | 'danger' | 'secondary' }> = {
   1: { label: 'Available', severity: 'success' },
@@ -106,6 +107,7 @@ export class TruckListPage {
   }
 
   onFormSaved(payload: Partial<TruckDto>): void {
+    if (this.submitting()) return;
     this.submitting.set(true);
 
     const editTruck = this.editingTruck();
@@ -114,24 +116,21 @@ export class TruckListPage {
       ? this.truckService.update(editTruck.truckId, payload)
       : this.truckService.create(payload);
 
-    this.formDialogVisible.set(false); // !
-    this.editingTruck.set(null);
-    this.loading.set(true);
-
     op$.subscribe({
       next: () => {
+        this.formDialogVisible.set(false);
+        this.editingTruck.set(null);
         this.submitting.set(false);
+        this.refreshTable();
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: isEdit ? 'Truck updated successfully.' : 'Truck created successfully.',
           life: 3000,
         });
-        this.refreshTable();
       },
       error: () => {
         this.submitting.set(false);
-        this.loading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

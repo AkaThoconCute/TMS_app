@@ -1,12 +1,13 @@
 using AutoMapper;
 using back_end_for_TMS.Business.Types;
-using back_end_for_TMS.Infrastructure.Database;
+using back_end_for_TMS.Common;
 using back_end_for_TMS.Models;
+using back_end_for_TMS.Models.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace back_end_for_TMS.Business;
 
-public class TruckService(AppDbContext dbContext, IMapper mapper)
+public class TruckService(TruckRepo truckRepository, IMapper mapper)
 {
   public async Task<TruckDto> CreateAsync(CreateTruckDto dto)
   {
@@ -14,8 +15,7 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
       throw new ArgumentException("License plate cannot be null or empty", nameof(dto.LicensePlate));
 
     // Check if license plate already exists
-    var existingTruck = await dbContext.Trucks
-        .FirstOrDefaultAsync(t => t.LicensePlate == dto.LicensePlate);
+    var existingTruck = await truckRepository.FindAsync(t => t.LicensePlate == dto.LicensePlate);
 
     if (existingTruck != null)
       throw new InvalidOperationException($"Truck with license plate '{dto.LicensePlate}' already exists");
@@ -23,8 +23,8 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     var truck = mapper.Map<Truck>(dto);
     truck.CreatedAt = DateTimeOffset.UtcNow;
 
-    dbContext.Trucks.Add(truck);
-    await dbContext.SaveChangesAsync();
+    truckRepository.Add(truck);
+    await truckRepository.SaveChangesAsync();
 
     return mapper.Map<TruckDto>(truck);
   }
@@ -34,7 +34,7 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (truckId == Guid.Empty)
       throw new ArgumentException("Truck ID cannot be empty", nameof(truckId));
 
-    var truck = await dbContext.Trucks.FirstOrDefaultAsync(t => t.TruckId == truckId);
+    var truck = await truckRepository.FindAsync(t => t.TruckId == truckId);
     if (truck == null)
       throw new KeyNotFoundException($"Truck with ID '{truckId}' not found");
 
@@ -46,8 +46,7 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (string.IsNullOrEmpty(licensePlate))
       throw new ArgumentException("License plate cannot be null or empty", nameof(licensePlate));
 
-    var truck = await dbContext.Trucks
-        .FirstOrDefaultAsync(t => t.LicensePlate == licensePlate);
+    var truck = await truckRepository.FindAsync(t => t.LicensePlate == licensePlate);
 
     if (truck == null)
       throw new KeyNotFoundException($"Truck with license plate '{licensePlate}' not found");
@@ -55,7 +54,7 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     return mapper.Map<TruckDto>(truck);
   }
 
-  public async Task<PaginatedTrucksDto> ListAsync(
+  public async Task<PaginatedResult<TruckDto>> ListAsync(
       int pageNumber = 1,
       int pageSize = 10,
       int? status = null,
@@ -65,7 +64,7 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (pageSize < 1) pageSize = 10;
     if (pageSize > 100) pageSize = 100; // Max page size limit
 
-    var query = dbContext.Trucks.AsQueryable();
+    var query = truckRepository.Query();
 
     // Filter by status if provided
     if (status.HasValue)
@@ -89,7 +88,7 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
 
     var truckDtos = mapper.Map<List<TruckDto>>(trucks);
 
-    return new PaginatedTrucksDto
+    return new PaginatedResult<TruckDto>
     {
       Data = truckDtos,
       TotalCount = totalCount,
@@ -103,15 +102,14 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (truckId == Guid.Empty)
       throw new ArgumentException("Truck ID cannot be empty", nameof(truckId));
 
-    var truck = await dbContext.Trucks.FirstOrDefaultAsync(t => t.TruckId == truckId);
+    var truck = await truckRepository.FindAsync(t => t.TruckId == truckId);
     if (truck == null)
       throw new KeyNotFoundException($"Truck with ID '{truckId}' not found");
 
     // Check if new license plate already exists (if being updated)
     if (!string.IsNullOrEmpty(dto.LicensePlate) && dto.LicensePlate != truck.LicensePlate)
     {
-      var existingTruck = await dbContext.Trucks
-          .FirstOrDefaultAsync(t => t.LicensePlate == dto.LicensePlate);
+      var existingTruck = await truckRepository.FindAsync(t => t.LicensePlate == dto.LicensePlate);
 
       if (existingTruck != null)
         throw new InvalidOperationException($"Truck with license plate '{dto.LicensePlate}' already exists");
@@ -120,8 +118,8 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     mapper.Map(dto, truck);
     truck.UpdatedAt = DateTimeOffset.UtcNow;
 
-    dbContext.Trucks.Update(truck);
-    await dbContext.SaveChangesAsync();
+    truckRepository.Update(truck);
+    await truckRepository.SaveChangesAsync();
 
     return mapper.Map<TruckDto>(truck);
   }
@@ -131,12 +129,12 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (truckId == Guid.Empty)
       throw new ArgumentException("Truck ID cannot be empty", nameof(truckId));
 
-    var truck = await dbContext.Trucks.FirstOrDefaultAsync(t => t.TruckId == truckId);
+    var truck = await truckRepository.FindAsync(t => t.TruckId == truckId);
     if (truck == null)
       throw new KeyNotFoundException($"Truck with ID '{truckId}' not found");
 
-    dbContext.Trucks.Remove(truck);
-    await dbContext.SaveChangesAsync();
+    truckRepository.Remove(truck);
+    await truckRepository.SaveChangesAsync();
 
     return true;
   }
@@ -146,15 +144,15 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (truckId == Guid.Empty)
       throw new ArgumentException("Truck ID cannot be empty", nameof(truckId));
 
-    var truck = await dbContext.Trucks.FirstOrDefaultAsync(t => t.TruckId == truckId);
+    var truck = await truckRepository.FindAsync(t => t.TruckId == truckId);
     if (truck == null)
       throw new KeyNotFoundException($"Truck with ID '{truckId}' not found");
 
     truck.OdometerReading = odometerReading;
     truck.UpdatedAt = DateTimeOffset.UtcNow;
 
-    dbContext.Trucks.Update(truck);
-    await dbContext.SaveChangesAsync();
+    truckRepository.Update(truck);
+    await truckRepository.SaveChangesAsync();
 
     return true;
   }
@@ -164,15 +162,15 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (truckId == Guid.Empty)
       throw new ArgumentException("Truck ID cannot be empty", nameof(truckId));
 
-    var truck = await dbContext.Trucks.FirstOrDefaultAsync(t => t.TruckId == truckId);
+    var truck = await truckRepository.FindAsync(t => t.TruckId == truckId);
     if (truck == null)
       throw new KeyNotFoundException($"Truck with ID '{truckId}' not found");
 
     truck.CurrentStatus = status;
     truck.UpdatedAt = DateTimeOffset.UtcNow;
 
-    dbContext.Trucks.Update(truck);
-    await dbContext.SaveChangesAsync();
+    truckRepository.Update(truck);
+    await truckRepository.SaveChangesAsync();
 
     return true;
   }
@@ -182,15 +180,15 @@ public class TruckService(AppDbContext dbContext, IMapper mapper)
     if (truckId == Guid.Empty)
       throw new ArgumentException("Truck ID cannot be empty", nameof(truckId));
 
-    var truck = await dbContext.Trucks.FirstOrDefaultAsync(t => t.TruckId == truckId);
+    var truck = await truckRepository.FindAsync(t => t.TruckId == truckId);
     if (truck == null)
       throw new KeyNotFoundException($"Truck with ID '{truckId}' not found");
 
     truck.LastMaintenanceDate = maintenanceDate;
     truck.UpdatedAt = DateTimeOffset.UtcNow;
 
-    dbContext.Trucks.Update(truck);
-    await dbContext.SaveChangesAsync();
+    truckRepository.Update(truck);
+    await truckRepository.SaveChangesAsync();
 
     return true;
   }

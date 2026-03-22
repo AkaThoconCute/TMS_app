@@ -1,5 +1,6 @@
 using back_end_for_TMS.Business;
 using back_end_for_TMS.Business.Types;
+using back_end_for_TMS.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +48,7 @@ public class TruckController(TruckService truckService) : ControllerBase
   /// </summary>
   [HttpGet]
   [Authorize]
-  public async Task<ActionResult<PaginatedTrucksDto>> List(
+  public async Task<ActionResult<PaginatedResult<TruckDto>>> List(
       [FromQuery] int pageNumber = 1,
       [FromQuery] int pageSize = 10,
       [FromQuery] int? status = null,
