@@ -33,6 +33,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
     builder.Entity<AppUser>().HasData(users);
     builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
 
+    // AppUser → Tenant relationship
+    builder.Entity<AppUser>(entity =>
+        {
+          entity.HasOne<Tenant>()
+                .WithMany()
+                .HasForeignKey(u => u.TenantId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+          entity.HasIndex(u => u.TenantId);
+        });
+
     // Tenant config
     builder.Entity<Tenant>(entity =>
         {
