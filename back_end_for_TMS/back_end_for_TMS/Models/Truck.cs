@@ -3,7 +3,7 @@ namespace back_end_for_TMS.Models;
 public class Truck
 {
   // 1. Identity Group (Hầu như không đổi)
-  public Guid TruckId { get; set; } = Guid.NewGuid();
+  public Guid TruckId { get; set; } = Guid.CreateVersion7();
   public string LicensePlate { get; set; } = string.Empty; // Biển số xe
   public string? VinNumber { get; set; }                   // Số khung
   public string? EngineNumber { get; set; }                // Số máy

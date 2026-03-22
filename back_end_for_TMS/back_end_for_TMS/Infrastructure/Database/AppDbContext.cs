@@ -27,7 +27,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
     base.OnModelCreating(builder);
 
     // Seed Identity Data
-    var (roles, users, userRoles) = DatabaseSeeder.GenerateIdentityData();
+    var (roles, users, userRoles) = IdentityDataSeeder.GenerateIdentityData();
     builder.Entity<IdentityRole>().HasData(roles);
     builder.Entity<AppUser>().HasData(users);
     builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
