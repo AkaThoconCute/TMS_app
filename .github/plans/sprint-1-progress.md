@@ -11,8 +11,8 @@
 | 2   | [BE] Create `Tenant` model                                        | Backend  | S-01       | Done        | 2026-03-22 |
 | 3   | [BE] Add `TenantId` to `AppUser`                                  | Backend  | S-01       | Done        | 2026-03-22 |
 | 4   | [BE] Add `TenantId` to `Truck` (implement `ITenantEntity`)        | Backend  | S-02       | Done        | 2026-03-22 |
-| 5   | [BE] Create EF migration for Tenant + FK columns                  | Backend  | S-01, S-02 | Not Started | —          |
-| 6   | [BE] Update seed data (default tenant, assign to users & trucks)  | Backend  | S-01, S-02 | Not Started | —          |
+| 5   | [BE] Create EF migration for Tenant + FK columns                  | Backend  | S-01, S-02 | Done        | 2026-03-22 |
+| 6   | [BE] Update seed data (default tenant, assign to users & trucks)  | Backend  | S-01, S-02 | Done        | 2026-03-22 |
 | 7   | [BE] Create `TenantContext` scoped service                        | Backend  | S-04       | Not Started | —          |
 | 8   | [BE] Create tenant resolution middleware (JWT → TenantContext)    | Backend  | S-04       | Not Started | —          |
 | 9   | [BE] Add Global Query Filter for `ITenantEntity`                  | Backend  | S-05       | Not Started | —          |
