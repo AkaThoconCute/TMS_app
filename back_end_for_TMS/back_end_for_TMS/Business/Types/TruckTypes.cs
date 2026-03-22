@@ -32,9 +32,6 @@ public class UpdateTruckDto
   public int? WidthMm { get; set; }
   public int? HeightMm { get; set; }
   public int? OwnershipType { get; set; }
-  public int? CurrentStatus { get; set; }
-  public decimal? OdometerReading { get; set; }
-  public DateTime? LastMaintenanceDate { get; set; }
 }
 
 // DTO for returning truck information
