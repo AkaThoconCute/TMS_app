@@ -1,5 +1,6 @@
 using AutoMapper;
 using back_end_for_TMS.Business.Types;
+using back_end_for_TMS.Common;
 using back_end_for_TMS.Models;
 using back_end_for_TMS.Models.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ public class TruckService(TruckRepo truckRepository, IMapper mapper)
     return mapper.Map<TruckDto>(truck);
   }
 
-  public async Task<PaginatedTrucksDto> ListAsync(
+  public async Task<PaginatedResult<TruckDto>> ListAsync(
       int pageNumber = 1,
       int pageSize = 10,
       int? status = null,
@@ -87,7 +88,7 @@ public class TruckService(TruckRepo truckRepository, IMapper mapper)
 
     var truckDtos = mapper.Map<List<TruckDto>>(trucks);
 
-    return new PaginatedTrucksDto
+    return new PaginatedResult<TruckDto>
     {
       Data = truckDtos,
       TotalCount = totalCount,

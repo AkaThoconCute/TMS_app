@@ -57,16 +57,6 @@ public class TruckDto
   public DateTimeOffset? UpdatedAt { get; set; }
 }
 
-// DTO for paginated list response
-public class PaginatedTrucksDto
-{
-  public List<TruckDto> Data { get; set; } = [];
-  public int TotalCount { get; set; }
-  public int PageSize { get; set; }
-  public int PageNumber { get; set; }
-  public int TotalPages => (TotalCount + PageSize - 1) / PageSize;
-}
-
 // DTO for updating odometer
 public class UpdateOdometerDto
 {
