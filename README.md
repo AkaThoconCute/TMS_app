@@ -1,42 +1,89 @@
-# Introduction
+# EasyTMS
 
-EasyTMS app provides an Easy - Fast - Save solution for household transportation businesses.
+A transportation management system built for household trucking businesses. Easy to use, fast to set up, cost-effective to run.
 
-# Getting Started
+## What It Does
 
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
+EasyTMS helps small trucking operators manage their day-to-day operations in one place:
 
-1. Installation process
-2. Software dependencies
-3. Latest releases
-4. API references
+- **Account Management** — Register, log in, and secure access with JWT-based authentication
+- **Truck Management** — Add, edit, remove, and search trucks with pagination and filtering
 
-# Build and Test
+More modules (drivers, routes, orders, invoicing) are planned as the product grows.
 
-TODO: Describe and show how to build your code and run the tests.
+## Tech Stack
 
-# Contribute
+| Layer    | Technology                             |
+| -------- | -------------------------------------- |
+| Frontend | Angular 21, PrimeNG 21, Tailwind CSS 4 |
+| Backend  | ASP.NET Core 10, EF Core 10            |
+| Database | SQL Server                             |
+| Auth     | JWT + ASP.NET Identity                 |
 
-TODO: Explain how other users and developers can contribute to make your code better.
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
-
-Yarn
-
-- yarn install --check-files
+## Project Structure
 
 ```
-      // Configure XSRF protection
-      // withXsrfConfiguration({
-      //   cookieName: 'X-CSRF-TOKEN',
-      //   headerName: 'X-CSRF-TOKEN'
-      // })
+TMS_app/
+├── back_end_for_TMS/    # ASP.NET Core Web API
+└── front_end_for_TMS/   # Angular SPA
 ```
 
-Angular
- - ng g c Name
- - ng generate component Name
+### Backend (`back_end_for_TMS/back_end_for_TMS`)
+
+```
+Api/                  # Controllers — HTTP endpoints
+Business/             # Services & business logic
+Common/               # Shared utilities (pagination, filtering, guards)
+Models/               # EF Core entities
+Infrastructure/       # Cross-cutting wiring
+Migrations/           # EF Core migration files
+Program.cs            # App entry point
+```
+
+### Frontend (`front_end_for_TMS/src/app/`)
+
+```
+features/             # Feature modules (one folder per domain)
+platform/             # App-wide services (non-UI)
+shell/                # Layout components
+common/               # Reusable UI components
+app.ts                # Root component
+app.routes.ts         # Route definitions
+app.config.ts         # App providers & config
+app.prime.ts          # PrimeNG theme setup
+```
+
+## Getting Started
+
+### Prerequisites
+
+- .NET 10 SDK
+- Node.js (LTS) + Yarn
+- SQL Server instance
+
+### Backend
+
+```bash
+cd back_end_for_TMS/back_end_for_TMS
+dotnet ef database update
+dotnet run
+```
+
+The API runs at `https://localhost:9090` by default.
+
+### Frontend
+
+```bash
+cd front_end_for_TMS
+yarn install
+yarn dev
+```
+
+The app runs at `http://localhost:4200` by default.
+
+## Contributing
+
+1. Pick an issue or propose a feature
+2. Create a branch from `main`
+3. Make your changes and test locally
+4. Open a pull request with a clear description
