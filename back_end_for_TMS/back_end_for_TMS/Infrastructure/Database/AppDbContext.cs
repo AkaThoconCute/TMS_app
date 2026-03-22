@@ -72,7 +72,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
           entity.HasIndex(e => e.LicensePlate)
             .IsUnique();
 
-          // 3. Seed Data (Phải nằm trong khối entity này)
+          // 3. Tenant FK
+          entity.HasOne<Tenant>()
+                .WithMany()
+                .HasForeignKey(t => t.TenantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+          entity.HasIndex(t => t.TenantId);
+
+          // 4. Seed Data (Phải nằm trong khối entity này)
           entity.HasData(trucks);
         });
   }

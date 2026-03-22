@@ -10,7 +10,7 @@
 | 1   | [BE] Create `ITenantEntity` interface                             | Backend  | S-03       | Done        | 2026-03-22 |
 | 2   | [BE] Create `Tenant` model                                        | Backend  | S-01       | Done        | 2026-03-22 |
 | 3   | [BE] Add `TenantId` to `AppUser`                                  | Backend  | S-01       | Done        | 2026-03-22 |
-| 4   | [BE] Add `TenantId` to `Truck` (implement `ITenantEntity`)        | Backend  | S-02       | Not Started | —          |
+| 4   | [BE] Add `TenantId` to `Truck` (implement `ITenantEntity`)        | Backend  | S-02       | Done        | 2026-03-22 |
 | 5   | [BE] Create EF migration for Tenant + FK columns                  | Backend  | S-01, S-02 | Not Started | —          |
 | 6   | [BE] Update seed data (default tenant, assign to users & trucks)  | Backend  | S-01, S-02 | Not Started | —          |
 | 7   | [BE] Create `TenantContext` scoped service                        | Backend  | S-04       | Not Started | —          |
@@ -29,4 +29,5 @@
 - Task 1 completed: `ITenantEntity` interface created at `Models/ITenantEntity.cs` with single `Guid TenantId` property
 - Task 2 completed: `Tenant` model created at `Models/Tenant.cs` with properties: `TenantId` (Guid v7 PK), `Name` (string, required, max 200), `OwnerId` (string FK to AppUser.Id), `CreatedAt` (DateTimeOffset). `DbSet<Tenant>` registered in `AppDbContext` with entity config (Name required + max length, OwnerId required + indexed).
 - Task 3 completed: Added `Guid? TenantId` property to `AppUser` (nullable — safe for existing seed data). Configured `AppUser → Tenant` relationship in `AppDbContext` via Fluent API: `HasOne<Tenant>().WithMany()`, FK on `TenantId`, `OnDelete(SetNull)`, index on `TenantId`. No navigation properties (keep Identity clean).
-- Next unblocked tasks: Task 4 (Truck implements ITenantEntity), Task 7 (TenantContext service). Task 5 (migration) now unblocked by Tasks 2+3, waiting on Task 4.
+- Task 4 completed: `Truck` now implements `ITenantEntity` with `public Guid TenantId { get; set; }` (non-nullable — every truck must belong to a tenant). Configured `Truck → Tenant` FK in `AppDbContext` with `OnDelete(Restrict)` (protect business data), index on `TenantId`. No nav properties, no DTO changes.
+- Next unblocked tasks: Task 5 (migration — all prereqs 2+3+4 done!), Task 7 (TenantContext service — no deps). Tasks 9+10 need Task 7 first.
