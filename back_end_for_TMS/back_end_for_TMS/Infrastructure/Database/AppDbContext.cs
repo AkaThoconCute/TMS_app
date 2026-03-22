@@ -8,6 +8,7 @@ namespace back_end_for_TMS.Infrastructure.Database;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config) : IdentityDbContext<AppUser>(options)
 {
+  public DbSet<Tenant> Tenants { get; set; } = default!;
   public DbSet<Truck> Trucks { get; set; } = default!;
 
   protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -31,6 +32,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
     builder.Entity<IdentityRole>().HasData(roles);
     builder.Entity<AppUser>().HasData(users);
     builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
+
+    // Tenant config
+    builder.Entity<Tenant>(entity =>
+        {
+          entity.Property(e => e.Name)
+            .IsRequired()
+            .HasMaxLength(200);
+
+          entity.Property(e => e.OwnerId)
+            .IsRequired();
+
+          entity.HasIndex(e => e.OwnerId);
+        });
 
     // Seed Truck Data
     var trucks = TruckDataSeeder.Generate();
