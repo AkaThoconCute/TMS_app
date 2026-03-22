@@ -6,7 +6,7 @@ namespace back_end_for_TMS.Infrastructure.Database.Seeder;
 
 public class IdentityDataSeeder
 {
-  public static (List<IdentityRole> Roles, List<AppUser> Users, List<IdentityUserRole<string>> UserRoles) GenerateIdentityData()
+  public static (List<IdentityRole> Roles, List<AppUser> Users, List<IdentityUserRole<string>> UserRoles) GenerateIdentityData(Guid tenantId)
   {
     Randomizer.Seed = new Random(123456);
     var seedDate = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -37,6 +37,7 @@ public class IdentityDataSeeder
 
     var user1 = new AppUser
     {
+      TenantId = tenantId,
       Id = "u-user1",
       UserName = "User1",
       NormalizedUserName = "USER1",

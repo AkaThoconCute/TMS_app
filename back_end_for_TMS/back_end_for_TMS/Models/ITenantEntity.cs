@@ -2,5 +2,5 @@ namespace back_end_for_TMS.Models;
 
 public interface ITenantEntity
 {
-    Guid TenantId { get; set; }
+  Guid? TenantId { get; set; }
 }
