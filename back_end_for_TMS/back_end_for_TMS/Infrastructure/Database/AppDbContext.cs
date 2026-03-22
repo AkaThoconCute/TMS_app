@@ -30,30 +30,20 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
 
     // Setup Tenant model and seeding
     List<Tenant> tenants = TenantDataSeeder.Generate();
-    Guid firstTenantId = tenants.First().TenantId;
     TenantCreator.Setup(builder, tenants);
 
-
     // Setup Identity models and seeding
-    var (roles, users, userRoles) = IdentityDataSeeder.GenerateIdentityData(firstTenantId);
-    builder.Entity<IdentityRole>().HasData(roles);
+    List<AppUser> users = AppUserDataSeeder.Generate();
+    AppUserCreator.Setup(builder, users);
 
-    builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
+    List<IdentityRole> roles = RoleDataSeeder.Generate();
+    RoleCreator.Setup(builder, roles);
 
-    builder.Entity<AppUser>(entity =>
-    {
-      entity.HasOne<Tenant>()
-            .WithMany()
-            .HasForeignKey(u => u.TenantId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-      entity.HasIndex(u => u.TenantId);
-
-      entity.HasData(users);
-    });
+    List<IdentityUserRole<string>> user_roles = UserRoleDataSeeder.Generate();
+    UserRoleCreator.Setup(builder, user_roles);
 
     // Setup Truck model and seeding
-    List<Truck> trucks = TruckDataSeeder.Generate(firstTenantId);
+    List<Truck> trucks = TruckDataSeeder.Generate();
     TruckCreator.Setup(builder, trucks);
   }
 }

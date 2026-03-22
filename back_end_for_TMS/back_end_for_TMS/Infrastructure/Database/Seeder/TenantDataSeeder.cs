@@ -4,12 +4,14 @@ namespace back_end_for_TMS.Infrastructure.Database.Seeder;
 
 public class TenantDataSeeder : IDataSeeder<Tenant>
 {
+  public static readonly Guid AlphaTenantId = Guid.Parse("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e");
+
   public static List<Tenant> Generate()
   {
     // Fixed GUIDs to ensure migration stability
     var tenantIds = new[]
     {
-            Guid.Parse("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+            AlphaTenantId,
             Guid.Parse("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8f"),
             Guid.Parse("0195c63a-727b-7f32-8e2d-3f4a5b6c7d90"),
             Guid.Parse("0195c63a-727b-7f32-8e2d-3f4a5b6c7d91"),
