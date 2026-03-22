@@ -35,7 +35,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
 
 
     // Setup Identity models and seeding
-    var (roles, users, userRoles) = IdentityDataSeeder.GenerateIdentityData(firstTenantId);
+    var (roles, users, userRoles) = IdentityDataSeeder.GenerateIdentityData(); // (firstTenantId);
     builder.Entity<IdentityRole>().HasData(roles);
 
     builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
@@ -53,7 +53,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
     });
 
     // Setup Truck model and seeding
-    List<Truck> trucks = TruckDataSeeder.Generate(firstTenantId);
+    List<Truck> trucks = TruckDataSeeder.Generate(); // (firstTenantId);
     TruckCreator.Setup(builder, trucks);
   }
 }

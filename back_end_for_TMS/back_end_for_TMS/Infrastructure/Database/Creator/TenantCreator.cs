@@ -14,7 +14,6 @@ public class TenantCreator : IModelCreator<Tenant>
 
       // Properties
       entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
-
       entity.Property(e => e.OwnerId).IsRequired();
 
       // Seed Data

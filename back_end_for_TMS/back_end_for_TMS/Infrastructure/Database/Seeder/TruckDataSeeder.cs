@@ -3,9 +3,9 @@ using Bogus;
 
 namespace back_end_for_TMS.Infrastructure.Database.Seeder;
 
-public class TruckDataSeeder : ITenantDataSeeder<Truck>
+public class TruckDataSeeder // : ITenantDataSeeder<Truck>
 {
-  public static List<Truck> Generate(Guid tenantId)
+  public static List<Truck> Generate() // (Guid tenantId)
   {
     Randomizer.Seed = new Random(789012);
     var staticNow = new DateTimeOffset(2026, 3, 1, 0, 0, 0, TimeSpan.Zero);
@@ -14,7 +14,7 @@ public class TruckDataSeeder : ITenantDataSeeder<Truck>
     var types = new[] { "Thùng kín", "Mui bạt", "Bồn", "Cẩu", "Tự đổ" };
 
     var faker = new Faker<Truck>()
-            .RuleFor(t => t.TenantId, _ => tenantId)
+            // .RuleFor(t => t.TenantId, _ => tenantId)
             .RuleFor(t => t.TruckId, f => f.Random.Guid())
             .RuleFor(t => t.LicensePlate, f => $"{f.Random.Number(1000, 9999)}-{f.Random.AlphaNumeric(2).ToUpper()}{f.Random.Number(10, 99)}")
             .RuleFor(t => t.VinNumber, f => f.Vehicle.Vin())
@@ -33,7 +33,7 @@ public class TruckDataSeeder : ITenantDataSeeder<Truck>
             .RuleFor(t => t.LastMaintenanceDate, f => f.Date.Past(2, staticNow.DateTime))
             .RuleFor(t => t.CreatedAt, f => staticNow.AddDays(-f.Random.Number(1, 365)))
             .RuleFor(t => t.UpdatedAt, f => f.Random.Bool() ? staticNow.AddDays(-f.Random.Number(1, 30)) : (DateTimeOffset?)null);
-    
+
     return faker.Generate(10);
   }
 }

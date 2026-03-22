@@ -18,7 +18,6 @@ public class TruckCreator : IModelCreator<Truck>
 
           // 3. Cấu hình Index
           entity.HasIndex(t => t.TenantId);
-          entity.HasIndex(e => e.LicensePlate).IsUnique();
 
           // 4. Seed Data
           entity.HasData(seeding);
