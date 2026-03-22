@@ -3,7 +3,7 @@ using Bogus;
 
 namespace back_end_for_TMS.Infrastructure.Database.Seeder;
 
-public class TruckDataSeeder
+public class TruckDataSeeder : IDataSeeder<Truck>
 {
   public static List<Truck> Generate()
   {
@@ -14,6 +14,7 @@ public class TruckDataSeeder
     var types = new[] { "Thùng kín", "Mui bạt", "Bồn", "Cẩu", "Tự đổ" };
 
     var faker = new Faker<Truck>()
+            .RuleFor(t => t.TenantId, _ => TenantDataSeeder.AlphaTenantId)
             .RuleFor(t => t.TruckId, f => f.Random.Guid())
             .RuleFor(t => t.LicensePlate, f => $"{f.Random.Number(1000, 9999)}-{f.Random.AlphaNumeric(2).ToUpper()}{f.Random.Number(10, 99)}")
             .RuleFor(t => t.VinNumber, f => f.Vehicle.Vin())
@@ -32,6 +33,7 @@ public class TruckDataSeeder
             .RuleFor(t => t.LastMaintenanceDate, f => f.Date.Past(2, staticNow.DateTime))
             .RuleFor(t => t.CreatedAt, f => staticNow.AddDays(-f.Random.Number(1, 365)))
             .RuleFor(t => t.UpdatedAt, f => f.Random.Bool() ? staticNow.AddDays(-f.Random.Number(1, 30)) : (DateTimeOffset?)null);
+
     return faker.Generate(10);
   }
 }

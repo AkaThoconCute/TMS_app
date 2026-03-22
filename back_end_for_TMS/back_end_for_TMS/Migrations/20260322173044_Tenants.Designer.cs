@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using back_end_for_TMS.Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using back_end_for_TMS.Infrastructure.Database;
 namespace back_end_for_TMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260322173044_Tenants")]
+    partial class Tenants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -447,7 +450,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 69673.32m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2025, 10, 19, 16, 9, 53, 115, DateTimeKind.Unspecified).AddTicks(2034),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Cẩu",
                             UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             VinNumber = "9GZ4DNTSWGWL93896",
@@ -469,7 +471,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 419693.81m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2017, 3, 22, 6, 6, 49, 619, DateTimeKind.Unspecified).AddTicks(2731),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Cẩu",
                             UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             VinNumber = "LR5H42KG7NI092672",
@@ -491,7 +492,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 345576.58m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2019, 9, 7, 5, 38, 14, 623, DateTimeKind.Unspecified).AddTicks(5856),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Cẩu",
                             UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             VinNumber = "1OSM8M5T9YNG92381",
@@ -513,7 +513,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 129874.43m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2019, 2, 15, 12, 55, 23, 370, DateTimeKind.Unspecified).AddTicks(1670),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Cẩu",
                             UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             VinNumber = "AI6X76CHTGFT55593",
@@ -535,7 +534,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 125867.50m,
                             OwnershipType = 2,
                             PurchaseDate = new DateTime(2024, 7, 14, 16, 40, 36, 809, DateTimeKind.Unspecified).AddTicks(6497),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Mui bạt",
                             VinNumber = "XNVAW6LCBKO098514",
                             WidthMm = 2553
@@ -556,7 +554,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 459416.72m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2022, 4, 15, 12, 3, 47, 86, DateTimeKind.Unspecified).AddTicks(7788),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Bồn",
                             UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             VinNumber = "AMF2H9SHDSN471834",
@@ -578,7 +575,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 195850.70m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2022, 2, 2, 12, 24, 39, 865, DateTimeKind.Unspecified).AddTicks(8222),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Mui bạt",
                             VinNumber = "WEZBRTAJULHJ86716",
                             WidthMm = 2424
@@ -599,7 +595,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 229930.14m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2019, 2, 27, 0, 45, 11, 257, DateTimeKind.Unspecified).AddTicks(4336),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Cẩu",
                             VinNumber = "CHV52V6QTKUV78068",
                             WidthMm = 2499
@@ -620,7 +615,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 39006.62m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2017, 10, 11, 7, 38, 22, 846, DateTimeKind.Unspecified).AddTicks(3298),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Mui bạt",
                             VinNumber = "XCH11ZAPJ7TS67845",
                             WidthMm = 2468
@@ -641,7 +635,6 @@ namespace back_end_for_TMS.Migrations
                             OdometerReading = 308775.86m,
                             OwnershipType = 1,
                             PurchaseDate = new DateTime(2024, 3, 1, 19, 29, 37, 763, DateTimeKind.Unspecified).AddTicks(4202),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Bồn",
                             VinNumber = "WTGBCOF8M6T213769",
                             WidthMm = 2512

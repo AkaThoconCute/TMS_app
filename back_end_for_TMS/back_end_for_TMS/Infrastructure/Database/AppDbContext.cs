@@ -1,4 +1,5 @@
-﻿using back_end_for_TMS.Infrastructure.Database.Seeder;
+﻿using back_end_for_TMS.Infrastructure.Database.Creator;
+using back_end_for_TMS.Infrastructure.Database.Seeder;
 using back_end_for_TMS.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace back_end_for_TMS.Infrastructure.Database;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config) : IdentityDbContext<AppUser>(options)
 {
+  public DbSet<Tenant> Tenants { get; set; } = default!;
   public DbSet<Truck> Trucks { get; set; } = default!;
 
   protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -26,29 +28,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
   {
     base.OnModelCreating(builder);
 
-    // Seed Identity Data
-    var (roles, users, userRoles) = IdentityDataSeeder.GenerateIdentityData();
-    builder.Entity<IdentityRole>().HasData(roles);
-    builder.Entity<AppUser>().HasData(users);
-    builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
+    // Setup Tenant model and seeding
+    List<Tenant> tenants = TenantDataSeeder.Generate();
+    TenantCreator.Setup(builder, tenants);
 
-    // Seed Truck Data
-    var trucks = TruckDataSeeder.Generate();
-    builder.Entity<Truck>(entity =>
-        {
-          // 1. Cấu hình Precision
-          entity.Property(e => e.MaxPayloadKg)
-            .HasPrecision(18, 2);
+    // Setup Identity models and seeding
+    List<AppUser> users = AppUserDataSeeder.Generate();
+    AppUserCreator.Setup(builder, users);
 
-          entity.Property(e => e.OdometerReading)
-            .HasPrecision(18, 2);
+    List<IdentityRole> roles = RoleDataSeeder.Generate();
+    RoleCreator.Setup(builder, roles);
 
-          // 2. Cấu hình Index
-          entity.HasIndex(e => e.LicensePlate)
-            .IsUnique();
+    List<IdentityUserRole<string>> user_roles = UserRoleDataSeeder.Generate();
+    UserRoleCreator.Setup(builder, user_roles);
 
-          // 3. Seed Data (Phải nằm trong khối entity này)
-          entity.HasData(trucks);
-        });
+    // Setup Truck model and seeding
+    List<Truck> trucks = TruckDataSeeder.Generate();
+    TruckCreator.Setup(builder, trucks);
   }
 }
