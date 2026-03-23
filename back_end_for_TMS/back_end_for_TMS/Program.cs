@@ -2,6 +2,7 @@ using back_end_for_TMS.Infrastructure.Api;
 using back_end_for_TMS.Infrastructure.Business;
 using back_end_for_TMS.Infrastructure.Database;
 using back_end_for_TMS.Infrastructure.Security;
+using back_end_for_TMS.Infrastructure.Tenancy;
 
 // Register services to the DI container
 // Infra (Database, Caching, Logging) > Security (AuthN, AuthZ) > Business > API
@@ -13,6 +14,7 @@ builder.Services.AddDatabaseServices(builder.Configuration);
 builder.Services.AddCorsServices(builder.Configuration);
 builder.Services.AddAuthNServices(builder.Configuration);
 builder.Services.AddAuthZServices(builder.Configuration);
+builder.Services.AddTenancyServices(builder.Configuration);
 
 builder.Services.AddBusinessServices(builder.Configuration);
 
@@ -29,13 +31,14 @@ await app.CheckDatabaseConnection();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+  app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontEnd");
 app.UseAuthentication();
+app.UseTenantResolution();
 app.UseAuthorization();
 
 app.MapControllers();
