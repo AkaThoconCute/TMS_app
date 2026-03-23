@@ -1,7 +1,7 @@
 using back_end_for_TMS.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace back_end_for_TMS.Infrastructure.Database.ModelConfig;
+namespace back_end_for_TMS.Infrastructure.Database.Config;
 
 public class TenantModelConfig : IModelConfig<Tenant>
 {

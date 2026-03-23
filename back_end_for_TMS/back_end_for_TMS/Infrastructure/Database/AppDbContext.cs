@@ -1,4 +1,4 @@
-﻿using back_end_for_TMS.Infrastructure.Database.ModelConfig;
+﻿using back_end_for_TMS.Infrastructure.Database.Config;
 using back_end_for_TMS.Infrastructure.Database.Seeder;
 using back_end_for_TMS.Models;
 using Microsoft.AspNetCore.Identity;
