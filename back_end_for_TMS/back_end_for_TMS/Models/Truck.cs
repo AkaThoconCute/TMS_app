@@ -3,7 +3,7 @@ namespace back_end_for_TMS.Models;
 public class Truck : ITenantEntity
 {
   // Tenant Information (Bắt buộc cho multi-tenant)
-  public Guid? TenantId { get; set; }                        // FK → Tenant (multi-tenant)
+  public Guid TenantId { get; set; }                        // FK → Tenant (multi-tenant)
 
   // Identity Group (Hầu như không đổi)
   public Guid TruckId { get; set; } = Guid.CreateVersion7();
