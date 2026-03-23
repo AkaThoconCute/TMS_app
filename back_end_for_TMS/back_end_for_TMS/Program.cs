@@ -37,9 +37,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontEnd");
-app.UseAuthentication();
-app.UseTenantResolution();
-app.UseAuthorization();
+
+app.UseAuthentication();    // Người nào vậy ?
+app.UseTenantResolution();  // Nhà nào vậy ?
+app.UseAuthorization();     // Quyền nào vậy ?
 
 app.MapControllers();
 app.MapGet("/", () => "Application is ready").AllowAnonymous();
