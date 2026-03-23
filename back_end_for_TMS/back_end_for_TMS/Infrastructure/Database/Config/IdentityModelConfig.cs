@@ -2,9 +2,9 @@ using back_end_for_TMS.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace back_end_for_TMS.Infrastructure.Database.Creator;
+namespace back_end_for_TMS.Infrastructure.Database.Config;
 
-public class RoleCreator : IModelCreator<IdentityRole>
+public class RoleModelConfig : IModelConfig<IdentityRole>
 {
   public static void Setup(ModelBuilder builder, List<IdentityRole> seeding)
   {
@@ -12,7 +12,7 @@ public class RoleCreator : IModelCreator<IdentityRole>
   }
 }
 
-public class AppUserCreator : IModelCreator<AppUser>
+public class AppUserModelConfig : IModelConfig<AppUser>
 {
   public static void Setup(ModelBuilder builder, List<AppUser> seeding)
   {
@@ -27,7 +27,7 @@ public class AppUserCreator : IModelCreator<AppUser>
   }
 }
 
-public class UserRoleCreator : IModelCreator<IdentityUserRole<string>>
+public class UserRoleModelConfig : IModelConfig<IdentityUserRole<string>>
 {
   public static void Setup(ModelBuilder builder, List<IdentityUserRole<string>> seeding)
   {

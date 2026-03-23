@@ -1,9 +1,9 @@
 using back_end_for_TMS.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace back_end_for_TMS.Infrastructure.Database.Creator;
+namespace back_end_for_TMS.Infrastructure.Database.Config;
 
-public class TenantCreator : IModelCreator<Tenant>
+public class TenantModelConfig : IModelConfig<Tenant>
 {
   public static void Setup(ModelBuilder builder, List<Tenant> seeding)
   {

@@ -1,4 +1,4 @@
-﻿using back_end_for_TMS.Infrastructure.Database.Creator;
+﻿using back_end_for_TMS.Infrastructure.Database.Config;
 using back_end_for_TMS.Infrastructure.Database.Seeder;
 using back_end_for_TMS.Models;
 using Microsoft.AspNetCore.Identity;
@@ -30,20 +30,20 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
 
     // Setup Tenant model and seeding
     List<Tenant> tenants = TenantDataSeeder.Generate();
-    TenantCreator.Setup(builder, tenants);
+    TenantModelConfig.Setup(builder, tenants);
 
     // Setup Identity models and seeding
     List<AppUser> users = AppUserDataSeeder.Generate();
-    AppUserCreator.Setup(builder, users);
+    AppUserModelConfig.Setup(builder, users);
 
     List<IdentityRole> roles = RoleDataSeeder.Generate();
-    RoleCreator.Setup(builder, roles);
+    RoleModelConfig.Setup(builder, roles);
 
     List<IdentityUserRole<string>> user_roles = UserRoleDataSeeder.Generate();
-    UserRoleCreator.Setup(builder, user_roles);
+    UserRoleModelConfig.Setup(builder, user_roles);
 
     // Setup Truck model and seeding
     List<Truck> trucks = TruckDataSeeder.Generate();
-    TruckCreator.Setup(builder, trucks);
+    TruckModelConfig.Setup(builder, trucks);
   }
 }

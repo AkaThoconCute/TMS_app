@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace back_end_for_TMS.Infrastructure.Database.Creator;
+namespace back_end_for_TMS.Infrastructure.Database.Config;
 
-public interface IModelCreator<T> where T : class
+public interface IModelConfig<T> where T : class
 {
   static abstract void Setup(ModelBuilder builder, List<T> seeding);
 }
