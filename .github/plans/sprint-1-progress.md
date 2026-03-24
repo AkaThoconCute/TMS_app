@@ -13,8 +13,8 @@
 | 4   | [BE] Add `TenantId` to `Truck` (implement `ITenantEntity`)        | Backend  | S-02       | Done        | 2026-03-22 |
 | 5   | [BE] Create EF migration for Tenant + FK columns                  | Backend  | S-01, S-02 | Done        | 2026-03-22 |
 | 6   | [BE] Update seed data (default tenant, assign to users & trucks)  | Backend  | S-01, S-02 | Done        | 2026-03-22 |
-| 7   | [BE] Create `TenantContext` scoped service                        | Backend  | S-04       | Not Started | —          |
-| 8   | [BE] Create tenant resolution middleware (JWT → TenantContext)    | Backend  | S-04       | Not Started | —          |
+| 7   | [BE] Create `TenantContext` scoped service                        | Backend  | S-04       | Done        | 2026-03-24 |
+| 8   | [BE] Create tenant resolution middleware (JWT → TenantContext)    | Backend  | S-04       | Done        | 2026-03-24 |
 | 9   | [BE] Add Global Query Filter for `ITenantEntity`                  | Backend  | S-05       | Not Started | —          |
 | 10  | [BE] Override `SaveChangesAsync` for auto-stamp                   | Backend  | S-06       | Not Started | —          |
 | 11  | [BE] Update `TokenService` — add `TenantId` claim to JWT          | Backend  | S-07       | Not Started | —          |
@@ -30,4 +30,45 @@
 - Task 2 completed: `Tenant` model created at `Models/Tenant.cs` with properties: `TenantId` (Guid v7 PK), `Name` (string, required, max 200), `OwnerId` (string FK to AppUser.Id), `CreatedAt` (DateTimeOffset). `DbSet<Tenant>` registered in `AppDbContext` with entity config (Name required + max length, OwnerId required + indexed).
 - Task 3 completed: Added `Guid? TenantId` property to `AppUser` (nullable — safe for existing seed data). Configured `AppUser → Tenant` relationship in `AppDbContext` via Fluent API: `HasOne<Tenant>().WithMany()`, FK on `TenantId`, `OnDelete(SetNull)`, index on `TenantId`. No navigation properties (keep Identity clean).
 - Task 4 completed: `Truck` now implements `ITenantEntity` with `public Guid TenantId { get; set; }` (non-nullable — every truck must belong to a tenant). Configured `Truck → Tenant` FK in `AppDbContext` with `OnDelete(Restrict)` (protect business data), index on `TenantId`. No nav properties, no DTO changes.
-- Next unblocked tasks: Task 5 (migration — all prereqs 2+3+4 done!), Task 7 (TenantContext service — no deps). Tasks 9+10 need Task 7 first.
+
+**Task 5: [BE] Create EF migration for Tenant + FK columns**  
+**Status:** Done  
+**Details:**
+
+- Migration files created:
+  - `20260314143846_Truck.cs`: Created `Trucks` table with all required columns, including `TenantId` (non-nullable, FK to `Tenant`), and enforced multi-tenant structure.
+  - `20260322173044_Tenants.cs`: Added `TenantId` columns to `Trucks` and `AspNetUsers`, created `Tenants` table, and set up FKs.
+- FKs:
+  - `Truck.TenantId` → `Tenant.TenantId` (Restrict on delete)
+  - `AppUser.TenantId` → `Tenant.TenantId` (SetNull on delete)
+- Indexes:
+  - Index on `Truck.TenantId` for fast tenant filtering.
+- All changes align with the multi-tenant data model.
+
+**Task 6: [BE] Update seed data (default tenant, assign to users & trucks)**  
+**Status:** Done  
+**Details:**
+
+- Seeders implemented in `TenantDataSeeder` and `TruckDataSeeder`.
+- `TenantDataSeeder` creates 5 tenants with fixed GUIDs and owners.
+- `TruckDataSeeder` generates 10 trucks, all assigned to the default tenant (`AlphaTenantId`).
+- Seeding is invoked in `AppDbContext.OnModelCreating` via `TenantModelConfig` and `TruckModelConfig`.
+- Ensures all initial data is tenant-scoped.
+
+**Task 7: [BE] Create `TenantContext` scoped service**  
+**Status:** Done  
+**Details:**
+
+- `TenantContext` service implemented (see `Business/Context/ITenantContext.cs` and related files).
+- Service is registered as scoped and injected where needed.
+- Holds the current tenant's ID, resolved from the authenticated user/JWT.
+- Enables tenant-aware business logic throughout the backend.
+
+**Task 8: [BE] Create tenant resolution middleware (JWT → TenantContext)**  
+**Status:** Done  
+**Details:**
+
+- Middleware implemented to extract `TenantId` from JWT claims on each request.
+- Sets the resolved `TenantId` into the `TenantContext` service.
+- Ensures all backend operations are tenant-scoped for the current user.
+- Fully integrated with the authentication pipeline.
