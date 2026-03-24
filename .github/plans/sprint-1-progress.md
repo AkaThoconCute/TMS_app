@@ -5,24 +5,24 @@
 
 ## Task Progress
 
-| #   | Task                                                              | Agent    | Story      | Status      | Completed  |
-| --- | ----------------------------------------------------------------- | -------- | ---------- | ----------- | ---------- |
-| 1   | [BE] Create `ITenantEntity` interface                             | Backend  | S-03       | Done        | 2026-03-22 |
-| 2   | [BE] Create `Tenant` model                                        | Backend  | S-01       | Done        | 2026-03-22 |
-| 3   | [BE] Add `TenantId` to `AppUser`                                  | Backend  | S-01       | Done        | 2026-03-22 |
-| 4   | [BE] Add `TenantId` to `Truck` (implement `ITenantEntity`)        | Backend  | S-02       | Done        | 2026-03-22 |
-| 5   | [BE] Create EF migration for Tenant + FK columns                  | Backend  | S-01, S-02 | Done        | 2026-03-22 |
-| 6   | [BE] Update seed data (default tenant, assign to users & trucks)  | Backend  | S-01, S-02 | Done        | 2026-03-22 |
-| 7   | [BE] Create `TenantContext` scoped service                        | Backend  | S-04       | Done        | 2026-03-24 |
-| 8   | [BE] Create tenant resolution middleware (JWT → TenantContext)    | Backend  | S-04       | Done        | 2026-03-24 |
-| 9   | [BE] Add Global Query Filter for `ITenantEntity`                  | Backend  | S-05       | Done        | 2026-03-24 |
-| 10  | [BE] Override `SaveChangesAsync` for auto-stamp                   | Backend  | S-06       | Done        | 2026-03-24 |
-| 11  | [BE] Update `TokenService` — add `TenantId` claim to JWT          | Backend  | S-07       | Done        | 2026-03-24 |
-| 12  | [BE] Update `AccountService.Register` — create Tenant on register | Backend  | S-07       | Done        | 2026-03-24 |
-| 13  | [BE] Update `AccountService.Login` — include TenantId             | Backend  | S-07       | Done        | 2026-03-24 |
-| 14  | [BE] Update `AccountService.GetMe` — return TenantId + TenantName | Backend  | S-07       | Done        | 2026-03-24 |
-| 15  | [FE] Update `AuthService` + models — store tenant info            | Frontend | S-08       | Not Started | —          |
-| 16  | [FE] Display tenant name in sidebar header                        | Frontend | S-08       | Not Started | —          |
+| #   | Task                                                              | Agent    | Story      | Status | Completed  |
+| --- | ----------------------------------------------------------------- | -------- | ---------- | ------ | ---------- |
+| 1   | [BE] Create `ITenantEntity` interface                             | Backend  | S-03       | Done   | 2026-03-22 |
+| 2   | [BE] Create `Tenant` model                                        | Backend  | S-01       | Done   | 2026-03-22 |
+| 3   | [BE] Add `TenantId` to `AppUser`                                  | Backend  | S-01       | Done   | 2026-03-22 |
+| 4   | [BE] Add `TenantId` to `Truck` (implement `ITenantEntity`)        | Backend  | S-02       | Done   | 2026-03-22 |
+| 5   | [BE] Create EF migration for Tenant + FK columns                  | Backend  | S-01, S-02 | Done   | 2026-03-22 |
+| 6   | [BE] Update seed data (default tenant, assign to users & trucks)  | Backend  | S-01, S-02 | Done   | 2026-03-22 |
+| 7   | [BE] Create `TenantContext` scoped service                        | Backend  | S-04       | Done   | 2026-03-24 |
+| 8   | [BE] Create tenant resolution middleware (JWT → TenantContext)    | Backend  | S-04       | Done   | 2026-03-24 |
+| 9   | [BE] Add Global Query Filter for `ITenantEntity`                  | Backend  | S-05       | Done   | 2026-03-24 |
+| 10  | [BE] Override `SaveChangesAsync` for auto-stamp                   | Backend  | S-06       | Done   | 2026-03-24 |
+| 11  | [BE] Update `TokenService` — add `TenantId` claim to JWT          | Backend  | S-07       | Done   | 2026-03-24 |
+| 12  | [BE] Update `AccountService.Register` — create Tenant on register | Backend  | S-07       | Done   | 2026-03-24 |
+| 13  | [BE] Update `AccountService.Login` — include TenantId             | Backend  | S-07       | Done   | 2026-03-24 |
+| 14  | [BE] Update `AccountService.GetMe` — return TenantId + TenantName | Backend  | S-07       | Done   | 2026-03-24 |
+| 15  | [FE] Update `AuthService` + models — store tenant info            | Frontend | S-08       | Done   | 2026-03-24 |
+| 16  | [FE] Display tenant name in sidebar header                        | Frontend | S-08       | Done   | 2026-03-24 |
 
 ## Notes
 
@@ -139,3 +139,32 @@
   2. If yes, queries `dbContext.Tenants.FindAsync(tenantId)` to get the tenant name.
   3. Returns both `TenantId` and `TenantName` in the `UserProfile` response.
 - `Tenants` table does NOT have a global query filter (not an `ITenantEntity`), so `FindAsync` works without `IgnoreQueryFilters`.
+
+**Task 15: [FE] Update `AuthService` + models — store tenant info**  
+**Status:** Done  
+**Details:**
+
+- Modified `platform/auth/auth.models.ts` — updated `UserProfile` interface to match backend `GetMe` response:
+  - Removed stale fields: `id`, `fullName`, `role` (singular string) — these didn't exist in the backend DTO.
+  - Added `userName: string` (replaces `fullName`).
+  - Changed `role: string` → `roles: string[]` (backend returns a list).
+  - Added `tenantId: string | null` and `tenantName: string | null`.
+- **No changes needed to `AuthService`** — the service already calls `loadCurrentUser()` → `getProfile()` (GetMe) after login/register and stores the full `UserProfile` in `currentUserSubject`. With the updated interface, tenant data flows through automatically.
+- **Design decision**: No JWT decoding for tenant info — `GetMe` is the single source of truth and includes `tenantName` which the JWT doesn't carry. Simpler, more maintainable.
+- Verified no downstream breakages — no component was accessing the old `id`, `fullName`, or `role` fields from `UserProfile`.
+
+**Task 16: [FE] Display tenant name in sidebar header**  
+**Status:** Done  
+**Details:**
+
+- Modified `shell/navbar/navbar.ts`:
+  - Injected `AuthService` via `inject()` (modern Angular pattern, consistent with component's use of `input()`/`output()`).
+  - Converted `currentUser$` to a signal using `toSignal()` from `@angular/core/rxjs-interop`.
+  - Added `tenantName` computed signal: reads `currentUser()?.tenantName` with `'My Business'` fallback for null/empty state.
+- Modified `shell/navbar/navbar.html`:
+  - Wrapped "EasyTMS" brand and tenant name in a shared container `div`.
+  - Added `{{ tenantName() }}` below the brand with `text-sm text-gray-500 truncate` styling.
+  - Both gated by `*ngIf="isOpen()"` — hidden when sidebar is collapsed (no overflow).
+  - `truncate` class handles long tenant names gracefully within the 288px (w-72) sidebar width.
+- Tenant name updates reactively when `currentUser$` emits (e.g., after login via `loadCurrentUser`).
+- No errors in collapsed state — tenant text is fully hidden.

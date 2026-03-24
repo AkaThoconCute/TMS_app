@@ -1,6 +1,8 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { AuthService } from '@platform/auth/auth.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -10,8 +12,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.css'
 })
 export class Navbar {
+  private authService = inject(AuthService);
+  private currentUser = toSignal(this.authService.currentUser$);
+
   isOpen = input<boolean>(true);
   toggleNav = output<void>();
+  tenantName = computed(() => this.currentUser()?.tenantName || 'My Business');
 
   menuGroups = [
     {
