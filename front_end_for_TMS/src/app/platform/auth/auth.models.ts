@@ -23,10 +23,11 @@ export interface AuthResult {
 }
 
 export interface UserProfile {
-  id: string;
   email: string;
-  fullName: string;
-  role: string;
+  userName: string;
+  roles: string[];
+  tenantId: string | null;
+  tenantName: string | null;
 }
 
 // API Response wrapper

@@ -18,8 +18,9 @@
   </div> -->
 
   <div class="flex-1 overflow-y-auto overflow-x-hidden px-3">
-    <div *ngIf="isOpen()" class="px-4 py-4 text-[20px] font-bold text-blue-600 tracking-[0.15em]">
-      EasyTMS
+    <div *ngIf="isOpen()" class="px-4 py-4">
+      <div class="text-[20px] font-bold text-blue-600 tracking-[0.15em]">EasyTMS</div>
+      <div class="text-sm text-gray-500 truncate">{{ tenantName() }}</div>
     </div>
 
     <div class="space-y-1">
