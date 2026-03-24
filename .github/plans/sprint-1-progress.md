@@ -17,10 +17,10 @@
 | 8   | [BE] Create tenant resolution middleware (JWT → TenantContext)    | Backend  | S-04       | Done        | 2026-03-24 |
 | 9   | [BE] Add Global Query Filter for `ITenantEntity`                  | Backend  | S-05       | Done        | 2026-03-24 |
 | 10  | [BE] Override `SaveChangesAsync` for auto-stamp                   | Backend  | S-06       | Done        | 2026-03-24 |
-| 11  | [BE] Update `TokenService` — add `TenantId` claim to JWT          | Backend  | S-07       | Not Started | —          |
-| 12  | [BE] Update `AccountService.Register` — create Tenant on register | Backend  | S-07       | Not Started | —          |
-| 13  | [BE] Update `AccountService.Login` — include TenantId             | Backend  | S-07       | Not Started | —          |
-| 14  | [BE] Update `AccountService.GetMe` — return TenantId + TenantName | Backend  | S-07       | Not Started | —          |
+| 11  | [BE] Update `TokenService` — add `TenantId` claim to JWT          | Backend  | S-07       | Done        | 2026-03-24 |
+| 12  | [BE] Update `AccountService.Register` — create Tenant on register | Backend  | S-07       | Done        | 2026-03-24 |
+| 13  | [BE] Update `AccountService.Login` — include TenantId             | Backend  | S-07       | Done        | 2026-03-24 |
+| 14  | [BE] Update `AccountService.GetMe` — return TenantId + TenantName | Backend  | S-07       | Done        | 2026-03-24 |
 | 15  | [FE] Update `AuthService` + models — store tenant info            | Frontend | S-08       | Not Started | —          |
 | 16  | [FE] Display tenant name in sidebar header                        | Frontend | S-08       | Not Started | —          |
 
@@ -95,3 +95,47 @@
 - `TruckService.CreateAsync()` does NOT manually set `TenantId` — it's auto-stamped via this override.
 - `TruckRepo.SaveChangesAsync()` calls `dbContext.SaveChangesAsync()`, so the override is invoked automatically.
 - Future entities implementing `ITenantEntity` will also be auto-stamped — no service code changes needed.
+
+**Task 11: [BE] Update `TokenService` — add `TenantId` claim to JWT**  
+**Status:** Done (already implemented)  
+**Details:**
+
+- Verified `TokenService.CreateToken` already adds `tenantId` claims to JWT at lines ~86-90.
+- When `user.TenantId` is non-null and non-empty, two claims are added: custom `"tenantId"` claim and `ClaimTypes.GroupSid`.
+- The `TenantResolutionMiddleware` reads these claims to populate `TenantContext` on each request.
+- No code changes needed — this was implemented as part of tasks 7-8.
+
+**Task 12: [BE] Update `AccountService.Register` — create Tenant on register**  
+**Status:** Done  
+**Details:**
+
+- Modified `Business/AccountService.cs`.
+- Injected `AppDbContext dbContext` into `AccountService` primary constructor (4th parameter).
+- In `Register` method, after user creation and role assignment:
+  1. Creates a new `Tenant` with auto-generated name from email (generic domains like gmail/outlook → `"{username}'s Business"`, custom domains → domain name).
+  2. Sets `OwnerId` to the new user's ID.
+  3. Saves tenant to DB via `dbContext.Tenants.Add` + `SaveChangesAsync`.
+  4. Assigns `tenant.TenantId` to `user.TenantId` and updates user.
+  5. Token generation happens AFTER tenant assignment, so JWT includes the `tenantId` claim.
+- Added private static helper `GenerateTenantName(string email)` with generic domain list: gmail.com, outlook.com, yahoo.com, hotmail.com.
+- `Tenant` does NOT implement `ITenantEntity`, so the `SaveChangesAsync` auto-stamp override doesn't interfere.
+
+**Task 13: [BE] Update `AccountService.Login` — include TenantId**  
+**Status:** Done (no changes needed)  
+**Details:**
+
+- Verified `userManager.FindByEmailAsync` returns `AppUser` with `TenantId` populated.
+- `TenantId` is a direct column on `AspNetUsers` table (not a navigation property), so it's always loaded — no eager loading or `.Include()` needed.
+- `CreateToken(user, roles)` already picks up `user.TenantId` and adds the claim.
+- No code changes were necessary.
+
+**Task 14: [BE] Update `AccountService.GetMe` — return TenantId + TenantName**  
+**Status:** Done  
+**Details:**
+
+- Modified `Business/Types/AccountTypes.cs` — added `Guid? TenantId` and `string? TenantName` to `UserProfile` class.
+- Modified `Business/AccountService.cs` — `GetProfile` method now:
+  1. Checks if `user.TenantId` is a valid non-empty Guid.
+  2. If yes, queries `dbContext.Tenants.FindAsync(tenantId)` to get the tenant name.
+  3. Returns both `TenantId` and `TenantName` in the `UserProfile` response.
+- `Tenants` table does NOT have a global query filter (not an `ITenantEntity`), so `FindAsync` works without `IgnoreQueryFilters`.
