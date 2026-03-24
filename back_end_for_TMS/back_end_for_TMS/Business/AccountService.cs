@@ -1,5 +1,6 @@
 ﻿using back_end_for_TMS.Business.Types;
 using back_end_for_TMS.Models;
+using back_end_for_TMS.Models.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -9,7 +10,8 @@ namespace back_end_for_TMS.Business;
 public class AccountService(
     UserManager<AppUser> userManager,
     SignInManager<AppUser> signInManager,
-    TokenService tokenService)
+    TokenService tokenService,
+    TenantRepo tenantRepo)
 {
     public async Task<AuthResult> RefreshToken(TokenDto dto)
     {
@@ -49,6 +51,18 @@ public class AccountService(
             return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
 
         await userManager.AddToRoleAsync(user, "User");
+
+        // Tạo Tenant cho user mới
+        var tenant = new Tenant
+        {
+            Name = GenerateTenantName(dto.Email),
+            OwnerId = user.Id
+        };
+        tenantRepo.Add(tenant);
+        await tenantRepo.SaveChangesAsync();
+
+        user.TenantId = tenant.TenantId;
+        await userManager.UpdateAsync(user);
 
         var roles = await userManager.GetRolesAsync(user);
         var accessToken = tokenService.CreateToken(user, roles);
@@ -104,11 +118,33 @@ public class AccountService(
 
         var roles = await userManager.GetRolesAsync(user);
 
+        string? tenantName = null;
+        if (user.TenantId is Guid tenantId && tenantId != Guid.Empty)
+        {
+            var tenant = await tenantRepo.FindAsync(t => t.TenantId == tenantId);
+            tenantName = tenant?.Name;
+        }
+
         return new UserProfile
         {
             Email = user.Email ?? string.Empty,
             UserName = user.UserName ?? string.Empty,
-            Roles = [.. roles]
+            Roles = [.. roles],
+            TenantId = user.TenantId,
+            TenantName = tenantName
         };
+    }
+
+    private static string GenerateTenantName(string email)
+    {
+        var parts = email.Split('@');
+        var username = parts[0];
+        var domain = parts[1].ToLowerInvariant();
+
+        string[] genericDomains = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com"];
+
+        return genericDomains.Contains(domain)
+            ? $"{username}'s Business"
+            : domain;
     }
 }

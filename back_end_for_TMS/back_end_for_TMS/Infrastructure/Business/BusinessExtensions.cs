@@ -16,6 +16,8 @@ public static class BusinessExtensions
     services.AddAutoMapper(typeof(AppMapperProfile).Assembly);
 
     // Repositories
+    services.AddScoped<TenantRepo>();
+
     services.AddScoped<TruckRepo>();
 
     // Services

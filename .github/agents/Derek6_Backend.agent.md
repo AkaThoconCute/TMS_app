@@ -49,10 +49,18 @@ Migrations/     → EF Core migrations
 
 ### Services (`Business/`)
 
-- Class name: `XxxService`, inject `AppDbContext` and `IMapper` via primary constructor
+- Class name: `XxxService`, inject `XxxRepo` and `IMapper` via primary constructor
+- Never inject `AppDbContext` directly into services — always go through a repository
 - Validate inputs, throw typed exceptions (`ArgumentException`, `KeyNotFoundException`, `InvalidOperationException`)
 - Use `async/await` with EF Core queries
 - Return DTOs, never return EF entities directly
+
+### Repositories (`Models/Repository/`)
+
+- Class name: `XxxRepo`, inject `AppDbContext` via primary constructor
+- Expose: `FindAsync(predicate)`, `Query()`, `Add`, `Update`, `Remove`, `SaveChangesAsync()`
+- One repo per aggregate root (e.g., `TruckRepo`, `TenantRepo`)
+- Register as `AddScoped<XxxRepo>()` in `BusinessExtensions.cs`
 
 ### DTOs (`Business/Types/`)
 
@@ -102,13 +110,14 @@ Migrations/     → EF Core migrations
 
 1. Understand the requirement — read related existing code first
 2. Create/update **Model** if new entity needed (with migration plan)
-3. Create/update **DTOs** in `Business/Types/XxxTypes.cs`
-4. Create/update **Service** in `Business/XxxService.cs`
-5. Register service in `Infrastructure/Business/BusinessExtensions.cs`
-6. Create/update **Controller** in `Api/XxxController.cs`
-7. Add **AutoMapper** mappings in `AppMapperProfile.cs`
-8. Update **DbContext** if new `DbSet` or model configuration needed
-9. Verify build compiles: `dotnet build`
+3. Create/update **Repository** in `Models/Repository/XxxRepo.cs`
+4. Create/update **DTOs** in `Business/Types/XxxTypes.cs`
+5. Create/update **Service** in `Business/XxxService.cs`
+6. Register repo + service in `Infrastructure/Business/BusinessExtensions.cs`
+7. Create/update **Controller** in `Api/XxxController.cs`
+8. Add **AutoMapper** mappings in `AppMapperProfile.cs`
+9. Update **DbContext** if new `DbSet` or model configuration needed
+10. Verify build compiles: `dotnet build`
 
 ### 2. Fix Bug
 
