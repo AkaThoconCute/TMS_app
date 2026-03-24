@@ -15,8 +15,8 @@
 | 6   | [BE] Update seed data (default tenant, assign to users & trucks)  | Backend  | S-01, S-02 | Done        | 2026-03-22 |
 | 7   | [BE] Create `TenantContext` scoped service                        | Backend  | S-04       | Done        | 2026-03-24 |
 | 8   | [BE] Create tenant resolution middleware (JWT → TenantContext)    | Backend  | S-04       | Done        | 2026-03-24 |
-| 9   | [BE] Add Global Query Filter for `ITenantEntity`                  | Backend  | S-05       | Not Started | —          |
-| 10  | [BE] Override `SaveChangesAsync` for auto-stamp                   | Backend  | S-06       | Not Started | —          |
+| 9   | [BE] Add Global Query Filter for `ITenantEntity`                  | Backend  | S-05       | Done        | 2026-03-24 |
+| 10  | [BE] Override `SaveChangesAsync` for auto-stamp                   | Backend  | S-06       | Done        | 2026-03-24 |
 | 11  | [BE] Update `TokenService` — add `TenantId` claim to JWT          | Backend  | S-07       | Not Started | —          |
 | 12  | [BE] Update `AccountService.Register` — create Tenant on register | Backend  | S-07       | Not Started | —          |
 | 13  | [BE] Update `AccountService.Login` — include TenantId             | Backend  | S-07       | Not Started | —          |
@@ -72,3 +72,26 @@
 - Sets the resolved `TenantId` into the `TenantContext` service.
 - Ensures all backend operations are tenant-scoped for the current user.
 - Fully integrated with the authentication pipeline.
+
+**Task 9: [BE] Add Global Query Filter for `ITenantEntity`**  
+**Status:** Done  
+**Details:**
+
+- Modified `Infrastructure/Database/AppDbContext.cs` — single file change.
+- Injected `ITenantContext` as 3rd constructor parameter, stored as explicit private field `_tenantContext` (required for expression tree reference in query filters).
+- Added dynamic global query filter loop at the end of `OnModelCreating`: iterates `builder.Model.GetEntityTypes()`, checks `ITenantEntity` assignability, builds expression tree `e.TenantId == _tenantContext.TenantId`, applies via `HasQueryFilter()`.
+- EF Core evaluates `_tenantContext.TenantId` per-query (member access expression), so the filter is always current.
+- `TruckService`, `TruckRepo` — zero changes needed. All `DbSet<Truck>` queries automatically scoped to current tenant.
+- Future entities implementing `ITenantEntity` (Driver, Order, etc.) will automatically get the filter — no code changes needed.
+
+**Task 10: [BE] Override `SaveChangesAsync` for auto-stamp**  
+**Status:** Done  
+**Details:**
+
+- Modified `Infrastructure/Database/AppDbContext.cs` — same file as Task 9.
+- Overrode `SaveChangesAsync(CancellationToken)` to iterate `ChangeTracker.Entries<ITenantEntity>()`.
+- Only `EntityState.Added` entries are stamped — `TenantId` is set from `_tenantContext.TenantId`.
+- `Modified`/`Deleted` entries are untouched — `TenantId` should never change after creation.
+- `TruckService.CreateAsync()` does NOT manually set `TenantId` — it's auto-stamped via this override.
+- `TruckRepo.SaveChangesAsync()` calls `dbContext.SaveChangesAsync()`, so the override is invoked automatically.
+- Future entities implementing `ITenantEntity` will also be auto-stamped — no service code changes needed.
