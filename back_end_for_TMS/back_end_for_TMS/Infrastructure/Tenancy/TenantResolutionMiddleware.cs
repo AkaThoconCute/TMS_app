@@ -30,6 +30,7 @@ public class TenantResolutionMiddleware(RequestDelegate next)
   }
 }
 
+// Here is a class for me to just test and please ignore
 public class TenantResolutionMiddlewareIssue(RequestDelegate next, ITenantContext tenantContext)
 {
   private readonly RequestDelegate _next = next;
