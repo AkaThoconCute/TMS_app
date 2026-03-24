@@ -12,6 +12,7 @@ namespace back_end_for_TMS.Infrastructure.Database;
 public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config, ITenantContext tenantContext) : IdentityDbContext<AppUser>(options)
 {
   private readonly ITenantContext _tenantContext = tenantContext;
+  private Guid CurrentTenantId => _tenantContext.TenantId;
   public DbSet<Tenant> Tenants { get; set; } = default!;
   public DbSet<Truck> Trucks { get; set; } = default!;
 
@@ -57,8 +58,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
 
       var parameter = Expression.Parameter(entityType.ClrType, "e");
       var tenantIdProp = Expression.Property(parameter, nameof(ITenantEntity.TenantId));
-      var tenantContextField = Expression.Field(Expression.Constant(this), nameof(_tenantContext));
-      var currentTenantId = Expression.Property(tenantContextField, nameof(ITenantContext.TenantId));
+      var currentTenantId = Expression.Property(Expression.Constant(this), nameof(CurrentTenantId));
       var body = Expression.Equal(tenantIdProp, currentTenantId);
       var filter = Expression.Lambda(body, parameter);
       builder.Entity(entityType.ClrType).HasQueryFilter(filter);
