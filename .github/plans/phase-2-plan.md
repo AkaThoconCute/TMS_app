@@ -22,7 +22,7 @@ Establish data isolation so each household transportation business sees only its
 
 ---
 
-## Phase 2A: Multi-Tenant Data Isolation (Sprint 1)
+## Sprint 1: Multi-Tenant Data Isolation
 
 **Priority**: MUST HAVE — blocks all future features  
 **Goal**: Every data entity is scoped to a Tenant. Users see only their business's data.
@@ -132,7 +132,7 @@ Establish data isolation so each household transportation business sees only its
 
 ---
 
-## Phase 2B: Driver Management (Sprint 2)
+## Sprint 2: Driver Management
 
 **Priority**: HIGH  
 **Goal**: CRUD for drivers with tenant scoping, and basic driver-truck assignment.
@@ -211,7 +211,7 @@ Establish data isolation so each household transportation business sees only its
 
 | # | Task | Agent | Story | Depends On |
 |---|---|---|---|---|
-| 1 | [BE] Create `Driver` model (implements `ITenantEntity`) | Backend | S-09 | Phase 2A |
+| 1 | [BE] Create `Driver` model (implements `ITenantEntity`) | Backend | S-09 | Sprint 1 |
 | 2 | [BE] Create EF migration for Drivers table | Backend | S-09 | 1 |
 | 3 | [BE] Create seed data for Drivers | Backend | S-09 | 2 |
 | 4 | [BE] Create `DriverRepo` | Backend | S-10 | 1 |
@@ -232,7 +232,7 @@ Establish data isolation so each household transportation business sees only its
 
 ---
 
-## Phase 2C: Core Operations (Sprint 3)
+## Sprint 3: Core Operations
 
 **Priority**: SHOULD HAVE  
 **Goal**: Polish the foundation with dashboard, profile management, and completing partial features.
@@ -297,13 +297,13 @@ Establish data isolation so each household transportation business sees only its
 
 | # | Task | Agent | Story | Depends On |
 |---|---|---|---|---|
-| 1 | [BE] Create `GET /api/Dashboard/Summary` endpoint | Backend | S-15 | Phase 2A |
+| 1 | [BE] Create `GET /api/Dashboard/Summary` endpoint | Backend | S-15 | Sprint 1 |
 | 2 | [FE] Build dashboard page with KPI cards | Frontend | S-15 | 1 |
 | 3 | [BE] Add `UpdateProfile` + `ChangePassword` endpoints | Backend | S-16 | — |
 | 4 | [FE] Build profile page | Frontend | S-16 | 3 |
 | 5 | [BE] Add `ForgotPassword` + `ResetPassword` endpoints | Backend | S-17 | — |
 | 6 | [FE] Wire reset password page to backend | Frontend | S-17 | 5 |
-| 7 | [BE] Create `MaintenanceRecord` model + migration | Backend | S-18 | Phase 2A |
+| 7 | [BE] Create `MaintenanceRecord` model + migration | Backend | S-18 | Sprint 1 |
 | 8 | [BE] Create maintenance CRUD API | Backend | S-18 | 7 |
 | 9 | [FE] Build truck maintenance page with records table | Frontend | S-18 | 8 |
 | 10 | [FE] Add role-based visibility logic | Frontend | S-19 | — |
