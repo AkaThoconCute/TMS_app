@@ -15,6 +15,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
   private Guid CurrentTenantId => _tenantContext.TenantId;
   public DbSet<Tenant> Tenants { get; set; } = default!;
   public DbSet<Truck> Trucks { get; set; } = default!;
+  public DbSet<Driver> Drivers { get; set; } = default!;
 
   protected override void OnConfiguring(DbContextOptionsBuilder builder)
   {
@@ -49,6 +50,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration
     // Setup Truck model and seeding
     List<Truck> trucks = TruckDataSeeder.Generate();
     TruckModelConfig.Setup(builder, trucks);
+
+    // Setup Driver model and seeding
+    List<Driver> drivers = DriverDataSeeder.Generate();
+    DriverModelConfig.Setup(builder, drivers);
 
     // Multi-tenant: Auto-apply query filter to all ITenantEntity entities
     foreach (var entityType in builder.Model.GetEntityTypes())

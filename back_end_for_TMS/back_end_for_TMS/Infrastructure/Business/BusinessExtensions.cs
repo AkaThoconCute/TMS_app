@@ -20,6 +20,8 @@ public static class BusinessExtensions
 
     services.AddScoped<TruckRepo>();
 
+    services.AddScoped<DriverRepo>();
+
     // Services
     services.AddScoped<TokenService>();
 
