@@ -43,6 +43,13 @@ export class Navbar {
         { label: 'Button', route: '/demo/button' },
         { label: 'Upcoming', route: '/demo/upcoming' }
       ]
+    },
+    {
+      label: 'Account',
+      icon: 'account_circle',
+      items: [
+        { label: 'My Profile', route: '/profile' }
+      ]
     }
   ];
 }

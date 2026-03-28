@@ -9,7 +9,10 @@ import {
   TokenDto,
   AuthResult,
   UserProfile,
-  ApiResponse
+  ApiResponse,
+  UpdateProfileDto,
+  ChangePasswordDto,
+  ChangePasswordResult,
 } from './auth.models';
 import { EnvService } from '../env/env.service';
 import { CookieService } from '../cookie/cookie.service';
@@ -224,6 +227,31 @@ export class AuthService {
   getPublicInfo(): Observable<{ message: string }> {
     return this.http
       .get<ApiResponse<{ message: string }>>(`${this.apiUrl}/GetInfo`)
+      .pipe(
+        map(response => response.data),
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  /**
+   * Update authenticated user's profile
+   */
+  updateProfile(dto: UpdateProfileDto): Observable<UserProfile> {
+    return this.http
+      .put<ApiResponse<UserProfile>>(`${this.apiUrl}/UpdateProfile`, dto)
+      .pipe(
+        map(response => response.data),
+        tap(user => this.currentUserSubject.next(user)),
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  /**
+   * Change authenticated user's password
+   */
+  changePassword(dto: ChangePasswordDto): Observable<ChangePasswordResult> {
+    return this.http
+      .post<ApiResponse<ChangePasswordResult>>(`${this.apiUrl}/ChangePassword`, dto)
       .pipe(
         map(response => response.data),
         catchError(error => this.handleError(error))

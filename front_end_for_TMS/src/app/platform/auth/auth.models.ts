@@ -37,3 +37,19 @@ export interface ApiResponse<T> {
   status: number;
   data: T;
 }
+
+// Profile update
+export interface UpdateProfileDto {
+  userName: string;
+}
+
+// Change password
+export interface ChangePasswordDto {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordResult {
+  success: boolean;
+  errors: string[];
+}

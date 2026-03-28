@@ -1,0 +1,151 @@
+<p-toast />
+
+<div class="p-6 max-w-3xl mx-auto flex flex-col gap-6">
+  <h1 class="text-2xl font-bold text-gray-800">My Profile</h1>
+
+  <!-- Profile Info Card -->
+  <p-card header="Profile Information">
+    <!-- Read-only fields -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+      <!-- Email -->
+      <div class="flex flex-col gap-1">
+        <label class="font-medium text-sm text-gray-600">Email</label>
+        <input
+          pInputText
+          [value]="currentUser()?.email ?? ''"
+          [readonly]="true"
+          class="bg-gray-50 cursor-default"
+        />
+      </div>
+
+      <!-- Tenant Name -->
+      <div class="flex flex-col gap-1">
+        <label class="font-medium text-sm text-gray-600">Organization</label>
+        <input
+          pInputText
+          [value]="currentUser()?.tenantName ?? '—'"
+          [readonly]="true"
+          class="bg-gray-50 cursor-default"
+        />
+      </div>
+
+      <!-- Roles -->
+      <div class="flex flex-col gap-1 md:col-span-2">
+        <label class="font-medium text-sm text-gray-600">Roles</label>
+        <div class="flex flex-wrap gap-2 pt-1 min-h-8">
+          @for (role of currentUser()?.roles ?? []; track role) {
+            <p-tag [value]="role" severity="secondary" />
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Editable username form -->
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label for="userName" class="font-medium text-sm">
+          Username <span class="text-red-500">*</span>
+        </label>
+        <input
+          pInputText
+          id="userName"
+          formControlName="userName"
+          placeholder="Enter your username"
+        />
+        @if (profileForm.get('userName')?.invalid && profileForm.get('userName')?.touched) {
+          <small class="text-red-500">Username is required.</small>
+        }
+      </div>
+
+      <div class="flex justify-end">
+        <p-button
+          label="Save Profile"
+          icon="pi pi-save"
+          type="submit"
+          [loading]="savingProfile()"
+          [disabled]="profileForm.invalid || profileForm.pristine || savingProfile()"
+        />
+      </div>
+    </form>
+  </p-card>
+
+  <!-- Change Password Card -->
+  <p-card header="Change Password">
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="flex flex-col gap-4">
+      <!-- Current Password -->
+      <div class="flex flex-col gap-1">
+        <label for="currentPassword" class="font-medium text-sm">
+          Current Password <span class="text-red-500">*</span>
+        </label>
+        <p-password
+          inputId="currentPassword"
+          formControlName="currentPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+          placeholder="Enter current password"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+        />
+        @if (
+          passwordForm.get('currentPassword')?.invalid &&
+          passwordForm.get('currentPassword')?.touched
+        ) {
+          <small class="text-red-500">Current password is required.</small>
+        }
+      </div>
+
+      <!-- New Password -->
+      <div class="flex flex-col gap-1">
+        <label for="newPassword" class="font-medium text-sm">
+          New Password <span class="text-red-500">*</span>
+        </label>
+        <p-password
+          inputId="newPassword"
+          formControlName="newPassword"
+          [toggleMask]="true"
+          placeholder="At least 6 characters"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+        />
+        @if (passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched) {
+          @if (passwordForm.get('newPassword')?.hasError('required')) {
+            <small class="text-red-500">New password is required.</small>
+          } @else if (passwordForm.get('newPassword')?.hasError('minlength')) {
+            <small class="text-red-500">Password must be at least 6 characters.</small>
+          }
+        }
+      </div>
+
+      <!-- Confirm New Password -->
+      <div class="flex flex-col gap-1">
+        <label for="confirmPassword" class="font-medium text-sm">
+          Confirm New Password <span class="text-red-500">*</span>
+        </label>
+        <p-password
+          inputId="confirmPassword"
+          formControlName="confirmPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+          placeholder="Repeat new password"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+        />
+        @if (
+          passwordForm.get('confirmPassword')?.touched && passwordForm.hasError('passwordsMismatch')
+        ) {
+          <small class="text-red-500">Passwords do not match.</small>
+        }
+      </div>
+
+      <div class="flex justify-end">
+        <p-button
+          label="Change Password"
+          icon="pi pi-lock"
+          type="submit"
+          [loading]="changingPassword()"
+          [disabled]="passwordForm.invalid || changingPassword()"
+        />
+      </div>
+    </form>
+  </p-card>
+</div>
