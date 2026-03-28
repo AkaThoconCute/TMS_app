@@ -25,10 +25,10 @@
 | ------------------------------------------------------- | -------------------------------------------------------------- |
 | User profile page (view/edit username, change password) | Email sending (password reset token logged to console for now) |
 | Forgot/Reset password backend flow                      | Truck maintenance records (deferred to future sprint)          |
-| Reset password frontend page wired to backend           | Customer-Order linking                                |
+| Reset password frontend page wired to backend           | Customer-Order linking                                         |
 | Role-based UI visibility (admin vs user)                | Customer address autocomplete                                  |
-| Customer entity with CRUD API                           | Customer order history                                |
-| Customer list page (paginated, searchable, filterable)  | Payment terms / credit limits                         |
+| Customer entity with CRUD API                           | Customer order history                                         |
+| Customer list page (paginated, searchable, filterable)  | Payment terms / credit limits                                  |
 | Customer form dialog (create + edit)                    |                                                                |
 
 ---
@@ -110,7 +110,7 @@ In a household truck transportation business, a **Customer** is:
 - May have a **tax code** (needed later for invoicing in Phase 5)
 - Has a **status** (active customers vs inactive/past customers)
 
-**Why now?** Orders  require `CustomerId` as a foreign key. Building the Customer module now means Order management can reference real customer data immediately.
+**Why now?** Orders require `CustomerId` as a foreign key. Building the Customer module now means Order management can reference real customer data immediately.
 
 ### User Stories
 
@@ -199,8 +199,8 @@ In a household truck transportation business, a **Customer** is:
 
 | #   | Task                                                  | Agent    | Story | Depends On | Status      |
 | --- | ----------------------------------------------------- | -------- | ----- | ---------- | ----------- |
-| 1   | [BE] Add `UpdateProfile` + `ChangePassword` endpoints | Backend  | S-15  | —          | Not Started |
-| 2   | [FE] Build profile page with edit + change password   | Frontend | S-16  | 1          | Not Started |
+| 1   | [BE] Add `UpdateProfile` + `ChangePassword` endpoints | Backend  | S-15  | —          | Done        |
+| 2   | [FE] Build profile page with edit + change password   | Frontend | S-16  | 1          | Done        |
 | 3   | [BE] Add `ForgotPassword` + `ResetPassword` endpoints | Backend  | S-17  | —          | Not Started |
 | 4   | [FE] Wire reset password page to backend endpoints    | Frontend | S-17  | 3          | Not Started |
 | 5   | [FE] Add role-based visibility logic + demo           | Frontend | S-18  | —          | Not Started |

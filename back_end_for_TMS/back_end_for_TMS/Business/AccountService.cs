@@ -13,138 +13,191 @@ public class AccountService(
     TokenService tokenService,
     TenantRepo tenantRepo)
 {
-    public async Task<AuthResult> RefreshToken(TokenDto dto)
+  public async Task<AuthResult> RefreshToken(TokenDto dto)
+  {
+    var principal = tokenService.GetPrincipalFromExpiredToken(dto.Token);
+    var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (string.IsNullOrEmpty(userId))
+      throw new InvalidOperationException("NameIdentifier is empty in ClaimsPrincipal");
+
+    var user = await userManager.FindByIdAsync(userId);
+    if (user == null)
+      throw new KeyNotFoundException("User not found by ID");
+
+    if (user.RefreshToken != dto.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+      throw new SecurityTokenException("Invalid refresh token");
+
+    var roles = await userManager.GetRolesAsync(user);
+    var newAccessToken = tokenService.CreateToken(user, roles);
+    var newRefreshToken = tokenService.GenerateRefreshToken();
+
+    user.RefreshToken = newRefreshToken;
+    await userManager.UpdateAsync(user);
+
+    return new AuthResult
     {
-        var principal = tokenService.GetPrincipalFromExpiredToken(dto.Token);
-        var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (string.IsNullOrEmpty(userId))
-            throw new InvalidOperationException("NameIdentifier is empty in ClaimsPrincipal");
+      Success = true,
+      Token = newAccessToken,
+      RefreshToken = newRefreshToken
+    };
+  }
 
-        var user = await userManager.FindByIdAsync(userId);
-        if (user == null)
-            throw new KeyNotFoundException("User not found by ID");
+  public async Task<AuthResult> Register(RegisterDto dto)
+  {
+    var user = new AppUser { UserName = dto.Email, Email = dto.Email };
 
-        if (user.RefreshToken != dto.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
-            throw new SecurityTokenException("Invalid refresh token");
+    var result = await userManager.CreateAsync(user, dto.Password);
+    if (!result.Succeeded)
+      return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
 
-        var roles = await userManager.GetRolesAsync(user);
-        var newAccessToken = tokenService.CreateToken(user, roles);
-        var newRefreshToken = tokenService.GenerateRefreshToken();
+    await userManager.AddToRoleAsync(user, "User");
 
-        user.RefreshToken = newRefreshToken;
-        await userManager.UpdateAsync(user);
+    // Tạo Tenant cho user mới
+    var tenant = new Tenant
+    {
+      Name = GenerateTenantName(dto.Email),
+      OwnerId = user.Id
+    };
+    tenantRepo.Add(tenant);
+    await tenantRepo.SaveChangesAsync();
 
-        return new AuthResult
-        {
-            Success = true,
-            Token = newAccessToken,
-            RefreshToken = newRefreshToken
-        };
+    user.TenantId = tenant.TenantId;
+    await userManager.UpdateAsync(user);
+
+    var roles = await userManager.GetRolesAsync(user);
+    var accessToken = tokenService.CreateToken(user, roles);
+    var refreshToken = tokenService.GenerateRefreshToken();
+
+    user.RefreshToken = refreshToken;
+    user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+    await userManager.UpdateAsync(user);
+
+    return new AuthResult
+    {
+      Success = true,
+      Token = accessToken,
+      RefreshToken = refreshToken
+    };
+  }
+
+  public async Task<AuthResult> Login(LoginDto dto)
+  {
+    var user = await userManager.FindByEmailAsync(dto.Email);
+    if (user == null)
+      return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
+
+    var result = await signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
+    if (!result.Succeeded)
+      return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
+
+    var roles = await userManager.GetRolesAsync(user);
+    var accessToken = tokenService.CreateToken(user, roles);
+    var refreshToken = tokenService.GenerateRefreshToken();
+
+    user.RefreshToken = refreshToken;
+    user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+    await userManager.UpdateAsync(user);
+
+    return new AuthResult
+    {
+      Success = true,
+      Token = accessToken,
+      RefreshToken = refreshToken
+    };
+  }
+
+  public async Task<UserProfile?> GetProfile(ClaimsPrincipal currentUser)
+  {
+    var email = currentUser.FindFirstValue(ClaimTypes.Email);
+    if (string.IsNullOrEmpty(email))
+      throw new InvalidOperationException("Email is empty in ClaimsPrincipal");
+
+    var user = await userManager.FindByEmailAsync(email);
+    if (user == null)
+      throw new KeyNotFoundException("User not found by email");
+
+    var roles = await userManager.GetRolesAsync(user);
+
+    string? tenantName = null;
+    if (user.TenantId is Guid tenantId && tenantId != Guid.Empty)
+    {
+      var tenant = await tenantRepo.FindAsync(t => t.TenantId == tenantId);
+      tenantName = tenant?.Name;
     }
 
-    public async Task<AuthResult> Register(RegisterDto dto)
+    return new UserProfile
     {
-        var user = new AppUser { UserName = dto.Email, Email = dto.Email };
+      Email = user.Email ?? string.Empty,
+      UserName = user.UserName ?? string.Empty,
+      Roles = [.. roles],
+      TenantId = user.TenantId,
+      TenantName = tenantName
+    };
+  }
 
-        var result = await userManager.CreateAsync(user, dto.Password);
-        if (!result.Succeeded)
-            return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
+  public async Task<UserProfile> UpdateProfileAsync(ClaimsPrincipal currentUser, UpdateProfileDto dto)
+  {
+    var email = currentUser.FindFirstValue(ClaimTypes.Email);
+    if (string.IsNullOrEmpty(email))
+      throw new InvalidOperationException("Email is empty in ClaimsPrincipal");
 
-        await userManager.AddToRoleAsync(user, "User");
+    var user = await userManager.FindByEmailAsync(email);
+    if (user == null)
+      throw new KeyNotFoundException("User not found by email");
 
-        // Tạo Tenant cho user mới
-        var tenant = new Tenant
-        {
-            Name = GenerateTenantName(dto.Email),
-            OwnerId = user.Id
-        };
-        tenantRepo.Add(tenant);
-        await tenantRepo.SaveChangesAsync();
+    var result = await userManager.SetUserNameAsync(user, dto.UserName);
+    if (!result.Succeeded)
+      throw new ArgumentException(string.Join("; ", result.Errors.Select(e => e.Description)));
 
-        user.TenantId = tenant.TenantId;
-        await userManager.UpdateAsync(user);
+    user = await userManager.FindByEmailAsync(email);
+    if (user == null)
+      throw new KeyNotFoundException("User not found after update");
 
-        var roles = await userManager.GetRolesAsync(user);
-        var accessToken = tokenService.CreateToken(user, roles);
-        var refreshToken = tokenService.GenerateRefreshToken();
-
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
-        await userManager.UpdateAsync(user);
-
-        return new AuthResult
-        {
-            Success = true,
-            Token = accessToken,
-            RefreshToken = refreshToken
-        };
+    var roles = await userManager.GetRolesAsync(user);
+    string? tenantName = null;
+    if (user.TenantId is Guid tenantId && tenantId != Guid.Empty)
+    {
+      var tenant = await tenantRepo.FindAsync(t => t.TenantId == tenantId);
+      tenantName = tenant?.Name;
     }
 
-    public async Task<AuthResult> Login(LoginDto dto)
+    return new UserProfile
     {
-        var user = await userManager.FindByEmailAsync(dto.Email);
-        if (user == null)
-            return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
+      Email = user.Email ?? string.Empty,
+      UserName = user.UserName ?? string.Empty,
+      Roles = [.. roles],
+      TenantId = user.TenantId,
+      TenantName = tenantName
+    };
+  }
 
-        var result = await signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
-        if (!result.Succeeded)
-            return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
+  public async Task<AuthResult> ChangePasswordAsync(ClaimsPrincipal currentUser, ChangePasswordDto dto)
+  {
+    var email = currentUser.FindFirstValue(ClaimTypes.Email);
+    if (string.IsNullOrEmpty(email))
+      throw new InvalidOperationException("Email is empty in ClaimsPrincipal");
 
-        var roles = await userManager.GetRolesAsync(user);
-        var accessToken = tokenService.CreateToken(user, roles);
-        var refreshToken = tokenService.GenerateRefreshToken();
+    var user = await userManager.FindByEmailAsync(email);
+    if (user == null)
+      throw new KeyNotFoundException("User not found by email");
 
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
-        await userManager.UpdateAsync(user);
+    var result = await userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+    if (!result.Succeeded)
+      return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
 
-        return new AuthResult
-        {
-            Success = true,
-            Token = accessToken,
-            RefreshToken = refreshToken
-        };
-    }
+    return new AuthResult { Success = true };
+  }
 
-    public async Task<UserProfile?> GetProfile(ClaimsPrincipal currentUser)
-    {
-        var email = currentUser.FindFirstValue(ClaimTypes.Email);
-        if (string.IsNullOrEmpty(email))
-            throw new InvalidOperationException("Email is empty in ClaimsPrincipal");
+  private static string GenerateTenantName(string email)
+  {
+    var parts = email.Split('@');
+    var username = parts[0];
+    var domain = parts[1].ToLowerInvariant();
 
-        var user = await userManager.FindByEmailAsync(email);
-        if (user == null)
-            throw new KeyNotFoundException("User not found by email");
+    string[] genericDomains = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com"];
 
-        var roles = await userManager.GetRolesAsync(user);
-
-        string? tenantName = null;
-        if (user.TenantId is Guid tenantId && tenantId != Guid.Empty)
-        {
-            var tenant = await tenantRepo.FindAsync(t => t.TenantId == tenantId);
-            tenantName = tenant?.Name;
-        }
-
-        return new UserProfile
-        {
-            Email = user.Email ?? string.Empty,
-            UserName = user.UserName ?? string.Empty,
-            Roles = [.. roles],
-            TenantId = user.TenantId,
-            TenantName = tenantName
-        };
-    }
-
-    private static string GenerateTenantName(string email)
-    {
-        var parts = email.Split('@');
-        var username = parts[0];
-        var domain = parts[1].ToLowerInvariant();
-
-        string[] genericDomains = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com"];
-
-        return genericDomains.Contains(domain)
-            ? $"{username}'s Business"
-            : domain;
-    }
+    return genericDomains.Contains(domain)
+        ? $"{username}'s Business"
+        : domain;
+  }
 }

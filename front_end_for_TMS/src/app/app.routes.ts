@@ -49,6 +49,10 @@ export const appRoutes: Routes = [
         loadComponent: () => import('./common/development/development.page').then(m => m.DevelopmentPage)
       },
       {
+        path: 'profile',
+        loadComponent: () => import('./features/account/pages/profile/profile.page').then(m => m.ProfilePage)
+      },
+      {
         path: 'under-development',
         loadComponent: () => import('./common/development/development.page').then(m => m.DevelopmentPage)
       },
