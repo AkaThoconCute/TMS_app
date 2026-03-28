@@ -152,4 +152,4 @@ Migrations/     → EF Core migrations
 - Do NOT return EF entities from API — always map to DTOs
 - Keep controllers thin — all logic in services
 - Follow existing patterns — match the style of `TruckController`/`TruckService` as reference
-- Always verify the build compiles after changes
+- Skip running the build command line

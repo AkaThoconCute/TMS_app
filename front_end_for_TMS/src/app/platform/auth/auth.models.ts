@@ -53,3 +53,18 @@ export interface ChangePasswordResult {
   success: boolean;
   errors: string[];
 }
+
+export interface ForgotPasswordDto {
+  email: string;
+}
+
+export interface ResetPasswordDto {
+  email: string;
+  token: string;
+  newPassword: string;
+}
+
+export interface ForgotPasswordResult {
+  success: boolean;
+  message: string;
+}

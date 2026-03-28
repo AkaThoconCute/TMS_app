@@ -4,6 +4,18 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '@platform/auth/auth.service';
 
+interface MenuItem {
+  label: string;
+  route: string;
+}
+
+interface MenuGroup {
+  label: string;
+  icon: string;
+  adminOnly?: boolean;
+  items: MenuItem[];
+}
+
 @Component({
   selector: 'app-side-nav',
   standalone: true,
@@ -17,8 +29,9 @@ export class Navbar {
   isOpen = input<boolean>(true);
   toggleNav = output<void>();
   tenantName = computed(() => this.currentUser()?.tenantName || 'My Business');
+  isAdmin = computed(() => this.authService.hasRole('Admin'));
 
-  menuGroups = [
+  menuGroups: MenuGroup[] = [
     {
       label: 'Truck',
       icon: 'local_shipping',
@@ -48,6 +61,14 @@ export class Navbar {
       icon: 'account_circle',
       items: [
         { label: 'My Profile', route: '/profile' }
+      ]
+    },
+    {
+      label: 'Admin',
+      icon: 'admin_panel_settings',
+      adminOnly: true,
+      items: [
+        { label: 'Users', route: '/admin/users' }
       ]
     }
   ];

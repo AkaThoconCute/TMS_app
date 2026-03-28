@@ -70,4 +70,20 @@ public class AccountController(AccountService accountService) : ControllerBase
     var result = await accountService.ChangePasswordAsync(User, dto);
     return Ok(result);
   }
+
+  [HttpPost]
+  [AllowAnonymous]
+  public async Task<ActionResult<ForgotPasswordResult>> ForgotPassword([FromBody] ForgotPasswordDto dto)
+  {
+    var result = await accountService.ForgotPasswordAsync(dto);
+    return Ok(result);
+  }
+
+  [HttpPost]
+  [AllowAnonymous]
+  public async Task<ActionResult<AuthResult>> ResetPassword([FromBody] ResetPasswordDto dto)
+  {
+    var result = await accountService.ResetPasswordAsync(dto);
+    return Ok(result);
+  }
 }

@@ -13,6 +13,9 @@ import {
   UpdateProfileDto,
   ChangePasswordDto,
   ChangePasswordResult,
+  ForgotPasswordDto,
+  ResetPasswordDto,
+  ForgotPasswordResult,
 } from './auth.models';
 import { EnvService } from '../env/env.service';
 import { CookieService } from '../cookie/cookie.service';
@@ -65,6 +68,13 @@ export class AuthService {
    */
   get currentUser(): UserProfile | null {
     return this.currentUserSubject.value;
+  }
+
+  /**
+   * Check if the current user has a specific role (case-insensitive)
+   */
+  hasRole(role: string): boolean {
+    return this.currentUser?.roles?.some(r => r.toLowerCase() === role.toLowerCase()) ?? false;
   }
 
   initAuth(): Observable<UserProfile | null> {
@@ -252,6 +262,30 @@ export class AuthService {
   changePassword(dto: ChangePasswordDto): Observable<ChangePasswordResult> {
     return this.http
       .post<ApiResponse<ChangePasswordResult>>(`${this.apiUrl}/ChangePassword`, dto)
+      .pipe(
+        map(response => response.data),
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  /**
+   * Request a password reset token
+   */
+  forgotPassword(dto: ForgotPasswordDto): Observable<ForgotPasswordResult> {
+    return this.http
+      .post<ApiResponse<ForgotPasswordResult>>(`${this.apiUrl}/ForgotPassword`, dto)
+      .pipe(
+        map(response => response.data),
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  /**
+   * Reset password using token
+   */
+  resetPassword(dto: ResetPasswordDto): Observable<AuthResult> {
+    return this.http
+      .post<ApiResponse<AuthResult>>(`${this.apiUrl}/ResetPassword`, dto)
       .pipe(
         map(response => response.data),
         catchError(error => this.handleError(error))

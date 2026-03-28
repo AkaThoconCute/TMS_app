@@ -201,9 +201,9 @@ In a household truck transportation business, a **Customer** is:
 | --- | ----------------------------------------------------- | -------- | ----- | ---------- | ----------- |
 | 1   | [BE] Add `UpdateProfile` + `ChangePassword` endpoints | Backend  | S-15  | —          | Done        |
 | 2   | [FE] Build profile page with edit + change password   | Frontend | S-16  | 1          | Done        |
-| 3   | [BE] Add `ForgotPassword` + `ResetPassword` endpoints | Backend  | S-17  | —          | Not Started |
-| 4   | [FE] Wire reset password page to backend endpoints    | Frontend | S-17  | 3          | Not Started |
-| 5   | [FE] Add role-based visibility logic + demo           | Frontend | S-18  | —          | Not Started |
+| 3   | [BE] Add `ForgotPassword` + `ResetPassword` endpoints | Backend  | S-17  | —          | Done        |
+| 4   | [FE] Wire reset password page to backend endpoints    | Frontend | S-17  | 3          | Done        |
+| 5   | [FE] Add role-based visibility logic + demo           | Frontend | S-18  | —          | Done        |
 | 6   | [BE] Create `Customer` model + EF config + migration  | Backend  | S-19  | —          | Not Started |
 | 7   | [BE] Create seed data for Customers                   | Backend  | S-19  | 6          | Not Started |
 | 8   | [BE] Create `CustomerRepo`                            | Backend  | S-20  | 6          | Not Started |

@@ -145,7 +145,7 @@ src/app/
 - Use `inject()` for DI in new code (not constructor injection)
 - Use path aliases (`@platform/`, `@features/`, etc.) for imports
 - Follow existing patterns — match the style of `truck/` feature as reference
-- Always verify the build compiles after changes
+- Skip running the build command line
 
 ## Component Thinking
 

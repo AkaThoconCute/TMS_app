@@ -26,3 +26,13 @@ public class UserProfile
 public record UpdateProfileDto(string UserName);
 
 public record ChangePasswordDto(string CurrentPassword, string NewPassword);
+
+public record ForgotPasswordDto(string Email);
+
+public record ResetPasswordDto(string Email, string Token, string NewPassword);
+
+public class ForgotPasswordResult
+{
+  public bool Success { get; set; }
+  public string Message { get; set; } = string.Empty;
+}

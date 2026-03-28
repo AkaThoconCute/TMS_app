@@ -2,6 +2,7 @@
 using back_end_for_TMS.Models;
 using back_end_for_TMS.Models.Repository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
@@ -11,7 +12,8 @@ public class AccountService(
     UserManager<AppUser> userManager,
     SignInManager<AppUser> signInManager,
     TokenService tokenService,
-    TenantRepo tenantRepo)
+    TenantRepo tenantRepo,
+    ILogger<AccountService> logger)
 {
   public async Task<AuthResult> RefreshToken(TokenDto dto)
   {
@@ -182,6 +184,35 @@ public class AccountService(
       throw new KeyNotFoundException("User not found by email");
 
     var result = await userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+    if (!result.Succeeded)
+      return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
+
+    return new AuthResult { Success = true };
+  }
+
+  public async Task<ForgotPasswordResult> ForgotPasswordAsync(ForgotPasswordDto dto)
+  {
+    var user = await userManager.FindByEmailAsync(dto.Email);
+    if (user != null)
+    {
+      var token = await userManager.GeneratePasswordResetTokenAsync(user);
+      logger.LogInformation("Password reset token for {Email}: {Token}", dto.Email, token);
+    }
+
+    return new ForgotPasswordResult
+    {
+      Success = true,
+      Message = "If the email exists, a reset token has been sent."
+    };
+  }
+
+  public async Task<AuthResult> ResetPasswordAsync(ResetPasswordDto dto)
+  {
+    var user = await userManager.FindByEmailAsync(dto.Email);
+    if (user == null)
+      return new AuthResult { Success = false, Errors = ["Invalid request"] };
+
+    var result = await userManager.ResetPasswordAsync(user, dto.Token, dto.NewPassword);
     if (!result.Succeeded)
       return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
 
