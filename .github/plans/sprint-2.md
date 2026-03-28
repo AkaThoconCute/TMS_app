@@ -51,16 +51,16 @@
 
 **Acceptance Criteria:**
 
-- [ ] `DriverController` with: `Create`, `GetById`, `List` (paginated + search + status filter), `Update`, `Delete`
-- [ ] `DriverService` with business logic and validation:
+- [x] `DriverController` with: `Create`, `GetById`, `List` (paginated + search + status filter), `Update`, `Delete`
+- [x] `DriverService` with business logic and validation:
   - Unique phone number per tenant
   - License expiry checks (warn if expiring within 30 days)
   - Required field validation (FullName, PhoneNumber, LicenseNumber)
-- [ ] DTOs: `CreateDriverDto`, `UpdateDriverDto`, `DriverDto`
-- [ ] `DriverDto` includes computed `IsLicenseExpiringSoon` (bool) — true if `LicenseExpiry` is within 30 days or already expired
-- [ ] AutoMapper profile for Driver ↔ DTOs
-- [ ] All endpoints `[Authorize]`, data scoped by tenant (via global filter)
-- [ ] Follows same patterns as `TruckController` / `TruckService`
+- [x] DTOs: `CreateDriverDto`, `UpdateDriverDto`, `DriverDto`
+- [x] `DriverDto` includes computed `IsLicenseExpiringSoon` (bool) — true if `LicenseExpiry` is within 30 days or already expired
+- [x] AutoMapper profile for Driver ↔ DTOs
+- [x] All endpoints `[Authorize]`, data scoped by tenant (via global filter)
+- [x] Follows same patterns as `TruckController` / `TruckService`
 
 ### S-11: Driver List Page [L]
 
@@ -120,12 +120,12 @@
 | 2   | [BE] Create EF migration for Drivers table                           | Backend  | S-09       | 1          | Done        | 2026-03-26 |
 | 3   | [BE] Create seed data for Drivers                                    | Backend  | S-09       | 2          | Done        | 2026-03-26 |
 | 4   | [BE] Create `DriverRepo`                                             | Backend  | S-10       | 1          | Done        | 2026-03-26 |
-| 5   | [BE] Create DTOs (`CreateDriverDto`, `UpdateDriverDto`, `DriverDto`) | Backend  | S-10       | 1          | Not Started | —          |
-| 6   | [BE] Add AutoMapper profile for Driver                               | Backend  | S-10       | 1, 5       | Not Started | —          |
-| 7   | [BE] Create `DriverService` with CRUD + validation                   | Backend  | S-10       | 4, 5       | Not Started | —          |
-| 8   | [BE] Create `DriverController`                                       | Backend  | S-10       | 7          | Not Started | —          |
-| 9   | [FE] Create driver models/DTOs                                       | Frontend | S-11       | 5          | Not Started | —          |
-| 10  | [FE] Create `DriverService` (HTTP client)                            | Frontend | S-11       | 8          | Not Started | —          |
+| 5   | [BE] Create DTOs (`CreateDriverDto`, `UpdateDriverDto`, `DriverDto`) | Backend  | S-10       | 1          | Done        | 2026-03-28 |
+| 6   | [BE] Add AutoMapper profile for Driver                               | Backend  | S-10       | 1, 5       | Done        | 2026-03-28 |
+| 7   | [BE] Create `DriverService` with CRUD + validation                   | Backend  | S-10       | 4, 5       | Done        | 2026-03-28 |
+| 8   | [BE] Create `DriverController`                                       | Backend  | S-10       | 7          | Done        | 2026-03-28 |
+| 9   | [FE] Create driver models/DTOs                                       | Frontend | S-11       | 5          | Done        | 2026-03-28 |
+| 10  | [FE] Create `DriverService` (HTTP client)                            | Frontend | S-11       | 8          | Done        | 2026-03-28 |
 | 11  | [FE] Create Driver list page with PrimeNG DataTable                  | Frontend | S-11       | 9, 10      | Not Started | —          |
 | 12  | [FE] Create Driver form dialog                                       | Frontend | S-12       | 9, 10      | Not Started | —          |
 | 13  | [FE] Add driver routes (`/drivers/list`, `/drivers/salary`)          | Frontend | S-11, S-14 | 11         | Not Started | —          |
@@ -146,3 +146,19 @@
 - Task 4: `DriverRepo` created. Standard repo pattern matching `TruckRepo`: Find, Query, Add, Update, Remove, SaveChanges.
 - `DbSet<Driver>` registered in `AppDbContext`. Driver model + seeding invoked in `OnModelCreating`.
 - Global query filter automatically applies via `ITenantEntity` loop. Auto-stamp `TenantId` on create via `SaveChangesAsync` override.
+
+**Tasks 5-8: [BE] DTOs, AutoMapper, DriverService, DriverController**  
+**Status:** Done  
+**Details:**
+
+- Task 5: `DriverTypes.cs` created in `Business/Types/` with `CreateDriverDto`, `UpdateDriverDto`, `DriverDto`. `DriverDto` includes computed `IsLicenseExpiringSoon` (bool).
+- Task 6: `AppMapperProfile.cs` updated with Driver mappings. `UpdateDriverDto → Driver` skips null fields. `Driver → DriverDto` computes `IsLicenseExpiringSoon` (true if LicenseExpiry ≤ 30 days from now).
+- Task 7: `DriverService.cs` created with `CreateAsync`, `GetByIdAsync`, `ListAsync` (paginated + search by name/phone + status filter), `UpdateAsync`, `DeleteAsync`. Validates required fields, enforces unique phone per tenant. Registered as scoped in `BusinessExtensions.cs`.
+- Task 8: `DriverController.cs` created with 5 endpoints: Create (POST), GetById (GET), List (GET), Update (PUT), Delete (DELETE). All `[Authorize]`, follows TruckController pattern exactly.
+
+**Tasks 9-10: [FE] Driver models & HTTP service**  
+**Status:** Done  
+**Details:**
+
+- Task 9: `driver.models.ts` created in `features/driver/models/` with `ApiResult<T>`, `DriverDto` (13 fields including `isLicenseExpiringSoon`), and `PaginatedDriversDto`.
+- Task 10: `driver.service.ts` created in `features/driver/services/` with `create`, `getById`, `list`, `update`, `delete` methods. Uses `inject()` pattern, unwraps `ApiResult<T>`, matches TruckService pattern exactly.

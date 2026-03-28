@@ -29,6 +29,8 @@ public static class BusinessExtensions
 
     services.AddScoped<TruckService>();
 
+    services.AddScoped<DriverService>();
+
     return services;
   }
 }
