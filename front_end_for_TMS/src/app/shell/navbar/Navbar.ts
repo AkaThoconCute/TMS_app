@@ -32,7 +32,7 @@ export class Navbar {
       label: 'Driver',
       icon: 'person',
       items: [
-        { label: 'List driver', route: '/drivers' },
+        { label: 'List driver', route: '/drivers/list' },
         { label: 'Calculate salary', route: '/drivers/salary' }
       ]
     },

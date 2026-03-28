@@ -1,0 +1,142 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="p-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-5">
+    <div>
+      <h2 class="text-2xl font-semibold text-surface-900 dark:text-surface-0 m-0">Drivers</h2>
+      <p class="text-surface-500 mt-1 mb-0 text-sm">Manage your drivers</p>
+    </div>
+    <p-button label="Add Driver" icon="pi pi-plus" (onClick)="onAdd()" />
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="flex items-center gap-3 mb-4">
+    <div class="flex items-center gap-2">
+      <input
+        pInputText
+        placeholder="Search by name or phone..."
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)"
+        (keydown.enter)="onSearch()"
+        class="w-72"
+      />
+      <p-button
+        icon="pi pi-search"
+        [outlined]="true"
+        (onClick)="onSearch()"
+        pTooltip="Search"
+        tooltipPosition="top"
+      />
+    </div>
+    <p-select
+      [options]="statusFilterOptions"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Filter by status"
+      [ngModel]="statusFilter()"
+      (ngModelChange)="onStatusFilterChange($event)"
+      class="w-48"
+    />
+  </div>
+
+  <!-- Table -->
+  <p-table
+    [value]="drivers()"
+    [lazy]="true"
+    [loading]="loading()"
+    [paginator]="true"
+    [rows]="rows()"
+    [totalRecords]="totalRecords()"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [first]="first()"
+    (onLazyLoad)="loadDrivers($event)"
+    [tableStyle]="{ 'min-width': '70rem' }"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} drivers"
+    dataKey="driverId"
+    stripedRows
+  >
+    <ng-template #header>
+      <tr>
+        <th>Full Name</th>
+        <th>Phone Number</th>
+        <th>License Number</th>
+        <th>License Class</th>
+        <th>License Expiry</th>
+        <th>Status</th>
+        <th>Hire Date</th>
+        <th style="width: 10rem; text-align: center">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-driver>
+      <tr>
+        <td class="font-semibold">{{ driver.fullName }}</td>
+        <td>{{ driver.phoneNumber }}</td>
+        <td>{{ driver.licenseNumber }}</td>
+        <td>{{ driver.licenseClass ?? '—' }}</td>
+        <td>
+          @if (driver.isLicenseExpiringSoon) {
+            <span class="text-red-500 font-semibold">
+              <i class="pi pi-exclamation-triangle text-red-500 mr-1"></i>
+              {{ driver.licenseExpiry | date: 'yyyy-MM-dd' }}
+            </span>
+          } @else {
+            {{ driver.licenseExpiry ? (driver.licenseExpiry | date: 'yyyy-MM-dd') : '—' }}
+          }
+        </td>
+        <td>
+          <p-tag
+            [value]="getStatusLabel(driver.status)"
+            [severity]="getStatusSeverity(driver.status)"
+          />
+        </td>
+        <td>{{ driver.hireDate ? (driver.hireDate | date: 'yyyy-MM-dd') : '—' }}</td>
+        <td style="text-align: center">
+          <div class="flex items-center justify-center gap-2">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [text]="true"
+              severity="info"
+              pTooltip="Edit"
+              tooltipPosition="top"
+              (onClick)="onEdit(driver)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              pTooltip="Delete"
+              tooltipPosition="top"
+              (onClick)="onDelete(driver)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="8" class="text-center py-8">
+          <div class="flex flex-col items-center gap-3">
+            <i class="pi pi-users text-4xl text-surface-400"></i>
+            <span class="text-surface-500 text-lg">No drivers found</span>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Create / Edit Dialog -->
+<app-driver-form-dialog
+  [driver]="editingDriver()"
+  [(visible)]="formDialogVisible"
+  [submitting]="submitting()"
+  (saved)="onFormSaved($event)"
+  (closed)="onFormClosed($event)"
+/>

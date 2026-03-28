@@ -13,5 +13,13 @@ public class AppMapperProfile : Profile
     CreateMap<UpdateTruckDto, Truck>()
         .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
     CreateMap<Truck, TruckDto>();
+
+    // Driver mappings
+    CreateMap<CreateDriverDto, Driver>();
+    CreateMap<UpdateDriverDto, Driver>()
+        .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+    CreateMap<Driver, DriverDto>()
+        .ForMember(d => d.IsLicenseExpiringSoon, opt => opt.MapFrom(src =>
+            src.LicenseExpiry.HasValue && src.LicenseExpiry.Value <= DateTime.UtcNow.AddDays(30)));
   }
 }

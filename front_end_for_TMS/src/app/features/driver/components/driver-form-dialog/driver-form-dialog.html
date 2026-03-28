@@ -1,0 +1,136 @@
+<p-dialog
+  [header]="dialogTitle"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [style]="{ width: '42rem' }"
+  (onHide)="onDialogHide()"
+>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-x-5 gap-y-4 pt-2">
+    <!-- Full Name -->
+    <div class="flex flex-col gap-1">
+      <label for="fullName" class="font-medium text-sm"
+        >Full Name <span class="text-red-500">*</span></label
+      >
+      <input pInputText id="fullName" formControlName="fullName" placeholder="e.g. Nguyễn Văn A" />
+    </div>
+
+    <!-- Phone Number -->
+    <div class="flex flex-col gap-1">
+      <label for="phoneNumber" class="font-medium text-sm"
+        >Phone Number <span class="text-red-500">*</span></label
+      >
+      <input
+        pInputText
+        id="phoneNumber"
+        formControlName="phoneNumber"
+        placeholder="e.g. 0901234567"
+      />
+    </div>
+
+    <!-- License Number -->
+    <div class="flex flex-col gap-1">
+      <label for="licenseNumber" class="font-medium text-sm"
+        >License Number <span class="text-red-500">*</span></label
+      >
+      <input
+        pInputText
+        id="licenseNumber"
+        formControlName="licenseNumber"
+        placeholder="e.g. 123456789"
+      />
+    </div>
+
+    <!-- License Class -->
+    <div class="flex flex-col gap-1">
+      <label for="licenseClass" class="font-medium text-sm">License Class</label>
+      <p-select
+        id="licenseClass"
+        formControlName="licenseClass"
+        [options]="licenseClassOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select class"
+        [showClear]="true"
+      />
+    </div>
+
+    <!-- License Expiry -->
+    <div class="flex flex-col gap-1">
+      <label for="licenseExpiry" class="font-medium text-sm">License Expiry</label>
+      <p-datepicker
+        id="licenseExpiry"
+        formControlName="licenseExpiry"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="flex flex-col gap-1">
+      <label for="dateOfBirth" class="font-medium text-sm">Date of Birth</label>
+      <p-datepicker
+        id="dateOfBirth"
+        formControlName="dateOfBirth"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Status -->
+    <div class="flex flex-col gap-1">
+      <label for="status" class="font-medium text-sm">Status</label>
+      <p-select
+        id="status"
+        formControlName="status"
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select status"
+      />
+    </div>
+
+    <!-- Hire Date -->
+    <div class="flex flex-col gap-1">
+      <label for="hireDate" class="font-medium text-sm">Hire Date</label>
+      <p-datepicker
+        id="hireDate"
+        formControlName="hireDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Notes (full width) -->
+    <div class="flex flex-col gap-1 col-span-2">
+      <label for="notes" class="font-medium text-sm">Notes</label>
+      <textarea
+        pTextarea
+        id="notes"
+        formControlName="notes"
+        rows="3"
+        placeholder="Additional notes..."
+      ></textarea>
+    </div>
+  </form>
+
+  <ng-template #footer>
+    <div class="flex justify-end gap-2">
+      <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="visible.set(false)" />
+      <p-button
+        [label]="isEditMode ? 'Update' : 'Create'"
+        icon="pi pi-check"
+        [loading]="submitting()"
+        [disabled]="form.invalid || submitting()"
+        (onClick)="onSubmit()"
+      />
+    </div>
+  </ng-template>
+</p-dialog>
