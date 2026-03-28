@@ -12,12 +12,12 @@
 > Complete user self-service features (profile, password management, role-based UI) and build the Customer module to prepare for Order & Trip management in the next phase.
 
 **Priority**: HIGH  
-**Depends On**: Sprint 1 (Multi-Tenant) — Done, Sprint 2 (Driver) — Done
+**Depends On**: Sprint 0 (Foundation) - Done, Sprint 1 (Multi-Tenant) — Done
 
 **Business Rationale**
 
 - **User management**: Users currently cannot update their profile, change their password, or recover a forgotten password. These are table-stakes features for a production app.
-- **Customer management**: In a TMS, a "customer" is the person or business that hires trucks to transport goods. Customers must exist before Orders can reference them (Phase 3). Building Customer now unblocks Order & Trip management next.
+- **Customer management**: In a TMS, a "customer" is the person or business that hires trucks to transport goods. Customers must exist before Orders can reference them . Building Customer now unblocks Order & Trip management next.
 
 **Scope Decision**
 
@@ -25,10 +25,10 @@
 | ------------------------------------------------------- | -------------------------------------------------------------- |
 | User profile page (view/edit username, change password) | Email sending (password reset token logged to console for now) |
 | Forgot/Reset password backend flow                      | Truck maintenance records (deferred to future sprint)          |
-| Reset password frontend page wired to backend           | Customer-Order linking (Phase 3)                               |
+| Reset password frontend page wired to backend           | Customer-Order linking                                |
 | Role-based UI visibility (admin vs user)                | Customer address autocomplete                                  |
-| Customer entity with CRUD API                           | Customer order history (Phase 3)                               |
-| Customer list page (paginated, searchable, filterable)  | Payment terms / credit limits (Phase 5)                        |
+| Customer entity with CRUD API                           | Customer order history                                |
+| Customer list page (paginated, searchable, filterable)  | Payment terms / credit limits                         |
 | Customer form dialog (create + edit)                    |                                                                |
 
 ---
@@ -110,7 +110,7 @@ In a household truck transportation business, a **Customer** is:
 - May have a **tax code** (needed later for invoicing in Phase 5)
 - Has a **status** (active customers vs inactive/past customers)
 
-**Why now?** Orders (Phase 3) require `CustomerId` as a foreign key. Building the Customer module now means Order management can reference real customer data immediately.
+**Why now?** Orders  require `CustomerId` as a foreign key. Building the Customer module now means Order management can reference real customer data immediately.
 
 ### User Stories
 
