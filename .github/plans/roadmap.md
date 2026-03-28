@@ -15,13 +15,13 @@ EasyTMS provides an **Easy – Fast – Save** solution for household truck tran
 
 ```
 Phase 1 ✅  →  Phase 2 🔄  →  Phase 3  →  Phase 4  →  Phase 5  →  Phase 6+
-Foundation     Tenant +       Orders &     Customer    Invoicing    Advanced
-               Driver         Trips        Mgmt        & Billing    Features
+Auth +         Tenant +       Orders &     Customer    Invoicing    Advanced
+Truck          Driver         Trips        Mgmt        & Billing    Features
 ```
 
 ---
 
-## Phase 1: Foundation ✅ COMPLETE
+## Phase 1: Auth + Truck ✅ DONE
 
 **Delivered**: 2026-03-22
 
@@ -38,12 +38,11 @@ Foundation     Tenant +       Orders &     Customer    Invoicing    Advanced
 
 ---
 
-## Phase 2: Multi-Tenant + Core Features 🔄 IN PROGRESS
+## Phase 2: Multi-Tenant + Core Features ✅ DONE
 
 **Plan**: [phase-2-plan.md](phase-2-plan.md)
 
-### 2A: Multi-Tenant Data Isolation (Sprint 1) — MUST HAVE
-
+### 2A: Multi-Tenant Data Isolation (Sprint 1) ✅ DONE
 | Deliverable | MoSCoW |
 |---|---|
 | `Tenant` entity + migration | Must |
@@ -55,7 +54,7 @@ Foundation     Tenant +       Orders &     Customer    Invoicing    Advanced
 | Auth flow updated (Register creates Tenant, Login includes TenantId) | Must |
 | Frontend stores tenant context | Must |
 
-### 2B: Driver Management (Sprint 2) — MUST HAVE
+### 2B: Driver Management (Sprint 2) ✅ DONE
 
 | Deliverable | MoSCoW |
 |---|---|
@@ -69,7 +68,6 @@ Foundation     Tenant +       Orders &     Customer    Invoicing    Advanced
 
 | Deliverable | MoSCoW |
 |---|---|
-| Dashboard with KPI cards | Should |
 | User profile page (view/edit + change password) | Should |
 | Reset password (complete implementation) | Should |
 | Truck maintenance records | Should |

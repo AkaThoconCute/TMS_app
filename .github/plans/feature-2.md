@@ -50,24 +50,13 @@ Establish data isolation so each household transportation business sees only its
 ## Sprint 3: Core Operations
 
 **Priority**: SHOULD HAVE  
-**Goal**: Polish the foundation with dashboard, profile management, and completing partial features.
+**Goal**: Polish the foundation with profile management, and completing partial features.
 
 ### Epic: Core Operations & Polish
 
-> As a user, I want a functional dashboard, the ability to manage my profile, and completed features so the app feels production-ready.
+> As a user, I want the ability to manage my profile, and completed features so the app feels production-ready.
 
 ### User Stories
-
-#### S-15: Dashboard Page [M]
-
-> As a fleet manager, I want a dashboard showing key metrics at a glance.
-
-**Acceptance Criteria:**
-
-- [ ] Home page (`/home`) displays KPI cards: Total Trucks, Available Trucks, In-Use Trucks, Total Drivers, Active Drivers
-- [ ] Cards use PrimeNG Card component with icons and color coding
-- [ ] Data fetched from new summary API endpoint `GET /api/Dashboard/Summary`
-- [ ] Counts are tenant-scoped (global filter handles it)
 
 #### S-16: User Profile Page [S]
 
@@ -117,8 +106,6 @@ Establish data isolation so each household transportation business sees only its
 
 | #   | Task                                                  | Agent    | Story | Depends On |
 | --- | ----------------------------------------------------- | -------- | ----- | ---------- |
-| 1   | [BE] Create `GET /api/Dashboard/Summary` endpoint     | Backend  | S-15  | Phase 2A   |
-| 2   | [FE] Build dashboard page with KPI cards              | Frontend | S-15  | 1          |
 | 3   | [BE] Add `UpdateProfile` + `ChangePassword` endpoints | Backend  | S-16  | —          |
 | 4   | [FE] Build profile page                               | Frontend | S-16  | 3          |
 | 5   | [BE] Add `ForgotPassword` + `ResetPassword` endpoints | Backend  | S-17  | —          |
