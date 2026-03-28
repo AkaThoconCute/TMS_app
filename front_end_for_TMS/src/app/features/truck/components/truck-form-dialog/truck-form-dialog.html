@@ -60,6 +60,7 @@
         formControlName="purchaseDate"
         dateFormat="yy-mm-dd"
         [showIcon]="true"
+        [appendTo]="'body'"
         placeholder="Select date"
       />
     </div>
@@ -147,12 +148,7 @@
 
   <ng-template #footer>
     <div class="flex justify-end gap-2">
-      <p-button
-        label="Cancel"
-        severity="secondary"
-        [text]="true"
-        (onClick)="visible.set(false)"
-      />
+      <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="visible.set(false)" />
       <p-button
         [label]="isEditMode ? 'Update' : 'Create'"
         icon="pi pi-check"
