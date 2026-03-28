@@ -9,7 +9,6 @@ import { AuthService } from '@platform/auth/auth.service';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
 })
 export class Navbar {
   private authService = inject(AuthService);
