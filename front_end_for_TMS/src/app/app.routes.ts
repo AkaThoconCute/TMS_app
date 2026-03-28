@@ -37,6 +37,10 @@ export const appRoutes: Routes = [
         loadChildren: () => import('./features/truck/truck.routes').then(m => m.TRUCK_ROUTES)
       },
       {
+        path: 'drivers',
+        loadChildren: () => import('./features/driver/driver.routes').then(m => m.DRIVER_ROUTES)
+      },
+      {
         path: 'demo/button',
         loadComponent: () => import('./common/button/button-demo.component').then(m => m.ButtonDemo)
       },

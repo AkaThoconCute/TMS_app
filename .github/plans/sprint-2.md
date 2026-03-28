@@ -68,16 +68,16 @@
 
 **Acceptance Criteria:**
 
-- [ ] PrimeNG DataTable at `/drivers/list` with lazy loading (server-side pagination)
-- [ ] Columns: FullName, PhoneNumber, LicenseNumber, LicenseClass, LicenseExpiry, Status, HireDate
-- [ ] Status tags with color coding:
+- [x] PrimeNG DataTable at `/drivers/list` with lazy loading (server-side pagination)
+- [x] Columns: FullName, PhoneNumber, LicenseNumber, LicenseClass, LicenseExpiry, Status, HireDate
+- [x] Status tags with color coding:
   - `Active` → green
   - `OnLeave` → orange/yellow
   - `Terminated` → red
-- [ ] Search by name or phone number (single search input)
-- [ ] Filter by status dropdown
-- [ ] License expiry warning: highlight row/cell if license expiring within 30 days (red text or warning icon)
-- [ ] Follows same patterns as Truck list page
+- [x] Search by name or phone number (single search input)
+- [x] Filter by status dropdown
+- [x] License expiry warning: highlight row/cell if license expiring within 30 days (red text or warning icon)
+- [x] Follows same patterns as Truck list page
 
 ### S-12: Driver Form Dialog [M]
 
@@ -85,7 +85,7 @@
 
 **Acceptance Criteria:**
 
-- [ ] PrimeNG Dialog with form fields for all driver properties:
+- [x] PrimeNG Dialog with form fields for all driver properties:
   - FullName (text, required)
   - PhoneNumber (text, required)
   - LicenseNumber (text, required)
@@ -95,10 +95,10 @@
   - Status (dropdown: Active, On Leave, Terminated)
   - HireDate (date picker)
   - Notes (textarea)
-- [ ] Reusable for both Create and Edit modes
-- [ ] Validation: required fields, phone format
-- [ ] On save: calls API, refreshes table, shows success toast
-- [ ] Follows same patterns as Truck form dialog
+- [x] Reusable for both Create and Edit modes
+- [x] Validation: required fields, phone format
+- [x] On save: calls API, refreshes table, shows success toast
+- [x] Follows same patterns as Truck form dialog
 
 ### S-14: Driver Salary Page (Placeholder) [S]
 
@@ -106,31 +106,31 @@
 
 **Acceptance Criteria:**
 
-- [ ] Page at `/drivers/salary` with heading and description
-- [ ] Placeholder message: "Salary management will be available in a future update"
-- [ ] Nav link works (no more `under-development` redirect)
+- [x] Page at `/drivers/salary` with heading and description
+- [x] Placeholder message: "Salary management will be available in a future update"
+- [x] Nav link works (no more `under-development` redirect)
 
 ---
 
 ## Tasks
 
-| #   | Task                                                                 | Agent    | Story      | Depends On | Status      | Completed  |
-| --- | -------------------------------------------------------------------- | -------- | ---------- | ---------- | ----------- | ---------- |
-| 1   | [BE] Create `Driver` model (implements `ITenantEntity`)              | Backend  | S-09       | Phase 2A   | Done        | 2026-03-26 |
-| 2   | [BE] Create EF migration for Drivers table                           | Backend  | S-09       | 1          | Done        | 2026-03-26 |
-| 3   | [BE] Create seed data for Drivers                                    | Backend  | S-09       | 2          | Done        | 2026-03-26 |
-| 4   | [BE] Create `DriverRepo`                                             | Backend  | S-10       | 1          | Done        | 2026-03-26 |
-| 5   | [BE] Create DTOs (`CreateDriverDto`, `UpdateDriverDto`, `DriverDto`) | Backend  | S-10       | 1          | Done        | 2026-03-28 |
-| 6   | [BE] Add AutoMapper profile for Driver                               | Backend  | S-10       | 1, 5       | Done        | 2026-03-28 |
-| 7   | [BE] Create `DriverService` with CRUD + validation                   | Backend  | S-10       | 4, 5       | Done        | 2026-03-28 |
-| 8   | [BE] Create `DriverController`                                       | Backend  | S-10       | 7          | Done        | 2026-03-28 |
-| 9   | [FE] Create driver models/DTOs                                       | Frontend | S-11       | 5          | Done        | 2026-03-28 |
-| 10  | [FE] Create `DriverService` (HTTP client)                            | Frontend | S-11       | 8          | Done        | 2026-03-28 |
-| 11  | [FE] Create Driver list page with PrimeNG DataTable                  | Frontend | S-11       | 9, 10      | Not Started | —          |
-| 12  | [FE] Create Driver form dialog                                       | Frontend | S-12       | 9, 10      | Not Started | —          |
-| 13  | [FE] Add driver routes (`/drivers/list`, `/drivers/salary`)          | Frontend | S-11, S-14 | 11         | Not Started | —          |
-| 14  | [FE] Update navbar — wire driver links to real routes                | Frontend | S-11       | 13         | Not Started | —          |
-| 15  | [FE] Create salary placeholder page                                  | Frontend | S-14       | 13         | Not Started | —          |
+| #   | Task                                                                 | Agent    | Story      | Depends On | Status | Completed  |
+| --- | -------------------------------------------------------------------- | -------- | ---------- | ---------- | ------ | ---------- |
+| 1   | [BE] Create `Driver` model (implements `ITenantEntity`)              | Backend  | S-09       | Phase 2A   | Done   | 2026-03-26 |
+| 2   | [BE] Create EF migration for Drivers table                           | Backend  | S-09       | 1          | Done   | 2026-03-26 |
+| 3   | [BE] Create seed data for Drivers                                    | Backend  | S-09       | 2          | Done   | 2026-03-26 |
+| 4   | [BE] Create `DriverRepo`                                             | Backend  | S-10       | 1          | Done   | 2026-03-26 |
+| 5   | [BE] Create DTOs (`CreateDriverDto`, `UpdateDriverDto`, `DriverDto`) | Backend  | S-10       | 1          | Done   | 2026-03-28 |
+| 6   | [BE] Add AutoMapper profile for Driver                               | Backend  | S-10       | 1, 5       | Done   | 2026-03-28 |
+| 7   | [BE] Create `DriverService` with CRUD + validation                   | Backend  | S-10       | 4, 5       | Done   | 2026-03-28 |
+| 8   | [BE] Create `DriverController`                                       | Backend  | S-10       | 7          | Done   | 2026-03-28 |
+| 9   | [FE] Create driver models/DTOs                                       | Frontend | S-11       | 5          | Done   | 2026-03-28 |
+| 10  | [FE] Create `DriverService` (HTTP client)                            | Frontend | S-11       | 8          | Done   | 2026-03-28 |
+| 11  | [FE] Create Driver list page with PrimeNG DataTable                  | Frontend | S-11       | 9, 10      | Done   | 2026-03-28 |
+| 12  | [FE] Create Driver form dialog                                       | Frontend | S-12       | 9, 10      | Done   | 2026-03-28 |
+| 13  | [FE] Add driver routes (`/drivers/list`, `/drivers/salary`)          | Frontend | S-11, S-14 | 11         | Done   | 2026-03-28 |
+| 14  | [FE] Update navbar — wire driver links to real routes                | Frontend | S-11       | 13         | Done   | 2026-03-28 |
+| 15  | [FE] Create salary placeholder page                                  | Frontend | S-14       | 13         | Done   | 2026-03-28 |
 
 ---
 
@@ -162,3 +162,13 @@
 
 - Task 9: `driver.models.ts` created in `features/driver/models/` with `ApiResult<T>`, `DriverDto` (13 fields including `isLicenseExpiringSoon`), and `PaginatedDriversDto`.
 - Task 10: `driver.service.ts` created in `features/driver/services/` with `create`, `getById`, `list`, `update`, `delete` methods. Uses `inject()` pattern, unwraps `ApiResult<T>`, matches TruckService pattern exactly.
+
+**Tasks 11-15: [FE] Driver list page, form dialog, routes, navbar, salary page**  
+**Status:** Done  
+**Details:**
+
+- Task 11: `driver-list.page.ts` + `driver-list.page.html` created in `features/driver/pages/driver-list/`. PrimeNG DataTable with lazy loading, server-side pagination (5/10/20 rows). Search input (by name/phone, Enter or click). Status filter dropdown (All/Active/On Leave/Terminated). License expiry warning: red text + `pi-exclamation-triangle` icon when `isLicenseExpiringSoon === true`. Status tags: Active=green, On Leave=warn, Terminated=danger. Edit/Delete per row with confirm dialog + toast.
+- Task 12: `driver-form-dialog.ts` + `driver-form-dialog.html` created in `features/driver/components/driver-form-dialog/`. 2-column grid form: FullName (required), PhoneNumber (required), LicenseNumber (required), LicenseClass (Select: B2/C/D/FC), LicenseExpiry (DatePicker), DateOfBirth (DatePicker), Status (Select: Active/On Leave/Terminated, default 1), HireDate (DatePicker), Notes (Textarea, col-span-2). Uses `model()`/`input()`/`output()` pattern, `effect()` for edit mode population. Matches TruckFormDialog exactly.
+- Task 13: `driver.routes.ts` created with `list` and `salary` child routes. `app.routes.ts` updated — `drivers` lazy-loaded path added in PrivateLayout after `trucks`.
+- Task 14: `navbar.ts` updated — "List driver" route changed from `/drivers` to `/drivers/list`.
+- Task 15: `driver-salary.page.ts` created in `features/driver/pages/driver-salary/`. Inline template placeholder: "Salary management will be available in a future update." Follows TruckMaintenancePage pattern.
