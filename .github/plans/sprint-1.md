@@ -1,4 +1,4 @@
-# Sprint 1 Plan: Multi-Tenant Data Isolation
+# Sprint 1: Multi-Tenant Data Isolation
 
 **Date**: 2026-03-22  
 **Author**: Derek6_PO (Product Owner)  

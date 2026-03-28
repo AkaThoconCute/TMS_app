@@ -1,4 +1,4 @@
-# Sprint 2 Plan: Driver Management
+# Sprint 2: Driver Management
 
 **Date**: 2026-03-28  
 **Author**: Derek6_PO (Product Owner)  
