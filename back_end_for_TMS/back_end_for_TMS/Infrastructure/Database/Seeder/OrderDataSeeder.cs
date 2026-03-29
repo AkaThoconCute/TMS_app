@@ -15,10 +15,6 @@ public class OrderDataSeeder : IDataSeeder<Order>
   public static List<Order> Generate()
   {
     var tenantId = TenantDataSeeder.AlphaTenantId;
-
-    // We need customer IDs from seeded customers — CustomerDataSeeder uses Bogus with seed 987654
-    // Generate them deterministically to get the same GUIDs
-    var customerIds = GetSeededCustomerIds();
     var staticNow = new DateTimeOffset(2026, 3, 20, 0, 0, 0, TimeSpan.Zero);
 
     return
@@ -29,10 +25,10 @@ public class OrderDataSeeder : IDataSeeder<Order>
         TenantId = tenantId,
         OrderId = Order1Id,
         OrderNumber = "ORD-000001",
-        CustomerId = customerIds[0],
-        PickupAddress = "123 Nguyen Hue, District 1, HCMC",
-        DeliveryAddress = "456 Le Loi, District 3, HCMC",
-        CargoDescription = "Household furniture — sofa, table, chairs",
+        CustomerId = CustomerDataSeeder.Customer1Id,
+        PickupAddress = "123 Nguyễn Huệ, Quận 1, Tp. Hồ Chí Minh",
+        DeliveryAddress = "456 Lê Lợi, Quận 3, Tp. Hồ Chí Minh",
+        CargoDescription = "Nội thất gia đình — ghế sofa, bàn, ghế",
         CargoWeightKg = 350m,
         RequestedPickupDate = new DateTime(2026, 3, 25),
         RequestedDeliveryDate = new DateTime(2026, 3, 26),
@@ -47,10 +43,10 @@ public class OrderDataSeeder : IDataSeeder<Order>
         TenantId = tenantId,
         OrderId = Order2Id,
         OrderNumber = "ORD-000002",
-        CustomerId = customerIds[1],
-        PickupAddress = "789 Tran Hung Dao, District 5, HCMC",
-        DeliveryAddress = "12 Pham Van Dong, Thu Duc, HCMC",
-        CargoDescription = "Office equipment — desks, monitors, printers",
+        CustomerId = CustomerDataSeeder.Customer2Id,
+        PickupAddress = "789 Trần Hưng Đạo, Quận 5, Tp. Hồ Chí Minh",
+        DeliveryAddress = "12 Phạm Văn Đồng, Thủ Đức, Tp. Hồ Chí Minh",
+        CargoDescription = "Thiết bị văn phòng — bàn làm việc, màn hình, máy in",
         CargoWeightKg = 500m,
         RequestedPickupDate = new DateTime(2026, 3, 27),
         RequestedDeliveryDate = new DateTime(2026, 3, 28),
@@ -64,10 +60,10 @@ public class OrderDataSeeder : IDataSeeder<Order>
         TenantId = tenantId,
         OrderId = Order3Id,
         OrderNumber = "ORD-000003",
-        CustomerId = customerIds[2],
-        PickupAddress = "34 Vo Van Tan, District 3, HCMC",
-        DeliveryAddress = "56 Nguyen Van Linh, District 7, HCMC",
-        CargoDescription = "Refrigerator and washing machine",
+        CustomerId = CustomerDataSeeder.Customer3Id,
+        PickupAddress = "34 Võ Văn Tần, Quận 3, Tp. Hồ Chí Minh",
+        DeliveryAddress = "56 Nguyễn Văn Linh, Quận 7, Tp. Hồ Chí Minh",
+        CargoDescription = "Tủ lạnh và máy giặt",
         CargoWeightKg = 200m,
         RequestedPickupDate = new DateTime(2026, 3, 22),
         RequestedDeliveryDate = new DateTime(2026, 3, 23),
@@ -82,10 +78,10 @@ public class OrderDataSeeder : IDataSeeder<Order>
         TenantId = tenantId,
         OrderId = Order4Id,
         OrderNumber = "ORD-000004",
-        CustomerId = customerIds[3],
-        PickupAddress = "78 Ly Tu Trong, District 1, HCMC",
-        DeliveryAddress = "90 Le Van Viet, District 9, HCMC",
-        CargoDescription = "Personal belongings — boxes, clothing, kitchenware",
+        CustomerId = CustomerDataSeeder.Customer4Id,
+        PickupAddress = "78 Lý Tự Trọng, Quận 1, Tp. Hồ Chí Minh",
+        DeliveryAddress = "90 Lê Văn Việt, Quận 9, Tp. Hồ Chí Minh",
+        CargoDescription = "Hành lý cá nhân — hộp carton, quần áo, dụng cụ nhà bếp",
         CargoWeightKg = 150m,
         RequestedPickupDate = new DateTime(2026, 3, 21),
         RequestedDeliveryDate = new DateTime(2026, 3, 22),
@@ -100,10 +96,10 @@ public class OrderDataSeeder : IDataSeeder<Order>
         TenantId = tenantId,
         OrderId = Order5Id,
         OrderNumber = "ORD-000005",
-        CustomerId = customerIds[0],
-        PickupAddress = "100 Cach Mang Thang 8, District 10, HCMC",
-        DeliveryAddress = "200 Quang Trung, Go Vap, HCMC",
-        CargoDescription = "Construction materials — cement, steel bars",
+        CustomerId = CustomerDataSeeder.Customer1Id,
+        PickupAddress = "100 Cách Mạng Tháng 8, Quận 10, Tp. Hồ Chí Minh",
+        DeliveryAddress = "200 Quang Trung, Gò Vấp, Tp. Hồ Chí Minh",
+        CargoDescription = "Vật liệu xây dựng — xi măng, thanh thép",
         CargoWeightKg = 2000m,
         RequestedPickupDate = new DateTime(2026, 3, 15),
         RequestedDeliveryDate = new DateTime(2026, 3, 16),
@@ -118,10 +114,10 @@ public class OrderDataSeeder : IDataSeeder<Order>
         TenantId = tenantId,
         OrderId = Order6Id,
         OrderNumber = "ORD-000006",
-        CustomerId = customerIds[1],
-        PickupAddress = "44 Hai Ba Trung, District 1, HCMC",
-        DeliveryAddress = "88 Nguyen Thi Minh Khai, District 3, HCMC",
-        CargoDescription = "Electronic appliances — TVs, air conditioners",
+        CustomerId = CustomerDataSeeder.Customer2Id,
+        PickupAddress = "44 Hai Bà Trưng, Quận 1, Tp. Hồ Chí Minh",
+        DeliveryAddress = "88 Nguyễn Thị Minh Khai, Quận 3, Tp. Hồ Chí Minh",
+        CargoDescription = "Điện tử gia dụng — TV, điều hòa không khí",
         CargoWeightKg = 300m,
         RequestedPickupDate = new DateTime(2026, 3, 10),
         RequestedDeliveryDate = new DateTime(2026, 3, 11),
@@ -135,29 +131,4 @@ public class OrderDataSeeder : IDataSeeder<Order>
     ];
   }
 
-  /// <summary>
-  /// Regenerate the same customer GUIDs that CustomerDataSeeder produces with seed 987654.
-  /// </summary>
-  private static List<Guid> GetSeededCustomerIds()
-  {
-    Bogus.Randomizer.Seed = new Random(987654);
-
-    var faker = new Bogus.Faker<Customer>()
-        .RuleFor(c => c.TenantId, _ => TenantDataSeeder.AlphaTenantId)
-        .RuleFor(c => c.CustomerId, f => f.Random.Guid())
-        .RuleFor(c => c.CustomerType, f => f.Random.WeightedRandom([1, 2], [0.6f, 0.4f]))
-        .RuleFor(c => c.Name, f => f.Company.CompanyName())
-        .RuleFor(c => c.ContactPerson, f => f.Random.Bool(0.7f) ? f.Name.FullName() : null)
-        .RuleFor(c => c.PhoneNumber, f => $"09{f.Random.Number(10000000, 99999999)}")
-        .RuleFor(c => c.Email, f => f.Random.Bool(0.6f) ? f.Internet.Email() : null)
-        .RuleFor(c => c.Address, f => f.Random.Bool(0.8f) ? f.Address.FullAddress() : null)
-        .RuleFor(c => c.TaxCode, (f, c) => f.Random.Bool(0.5f) ? f.Random.Number(1000000000, 1999999999).ToString() : null)
-        .RuleFor(c => c.Status, f => f.Random.WeightedRandom([1, 2], [0.8f, 0.2f]))
-        .RuleFor(c => c.Notes, f => f.Random.Bool(0.2f) ? f.Lorem.Sentence() : null)
-        .RuleFor(c => c.CreatedAt, f => new DateTimeOffset(2026, 3, 1, 0, 0, 0, TimeSpan.Zero).AddDays(-f.Random.Number(1, 365)))
-        .RuleFor(c => c.UpdatedAt, f => f.Random.Bool(0.5f) ? new DateTimeOffset(2026, 3, 1, 0, 0, 0, TimeSpan.Zero).AddDays(-f.Random.Number(1, 30)) : (DateTimeOffset?)null);
-
-    var customers = faker.Generate(8);
-    return customers.Select(c => c.CustomerId).ToList();
-  }
 }
