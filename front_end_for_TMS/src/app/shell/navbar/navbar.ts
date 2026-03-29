@@ -56,6 +56,13 @@ export class Navbar {
       ]
     },
     {
+      label: 'Order',
+      icon: 'receipt_long',
+      items: [
+        { label: 'List order', route: '/orders/list' }
+      ]
+    },
+    {
       label: 'Demo',
       icon: 'person',
       items: [

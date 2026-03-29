@@ -1,0 +1,104 @@
+<p-dialog
+  [header]="dialogTitle"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [style]="{ width: '42rem' }"
+  (onHide)="onDialogHide()"
+>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-x-5 gap-y-4 pt-2">
+    <!-- Order Number (read-only context) -->
+    <div class="flex flex-col gap-1 col-span-2">
+      <label class="font-medium text-sm">Order</label>
+      <span class="font-semibold text-lg">{{ orderNumber() }}</span>
+    </div>
+
+    <!-- Truck -->
+    <div class="flex flex-col gap-1">
+      <label for="truckId" class="font-medium text-sm"
+        >Truck <span class="text-red-500">*</span></label
+      >
+      <p-select
+        id="truckId"
+        formControlName="truckId"
+        [options]="trucks()"
+        optionLabel="licensePlate"
+        optionValue="truckId"
+        placeholder="Select truck"
+        [filter]="true"
+        filterPlaceholder="Search trucks..."
+        [appendTo]="'body'"
+      />
+    </div>
+
+    <!-- Driver -->
+    <div class="flex flex-col gap-1">
+      <label for="driverId" class="font-medium text-sm"
+        >Driver <span class="text-red-500">*</span></label
+      >
+      <p-select
+        id="driverId"
+        formControlName="driverId"
+        [options]="activeDrivers()"
+        optionLabel="fullName"
+        optionValue="driverId"
+        placeholder="Select driver"
+        [filter]="true"
+        filterPlaceholder="Search drivers..."
+        [appendTo]="'body'"
+      />
+    </div>
+
+    <!-- Planned Pickup Date -->
+    <div class="flex flex-col gap-1">
+      <label for="plannedPickupDate" class="font-medium text-sm">Planned Pickup Date</label>
+      <p-datepicker
+        id="plannedPickupDate"
+        formControlName="plannedPickupDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Planned Delivery Date -->
+    <div class="flex flex-col gap-1">
+      <label for="plannedDeliveryDate" class="font-medium text-sm">Planned Delivery Date</label>
+      <p-datepicker
+        id="plannedDeliveryDate"
+        formControlName="plannedDeliveryDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Notes -->
+    <div class="flex flex-col gap-1 col-span-2">
+      <label for="tripNotes" class="font-medium text-sm">Notes</label>
+      <textarea
+        pTextarea
+        id="tripNotes"
+        formControlName="notes"
+        rows="3"
+        placeholder="Additional notes..."
+      ></textarea>
+    </div>
+  </form>
+
+  <ng-template #footer>
+    <div class="flex justify-end gap-2">
+      <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="visible.set(false)" />
+      <p-button
+        [label]="isEditMode ? 'Update' : 'Assign'"
+        icon="pi pi-check"
+        [loading]="submitting()"
+        [disabled]="form.invalid || submitting()"
+        (onClick)="onSubmit()"
+      />
+    </div>
+  </ng-template>
+</p-dialog>

@@ -45,6 +45,10 @@ export const appRoutes: Routes = [
         loadChildren: () => import('./features/customer/customer.routes').then(m => m.CUSTOMER_ROUTES)
       },
       {
+        path: 'orders',
+        loadChildren: () => import('./features/order/order.routes').then(m => m.ORDER_ROUTES)
+      },
+      {
         path: 'demo/button',
         loadComponent: () => import('./common/button/button-demo.component').then(m => m.ButtonDemo)
       },

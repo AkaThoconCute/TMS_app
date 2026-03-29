@@ -1,0 +1,401 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="p-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-5">
+    <div>
+      <h2 class="text-2xl font-semibold text-surface-900 dark:text-surface-0 m-0">Orders</h2>
+      <p class="text-surface-500 mt-1 mb-0 text-sm">Manage transportation orders</p>
+    </div>
+    <p-button label="New Order" icon="pi pi-plus" (onClick)="onAddOrder()" />
+  </div>
+
+  <!-- Status Pipeline Summary -->
+  <div class="grid grid-cols-6 gap-3 mb-5" *ngIf="statusSummary() as summary">
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
+      <div class="text-2xl font-bold text-blue-600">{{ summary.created }}</div>
+      <div class="text-xs text-blue-800 font-medium">Created</div>
+    </div>
+    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 text-center">
+      <div class="text-2xl font-bold text-orange-600">{{ summary.assigned }}</div>
+      <div class="text-xs text-orange-800 font-medium">Assigned</div>
+    </div>
+    <div class="bg-cyan-50 border border-cyan-200 rounded-lg p-3 text-center">
+      <div class="text-2xl font-bold text-cyan-600">{{ summary.inTransit }}</div>
+      <div class="text-xs text-cyan-800 font-medium">In Transit</div>
+    </div>
+    <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 text-center">
+      <div class="text-2xl font-bold text-teal-600">{{ summary.delivered }}</div>
+      <div class="text-xs text-teal-800 font-medium">Delivered</div>
+    </div>
+    <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
+      <div class="text-2xl font-bold text-green-600">{{ summary.completed }}</div>
+      <div class="text-xs text-green-800 font-medium">Completed</div>
+    </div>
+    <div class="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
+      <div class="text-2xl font-bold text-red-500">{{ summary.cancelled }}</div>
+      <div class="text-xs text-red-800 font-medium">Cancelled</div>
+    </div>
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="flex items-center gap-3 mb-4">
+    <div class="flex items-center gap-2">
+      <input
+        pInputText
+        placeholder="Search order #, address, cargo..."
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)"
+        (keydown.enter)="onSearch()"
+        class="w-80"
+      />
+      <p-button
+        icon="pi pi-search"
+        [outlined]="true"
+        (onClick)="onSearch()"
+        pTooltip="Search"
+        tooltipPosition="top"
+      />
+    </div>
+    <p-select
+      [options]="statusFilterOptions"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Filter by status"
+      [ngModel]="statusFilter()"
+      (ngModelChange)="onStatusFilterChange($event)"
+      class="w-48"
+    />
+    <p-select
+      [options]="customerFilterOptions()"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Filter by customer"
+      [ngModel]="customerFilter()"
+      (ngModelChange)="onCustomerFilterChange($event)"
+      class="w-56"
+    />
+  </div>
+
+  <!-- Orders Table with Expandable Rows -->
+  <p-table
+    [value]="orders()"
+    [lazy]="true"
+    [loading]="loading()"
+    [paginator]="true"
+    [rows]="rows()"
+    [totalRecords]="totalRecords()"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [first]="first()"
+    (onLazyLoad)="loadOrders($event)"
+    [(expandedRowKeys)]="expandedRows"
+    (onRowExpand)="onRowExpand($event)"
+    [tableStyle]="{ 'min-width': '80rem' }"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} orders"
+    dataKey="orderId"
+    stripedRows
+  >
+    <ng-template #header>
+      <tr>
+        <th style="width: 3rem"></th>
+        <th>Order #</th>
+        <th>Customer</th>
+        <th>Pickup Address</th>
+        <th>Delivery Address</th>
+        <th>Cargo</th>
+        <th style="text-align: right">Price</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th style="width: 10rem; text-align: center">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-order let-expanded="expanded">
+      <tr>
+        <td>
+          <p-button
+            type="button"
+            [pRowToggler]="order"
+            [text]="true"
+            [rounded]="true"
+            [plain]="true"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            pTooltip="Show trips"
+            tooltipPosition="top"
+          />
+        </td>
+        <td class="font-semibold">{{ order.orderNumber }}</td>
+        <td>{{ order.customerName }}</td>
+        <td class="max-w-48 truncate" [pTooltip]="order.pickupAddress" tooltipPosition="top">
+          {{ order.pickupAddress }}
+        </td>
+        <td class="max-w-48 truncate" [pTooltip]="order.deliveryAddress" tooltipPosition="top">
+          {{ order.deliveryAddress }}
+        </td>
+        <td class="max-w-40 truncate" [pTooltip]="order.cargoDescription" tooltipPosition="top">
+          {{ order.cargoDescription }}
+        </td>
+        <td style="text-align: right">
+          {{ order.quotedPrice != null ? (order.quotedPrice | number: '1.0-0') : '—' }}
+        </td>
+        <td>
+          <p-tag
+            [value]="getOrderStatusLabel(order.status)"
+            [severity]="getOrderStatusSeverity(order.status)"
+          />
+        </td>
+        <td>{{ order.createdAt | date: 'yyyy-MM-dd' }}</td>
+        <td style="text-align: center">
+          <div class="flex items-center justify-center gap-1">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [text]="true"
+              severity="info"
+              pTooltip="Edit"
+              tooltipPosition="top"
+              (onClick)="onEditOrder(order)"
+              *ngIf="!isOrderTerminal(order)"
+            />
+            <p-button
+              icon="pi pi-check-circle"
+              [rounded]="true"
+              [text]="true"
+              severity="success"
+              pTooltip="Complete Order"
+              tooltipPosition="top"
+              (onClick)="onCompleteOrder(order)"
+              *ngIf="order.status === 4"
+            />
+            <p-button
+              icon="pi pi-times-circle"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              pTooltip="Cancel Order"
+              tooltipPosition="top"
+              (onClick)="onCancelOrder(order)"
+              *ngIf="!isOrderTerminal(order)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Expandable Row: Trip Panel -->
+    <ng-template #rowexpansion let-order>
+      <tr>
+        <td [attr.colspan]="10">
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-lg font-semibold m-0">Trips for {{ order.orderNumber }}</h4>
+              <p-button
+                label="Assign Truck & Driver"
+                icon="pi pi-plus"
+                size="small"
+                [outlined]="true"
+                (onClick)="onAddTrip(order)"
+                *ngIf="!isOrderTerminal(order) && !hasActiveTrip(order)"
+              />
+            </div>
+
+            <!-- Trip Sub-Table -->
+            <p-table
+              [value]="orderTrips()[order.orderId] ?? []"
+              [loading]="orderTripsLoading()[order.orderId] ?? false"
+              dataKey="tripId"
+              [tableStyle]="{ 'min-width': '60rem' }"
+            >
+              <ng-template #header>
+                <tr>
+                  <th>Trip #</th>
+                  <th>Truck</th>
+                  <th>Driver</th>
+                  <th>Planned Pickup</th>
+                  <th>Actual Pickup</th>
+                  <th>Status</th>
+                  <th style="text-align: right">Total Cost</th>
+                  <th style="width: 12rem; text-align: center">Actions</th>
+                </tr>
+              </ng-template>
+
+              <ng-template #body let-trip>
+                <tr>
+                  <td class="font-semibold">{{ trip.tripNumber }}</td>
+                  <td>{{ trip.truckLicensePlate }}</td>
+                  <td>{{ trip.driverFullName }}</td>
+                  <td>
+                    {{
+                      trip.plannedPickupDate ? (trip.plannedPickupDate | date: 'yyyy-MM-dd') : '—'
+                    }}
+                  </td>
+                  <td>
+                    {{
+                      trip.actualPickupDate
+                        ? (trip.actualPickupDate | date: 'yyyy-MM-dd HH:mm')
+                        : '—'
+                    }}
+                  </td>
+                  <td>
+                    <p-tag
+                      [value]="getTripStatusLabel(trip.status)"
+                      [severity]="getTripStatusSeverity(trip.status)"
+                    />
+                  </td>
+                  <td style="text-align: right">
+                    {{ trip.totalCost != null ? (trip.totalCost | number: '1.0-0') : '—' }}
+                  </td>
+                  <td style="text-align: center">
+                    <div class="flex items-center justify-center gap-1">
+                      <p-button
+                        icon="pi pi-pencil"
+                        [rounded]="true"
+                        [text]="true"
+                        severity="info"
+                        size="small"
+                        pTooltip="Edit"
+                        tooltipPosition="top"
+                        (onClick)="onEditTrip(trip)"
+                        *ngIf="trip.status === 1"
+                      />
+                      <p-button
+                        icon="pi pi-play"
+                        [rounded]="true"
+                        [text]="true"
+                        severity="info"
+                        size="small"
+                        pTooltip="Start Trip"
+                        tooltipPosition="top"
+                        (onClick)="onStartTrip(trip)"
+                        *ngIf="trip.status === 1"
+                      />
+                      <p-button
+                        icon="pi pi-check"
+                        [rounded]="true"
+                        [text]="true"
+                        severity="success"
+                        size="small"
+                        pTooltip="Complete Trip"
+                        tooltipPosition="top"
+                        (onClick)="onCompleteTrip(trip)"
+                        *ngIf="trip.status === 2"
+                      />
+                      <p-button
+                        icon="pi pi-times"
+                        [rounded]="true"
+                        [text]="true"
+                        severity="danger"
+                        size="small"
+                        pTooltip="Cancel Trip"
+                        tooltipPosition="top"
+                        (onClick)="onCancelTrip(trip)"
+                        *ngIf="trip.status === 1 || trip.status === 2"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+
+              <ng-template #emptymessage>
+                <tr>
+                  <td colspan="8" class="text-center py-4">
+                    <span class="text-surface-500">No trips assigned yet</span>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="10" class="text-center py-8">
+          <div class="flex flex-col items-center gap-3">
+            <i class="pi pi-inbox text-4xl text-surface-400"></i>
+            <span class="text-surface-500 text-lg">No orders found</span>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Order Form Dialog -->
+<app-order-form-dialog
+  [order]="editingOrder()"
+  [customers]="customers()"
+  [(visible)]="orderFormVisible"
+  [submitting]="orderSubmitting()"
+  (saved)="onOrderFormSaved($event)"
+  (closed)="onOrderFormClosed($event)"
+/>
+
+<!-- Trip Form Dialog -->
+<app-trip-form-dialog
+  [trip]="editingTrip()"
+  [orderNumber]="tripFormOrderNumber()"
+  [trucks]="trucks()"
+  [drivers]="drivers()"
+  [(visible)]="tripFormVisible"
+  [submitting]="tripSubmitting()"
+  (saved)="onTripFormSaved($event)"
+  (closed)="onTripFormClosed($event)"
+/>
+
+<!-- Trip Complete Dialog -->
+<app-trip-complete-dialog
+  [trip]="completingTrip()"
+  [(visible)]="tripCompleteVisible"
+  [submitting]="tripCompleteSubmitting()"
+  (saved)="onTripCompleteSaved($event)"
+  (closed)="onTripCompleteClosed($event)"
+/>
+
+<!-- Cancel Dialog (shared for Order & Trip) -->
+<p-dialog
+  header="Confirm Cancellation"
+  [(visible)]="cancelDialogVisible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [style]="{ width: '30rem' }"
+>
+  <div class="flex flex-col gap-3">
+    <p class="m-0">
+      Are you sure you want to cancel <b>{{ cancelTargetLabel() }}</b
+      >?
+    </p>
+    <div class="flex flex-col gap-1">
+      <label class="font-medium text-sm">Reason <span class="text-red-500">*</span></label>
+      <textarea
+        pTextarea
+        rows="3"
+        [ngModel]="cancellationReason()"
+        (ngModelChange)="cancellationReason.set($event)"
+        placeholder="Please provide a reason for cancellation..."
+      ></textarea>
+    </div>
+  </div>
+  <ng-template #footer>
+    <div class="flex justify-end gap-2">
+      <p-button
+        label="Close"
+        severity="secondary"
+        [text]="true"
+        (onClick)="cancelDialogVisible.set(false)"
+      />
+      <p-button
+        label="Confirm Cancel"
+        icon="pi pi-times"
+        severity="danger"
+        [loading]="cancelSubmitting()"
+        [disabled]="!cancellationReason().trim() || cancelSubmitting()"
+        (onClick)="onConfirmCancel()"
+      />
+    </div>
+  </ng-template>
+</p-dialog>
