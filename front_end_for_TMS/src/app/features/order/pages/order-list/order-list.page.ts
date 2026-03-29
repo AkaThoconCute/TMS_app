@@ -116,8 +116,8 @@ export class OrderListPage implements OnInit {
 
   // --- Expanded rows + trips ---
   expandedRows: Record<string, boolean> = {};
-  orderTrips = signal<Record<string, TripDto[]>>({});
-  orderTripsLoading = signal<Record<string, boolean>>({});
+  orderTrips = signal<Record<string, TripDto[] | undefined>>({});
+  orderTripsLoading = signal<Record<string, boolean | undefined>>({});
 
   // --- Order form dialog ---
   orderFormVisible = signal(false);
