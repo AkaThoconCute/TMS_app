@@ -738,15 +738,15 @@ A Trip bridges the gap between the business request (Order) and the fleet resour
 
 | #   | Task                                                                   | Agent    | Story      | Depends On | Status      |
 | --- | ---------------------------------------------------------------------- | -------- | ---------- | ---------- | ----------- |
-| 1   | [BE] Create Order + Trip models + EF config + migration                | Backend  | S-23, S-27 | —          | Not Started |
-| 2   | [BE] Create seed data for Orders + Trips                               | Backend  | S-23, S-27 | 1          | Not Started |
-| 3   | [BE] Create OrderRepo + TripRepo                                       | Backend  | S-24, S-28 | 1          | Not Started |
-| 4   | [BE] Create Order DTOs + AutoMapper profile                            | Backend  | S-24       | 1          | Not Started |
-| 5   | [BE] Create Trip DTOs + AutoMapper profile                             | Backend  | S-28       | 1          | Not Started |
-| 6   | [BE] Create OrderService (CRUD + Complete + Cancel + Summary)          | Backend  | S-24       | 3, 4       | Not Started |
-| 7   | [BE] Create TripService (CRUD + Start + Complete + Cancel + cascading) | Backend  | S-28       | 3, 5       | Not Started |
-| 8   | [BE] Create OrderController                                            | Backend  | S-24       | 6          | Not Started |
-| 9   | [BE] Create TripController                                             | Backend  | S-28       | 7          | Not Started |
+| 1   | [BE] Create Order + Trip models + EF config + migration                | Backend  | S-23, S-27 | —          | Done        |
+| 2   | [BE] Create seed data for Orders + Trips                               | Backend  | S-23, S-27 | 1          | Done        |
+| 3   | [BE] Create OrderRepo + TripRepo                                       | Backend  | S-24, S-28 | 1          | Done        |
+| 4   | [BE] Create Order DTOs + AutoMapper profile                            | Backend  | S-24       | 1          | Done        |
+| 5   | [BE] Create Trip DTOs + AutoMapper profile                             | Backend  | S-28       | 1          | Done        |
+| 6   | [BE] Create OrderService (CRUD + Complete + Cancel + Summary)          | Backend  | S-24       | 3, 4       | Done        |
+| 7   | [BE] Create TripService (CRUD + Start + Complete + Cancel + cascading) | Backend  | S-28       | 3, 5       | Done        |
+| 8   | [BE] Create OrderController                                            | Backend  | S-24       | 6          | Done        |
+| 9   | [BE] Create TripController                                             | Backend  | S-28       | 7          | Done        |
 | 10  | [FE] Create Order + Trip TypeScript models                             | Frontend | S-25, S-29 | 4, 5       | Not Started |
 | 11  | [FE] Create OrderService (HTTP client)                                 | Frontend | S-25       | 8          | Not Started |
 | 12  | [FE] Create TripService (HTTP client)                                  | Frontend | S-29       | 9          | Not Started |

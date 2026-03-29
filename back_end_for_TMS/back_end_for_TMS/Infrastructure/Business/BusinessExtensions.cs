@@ -41,6 +41,8 @@ public static class BusinessExtensions
 
     services.AddScoped<OrderService>();
 
+    services.AddScoped<TripService>();
+
     return services;
   }
 }

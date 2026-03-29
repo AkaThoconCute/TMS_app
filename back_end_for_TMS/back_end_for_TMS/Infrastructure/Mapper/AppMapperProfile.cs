@@ -47,5 +47,23 @@ public class AppMapperProfile : Profile
           6 => "Cancelled",
           _ => "Unknown"
         }));
+
+    // Trip mappings
+    CreateMap<CreateTripDto, Trip>();
+    CreateMap<UpdateTripDto, Trip>()
+        .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+    CreateMap<Trip, TripDto>()
+        .ForMember(d => d.OrderNumber, opt => opt.MapFrom(src => src.Order != null ? src.Order.OrderNumber : string.Empty))
+        .ForMember(d => d.TruckLicensePlate, opt => opt.MapFrom(src => src.Truck != null ? src.Truck.LicensePlate : string.Empty))
+        .ForMember(d => d.DriverFullName, opt => opt.MapFrom(src => src.Driver != null ? src.Driver.FullName : string.Empty))
+        .ForMember(d => d.TotalCost, opt => opt.MapFrom(src => (src.FuelCost ?? 0) + (src.TollCost ?? 0) + (src.OtherCost ?? 0)))
+        .ForMember(d => d.StatusLabel, opt => opt.MapFrom(src => src.Status switch
+        {
+          1 => "Planned",
+          2 => "InTransit",
+          3 => "Completed",
+          4 => "Cancelled",
+          _ => "Unknown"
+        }));
   }
 }
