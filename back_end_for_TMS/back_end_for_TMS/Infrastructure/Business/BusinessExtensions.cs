@@ -22,6 +22,8 @@ public static class BusinessExtensions
 
     services.AddScoped<DriverRepo>();
 
+    services.AddScoped<CustomerRepo>();
+
     // Services
     services.AddScoped<TokenService>();
 
@@ -30,6 +32,8 @@ public static class BusinessExtensions
     services.AddScoped<TruckService>();
 
     services.AddScoped<DriverService>();
+
+    services.AddScoped<CustomerService>();
 
     return services;
   }
