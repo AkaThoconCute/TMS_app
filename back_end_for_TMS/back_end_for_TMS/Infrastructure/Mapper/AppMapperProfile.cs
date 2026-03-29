@@ -37,7 +37,7 @@ public class AppMapperProfile : Profile
     CreateMap<Order, OrderDto>()
         .ForMember(d => d.CustomerName, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Name : string.Empty))
         .ForMember(d => d.TripCount, opt => opt.MapFrom(src => src.Trips != null ? src.Trips.Count : 0))
-        .ForMember(d => d.StatusLabel, opt => opt.MapFrom(src => src.Status switch
+        .ForMember(d => d.StatusLabel, opt => opt.MapFrom((src, dest) => src.Status switch
         {
           1 => "Created",
           2 => "Assigned",
@@ -57,7 +57,7 @@ public class AppMapperProfile : Profile
         .ForMember(d => d.TruckLicensePlate, opt => opt.MapFrom(src => src.Truck != null ? src.Truck.LicensePlate : string.Empty))
         .ForMember(d => d.DriverFullName, opt => opt.MapFrom(src => src.Driver != null ? src.Driver.FullName : string.Empty))
         .ForMember(d => d.TotalCost, opt => opt.MapFrom(src => (src.FuelCost ?? 0) + (src.TollCost ?? 0) + (src.OtherCost ?? 0)))
-        .ForMember(d => d.StatusLabel, opt => opt.MapFrom(src => src.Status switch
+        .ForMember(d => d.StatusLabel, opt => opt.MapFrom((src, dest) => src.Status switch
         {
           1 => "Planned",
           2 => "InTransit",
