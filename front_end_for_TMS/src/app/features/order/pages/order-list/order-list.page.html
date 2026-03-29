@@ -91,7 +91,7 @@
     (onLazyLoad)="loadOrders($event)"
     [expandedRowKeys]="expandedRows"
     (onRowExpand)="onRowExpand($event)"
-    [tableStyle]="{ 'min-width': '80rem' }"
+    [scrollable]="true"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} orders"
     dataKey="orderId"
@@ -100,15 +100,15 @@
     <ng-template #header>
       <tr>
         <th style="width: 3rem"></th>
-        <th>Order #</th>
-        <th>Customer</th>
-        <th>Pickup Address</th>
-        <th>Delivery Address</th>
-        <th>Cargo</th>
-        <th style="text-align: right">Price</th>
-        <th>Status</th>
-        <th>Created</th>
-        <th style="width: 10rem; text-align: center">Actions</th>
+        <th style="min-width: 8rem">Order #</th>
+        <th style="min-width: 10rem">Customer</th>
+        <th style="min-width: 14rem">Pickup Address</th>
+        <th style="min-width: 14rem">Delivery Address</th>
+        <th style="min-width: 12rem">Cargo</th>
+        <th style="min-width: 8rem; text-align: right">Price</th>
+        <th style="min-width: 8rem">Status</th>
+        <th style="min-width: 8rem">Created</th>
+        <th style="width: 10rem; text-align: center" pFrozenColumn alignFrozen="right">Actions</th>
       </tr>
     </ng-template>
 
@@ -147,7 +147,7 @@
           />
         </td>
         <td>{{ order.createdAt | date: 'yyyy-MM-dd' }}</td>
-        <td style="text-align: center">
+        <td style="text-align: center" pFrozenColumn alignFrozen="right">
           <div class="flex items-center justify-center gap-1">
             <p-button
               icon="pi pi-pencil"
@@ -185,7 +185,7 @@
     </ng-template>
 
     <!-- Expandable Row: Trip Panel -->
-    <ng-template #rowexpansion let-order>
+    <ng-template #expandedrow let-order>
       <tr>
         <td [attr.colspan]="10">
           <div class="p-4">
