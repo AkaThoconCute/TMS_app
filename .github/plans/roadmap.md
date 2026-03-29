@@ -1,6 +1,6 @@
 # EasyTMS Product Roadmap
 
-**Last Updated**: 2026-03-28  
+**Last Updated**: 2026-03-29  
 **Author**: Derek6_PO (Product Owner)
 
 ---
@@ -14,7 +14,7 @@ EasyTMS provides an **Easy – Fast – Save** solution for household truck tran
 ## Roadmap Overview
 
 ```
-Foundation ✅  →  Sprint 1 ✅  →  Sprint 2 ✅  →  Sprint 3 🔄  →  Sprint 4    →  Sprint 5    →  Sprint 6+
+Foundation ✅  →  Sprint 1 ✅  →  Sprint 2 ✅  →  Sprint 3 ✅  →  Sprint 4 🔄  →  Sprint 5    →  Sprint 6+
 Auth + Truck      Multi-tenant     Driver          User +           Order &       Invoicing      Reporting,
                                                    Customer         Trip Mgmt     & Billing      Notifications
 ```
@@ -25,7 +25,7 @@ Auth + Truck      Multi-tenant     Driver          User +           Order &     
 
 **Delivered**: 2026-03-24  
 **Plan**: [sprint-0.md](sprint-0.md)  
-**Stories**: 
+**Stories**:
 
 | Deliverable                                           | Status |
 | ----------------------------------------------------- | ------ |
@@ -42,12 +42,12 @@ Auth + Truck      Multi-tenant     Driver          User +           Order &     
 **Plan**: [sprint-1.md](sprint-1.md)  
 **Stories**: S-01 → S-08
 
-| Deliverable                                           | Status |
-| ----------------------------------------------------- | ------ |
-| Tenant entity + TenantId on all entities              | Done   |
-| EF Core Global Query Filters + auto-stamp TenantId    | Done   |
-| TenantContext scoped service + JWT tenant claim       | Done   |
-| Frontend stores tenant context, displays tenant name  | Done   |
+| Deliverable                                          | Status |
+| ---------------------------------------------------- | ------ |
+| Tenant entity + TenantId on all entities             | Done   |
+| EF Core Global Query Filters + auto-stamp TenantId   | Done   |
+| TenantContext scoped service + JWT tenant claim      | Done   |
+| Frontend stores tenant context, displays tenant name | Done   |
 
 ---
 
@@ -68,35 +68,40 @@ Auth + Truck      Multi-tenant     Driver          User +           Order &     
 
 ---
 
-## Sprint 3: User Management + Customer Management 🔄 ACTIVE
+## Sprint 3: User Management + Customer Management ✅ DONE
 
+**Delivered**: 2026-03-29  
 **Plan**: [sprint-3.md](sprint-3.md)  
 **Stories**: S-15 → S-22
 
-| Deliverable                                          | Status      |
-| ---------------------------------------------------- | ----------- |
-| User profile page (view/edit username)               | Not Started |
-| Change password (authenticated)                      | Not Started |
-| Forgot/Reset password flow                           | Not Started |
-| Role-based UI visibility                             | Not Started |
-| Customer model + CRUD API (tenant-scoped)            | Not Started |
-| Customer list page (PrimeNG DataTable, lazy loading) | Not Started |
-| Customer form dialog (Create/Edit)                   | Not Started |
+| Deliverable                                          | Status |
+| ---------------------------------------------------- | ------ |
+| User profile page (view/edit username)               | Done   |
+| Change password (authenticated)                      | Done   |
+| Forgot/Reset password flow                           | Done   |
+| Role-based UI visibility                             | Done   |
+| Customer model + CRUD API (tenant-scoped)            | Done   |
+| Customer list page (PrimeNG DataTable, lazy loading) | Done   |
+| Customer form dialog (Create/Edit)                   | Done   |
 
 ---
 
-## Sprint 4 (Planned): Order & Trip Management
+## Sprint 4: Order & Trip Management 🔄 ACTIVE
 
-> Core TMS value — managing shipments from pickup to delivery.
+**Plan**: [sprint-4.md](sprint-4.md)  
+**Stories**: S-23 → S-30
 
-| Feature                                                      | Priority |
-| ------------------------------------------------------------ | -------- |
-| Order entity (Customer FK, Pickup, Delivery, Cargo, Status)  | Must     |
-| Trip/Route entity (assign Truck + Driver to Order)           | Must     |
-| Order lifecycle (Created → Assigned → InTransit → Delivered) | Must     |
-| Order list page with status pipeline view                    | Must     |
-| Trip tracking (status updates, timestamps)                   | Should   |
-| Trip cost recording (fuel, tolls, other expenses)            | Should   |
+| Deliverable                                                              | Status      |
+| ------------------------------------------------------------------------ | ----------- |
+| Order model + CRUD API (tenant-scoped, auto-generated OrderNumber)       | Not Started |
+| Order lifecycle (Created → Assigned → InTransit → Delivered → Completed) | Not Started |
+| Order list page with status pipeline summary + expandable rows           | Not Started |
+| Order form dialog (Create/Edit) + Complete/Cancel actions                | Not Started |
+| Trip model + CRUD API (tenant-scoped, auto-generated TripNumber)         | Not Started |
+| Trip lifecycle (Planned → InTransit → Completed) with order cascading    | Not Started |
+| Trip panel in order expandable rows + Start/Complete/Cancel actions      | Not Started |
+| Trip form dialog with truck/driver assignment                            | Not Started |
+| Trip cost recording (fuel, tolls, other) at completion                   | Not Started |
 
 ---
 
@@ -168,3 +173,7 @@ Auth + Truck      Multi-tenant     Driver          User +           Order &     
 | 2026-03-28 | Customer pulled forward into Sprint 3 (before Orders)                              | Orders require `CustomerId` FK. Building Customer now unblocks Order management in Sprint 4.                                                      |
 | 2026-03-28 | Truck maintenance records deferred to backlog                                      | Sprint 3 focuses on User + Customer. Maintenance is independent and can be added later without blocking anything.                                 |
 | 2026-03-28 | Sprint-based planning replaces phase-based                                         | Each sprint is self-contained with its own plan document. Roadmap stays as high-level overview only. Cleaner tracking, less document duplication. |
+| 2026-03-29 | One-to-many Order→Trip, cascading status, one active trip per order (MVP)          | Trips drive order progress automatically. Simple for household scale. Trip history preserved even if cancelled.                                   |
+| 2026-03-29 | No hard delete for Orders/Trips — use Cancellation                                 | Business records preserved for history, audit, and invoicing. Cancel is the soft-close mechanism.                                                 |
+| 2026-03-29 | Trips shown in Order expandable rows (no separate Trip page)                       | Trips are contextual to orders. PrimeNG row expansion keeps UX focused.                                                                           |
+| 2026-03-29 | Auto-generated OrderNumber/TripNumber (sequential per tenant)                      | Human-readable references (`ORD-000001`, `TRP-000001`) for customer communication and record-keeping.                                             |
