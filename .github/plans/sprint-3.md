@@ -204,17 +204,17 @@ In a household truck transportation business, a **Customer** is:
 | 3   | [BE] Add `ForgotPassword` + `ResetPassword` endpoints | Backend  | S-17  | —          | Done        |
 | 4   | [FE] Wire reset password page to backend endpoints    | Frontend | S-17  | 3          | Done        |
 | 5   | [FE] Add role-based visibility logic + demo           | Frontend | S-18  | —          | Done        |
-| 6   | [BE] Create `Customer` model + EF config + migration  | Backend  | S-19  | —          | Not Started |
-| 7   | [BE] Create seed data for Customers                   | Backend  | S-19  | 6          | Not Started |
-| 8   | [BE] Create `CustomerRepo`                            | Backend  | S-20  | 6          | Not Started |
-| 9   | [BE] Create DTOs + AutoMapper profile for Customer    | Backend  | S-20  | 6          | Not Started |
-| 10  | [BE] Create `CustomerService` with CRUD + validation  | Backend  | S-20  | 8, 9       | Not Started |
-| 11  | [BE] Create `CustomerController`                      | Backend  | S-20  | 10         | Not Started |
-| 12  | [FE] Create customer models/DTOs                      | Frontend | S-21  | 9          | Not Started |
-| 13  | [FE] Create `CustomerService` (HTTP client)           | Frontend | S-21  | 11         | Not Started |
-| 14  | [FE] Create Customer list page with PrimeNG DataTable | Frontend | S-21  | 12, 13     | Not Started |
-| 15  | [FE] Create Customer form dialog                      | Frontend | S-22  | 12, 13     | Not Started |
-| 16  | [FE] Add customer routes + update navbar              | Frontend | S-21  | 14         | Not Started |
+| 6   | [BE] Create `Customer` model + EF config + migration  | Backend  | S-19  | —          | Done        |
+| 7   | [BE] Create seed data for Customers                   | Backend  | S-19  | 6          | Done        |
+| 8   | [BE] Create `CustomerRepo`                            | Backend  | S-20  | 6          | Done        |
+| 9   | [BE] Create DTOs + AutoMapper profile for Customer    | Backend  | S-20  | 6          | Done        |
+| 10  | [BE] Create `CustomerService` with CRUD + validation  | Backend  | S-20  | 8, 9       | Done        |
+| 11  | [BE] Create `CustomerController`                      | Backend  | S-20  | 10         | Done        |
+| 12  | [FE] Create customer models/DTOs                      | Frontend | S-21  | 9          | Done        |
+| 13  | [FE] Create `CustomerService` (HTTP client)           | Frontend | S-21  | 11         | Done        |
+| 14  | [FE] Create Customer list page with PrimeNG DataTable | Frontend | S-21  | 12, 13     | Done        |
+| 15  | [FE] Create Customer form dialog                      | Frontend | S-22  | 12, 13     | Done        |
+| 16  | [FE] Add customer routes + update navbar              | Frontend | S-21  | 14         | Done        |
 
 **Parallelism Notes:**
 

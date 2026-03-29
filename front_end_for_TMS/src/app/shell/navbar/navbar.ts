@@ -49,6 +49,13 @@ export class Navbar {
       ]
     },
     {
+      label: 'Customer',
+      icon: 'groups',
+      items: [
+        { label: 'List customer', route: '/customers/list' }
+      ]
+    },
+    {
       label: 'Demo',
       icon: 'person',
       items: [
