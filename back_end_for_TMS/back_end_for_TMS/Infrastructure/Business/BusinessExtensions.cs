@@ -24,6 +24,10 @@ public static class BusinessExtensions
 
     services.AddScoped<CustomerRepo>();
 
+    services.AddScoped<OrderRepo>();
+
+    services.AddScoped<TripRepo>();
+
     // Services
     services.AddScoped<TokenService>();
 
@@ -34,6 +38,8 @@ public static class BusinessExtensions
     services.AddScoped<DriverService>();
 
     services.AddScoped<CustomerService>();
+
+    services.AddScoped<OrderService>();
 
     return services;
   }

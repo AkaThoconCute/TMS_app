@@ -29,5 +29,23 @@ public class AppMapperProfile : Profile
     CreateMap<Customer, CustomerDto>()
         .ForMember(d => d.CustomerTypeLabel, opt => opt.MapFrom(src => src.CustomerType == 1 ? "Individual" : "Business"))
         .ForMember(d => d.StatusLabel, opt => opt.MapFrom(src => src.Status == 1 ? "Active" : "Inactive"));
+
+    // Order mappings
+    CreateMap<CreateOrderDto, Order>();
+    CreateMap<UpdateOrderDto, Order>()
+        .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+    CreateMap<Order, OrderDto>()
+        .ForMember(d => d.CustomerName, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Name : string.Empty))
+        .ForMember(d => d.TripCount, opt => opt.MapFrom(src => src.Trips != null ? src.Trips.Count : 0))
+        .ForMember(d => d.StatusLabel, opt => opt.MapFrom(src => src.Status switch
+        {
+          1 => "Created",
+          2 => "Assigned",
+          3 => "InTransit",
+          4 => "Delivered",
+          5 => "Completed",
+          6 => "Cancelled",
+          _ => "Unknown"
+        }));
   }
 }
