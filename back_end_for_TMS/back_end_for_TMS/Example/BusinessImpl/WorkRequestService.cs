@@ -14,20 +14,26 @@ namespace back_end_for_TMS.Example.BusinessImpl
     {
       try
       {
-        for (int i = 0; i < 30; i++)
+        var quick = false;
+        var loop = quick ? 1 : 30;
+        for (int i = 0; i < loop; i++)
         {
           await Task.Delay(1000, cancellationToken);
         }
 
-        return true;
+        var success = true;
+        if (success == true)
+        {
+          return true;
+        }
+        else
+        {
+          throw new ArgumentException("Work done. Test an exception");
+        }
       }
       catch (Exception ex) when (ex is not OperationCanceledException)
       {
-        return false;
-      }
-      catch (OperationCanceledException ex)
-      {
-        return false;
+        throw;
       }
     }
   }
