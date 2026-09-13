@@ -58,7 +58,7 @@ export const appRoutes: Routes = [
       },
       {
         path: 'example/cancellation',
-        loadComponent: () => import('./common/example/cancellation/cancellation.component').then(m => m.CancellationComponent)
+        loadComponent: () => import('./example/cancellation/cancellation.component').then(m => m.CancellationComponent)
       },
       {
         path: 'profile',

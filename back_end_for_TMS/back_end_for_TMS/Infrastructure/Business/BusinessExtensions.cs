@@ -1,4 +1,6 @@
 ﻿using back_end_for_TMS.Business;
+using back_end_for_TMS.Example.BusinessImpl;
+using back_end_for_TMS.Example.IBusiness;
 using back_end_for_TMS.Infrastructure.Mapper;
 using back_end_for_TMS.Infrastructure.Response;
 using back_end_for_TMS.Models.Repository;
@@ -29,6 +31,8 @@ public static class BusinessExtensions
     services.AddScoped<TripRepo>();
 
     // Services
+    services.AddScoped<IWorkRequestService, WorkRequestService>();
+
     services.AddScoped<TokenService>();
 
     services.AddScoped<AccountService>();

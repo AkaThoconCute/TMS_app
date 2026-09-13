@@ -18,7 +18,7 @@ export class CancellationService {
     private http: HttpClient,
     private configService: EnvService
   ) {
-    this.apiService = this.configService.getApiUrl('/api/Cancellation');
+    this.apiService = this.configService.getApiUrl('/api/work-requests');
   }
 
   /**
@@ -26,19 +26,7 @@ export class CancellationService {
    */
   makeRequest(): Observable<void> {
     return this.http
-      .get<ApiResponse<void>>(`${this.apiService}`)
-      .pipe(
-        map(response => response.data),
-        catchError(error => this.handleError(error))
-      );
-  }
-
-  /**
-   * Cancel a cancellation request
-   */
-  cancelRequest(): Observable<void> {
-    return this.http
-      .delete<ApiResponse<void>>(`${this.apiService}`)
+      .post<ApiResponse<void>>(`${this.apiService}/start`, {})
       .pipe(
         map(response => response.data),
         catchError(error => this.handleError(error))
