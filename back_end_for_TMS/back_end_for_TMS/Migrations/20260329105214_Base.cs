@@ -403,7 +403,7 @@ namespace back_end_for_TMS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "CustomerId", "Address", "ContactPerson", "CreatedAt", "CustomerType", "Email", "Name", "Notes", "PhoneNumber", "Status", "TaxCode", "TenantId", "UpdatedAt" },
+                columns: new[] { "CustomerId", "Address", "ContactPerson", "CreatedAt", "CustomerType", "Email", "Name", "Notes", "PhoneNumber", "HttpStatus", "TaxCode", "TenantId", "UpdatedAt" },
                 values: new object[,]
                 {
                     { new Guid("0195d004-cccc-7000-8000-000000000001"), "123 Nguyễn Huệ, Quận 1, Tp. Hồ Chí Minh", "Nguyễn Văn Toàn", new DateTimeOffset(new DateTime(2026, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "info@thuanphat.vn", "Công ty TNHH Thuận Phát", null, "0281234567", 1, "0312345678", new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"), null },
@@ -418,7 +418,7 @@ namespace back_end_for_TMS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Drivers",
-                columns: new[] { "DriverId", "CreatedAt", "DateOfBirth", "FullName", "HireDate", "LicenseClass", "LicenseExpiry", "LicenseNumber", "Notes", "PhoneNumber", "Status", "TenantId", "UpdatedAt" },
+                columns: new[] { "DriverId", "CreatedAt", "DateOfBirth", "FullName", "HireDate", "LicenseClass", "LicenseExpiry", "LicenseNumber", "Notes", "PhoneNumber", "HttpStatus", "TenantId", "UpdatedAt" },
                 values: new object[,]
                 {
                     { new Guid("0195d003-dddd-7000-8000-000000000001"), new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new DateTime(1985, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Nguyễn Văn Minh", new DateTime(2020, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "B2", new DateTime(2028, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "B2-123456", null, "0901234567", 1, new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"), null },
@@ -458,7 +458,7 @@ namespace back_end_for_TMS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "OrderId", "CancellationReason", "CancelledAt", "CargoDescription", "CargoWeightKg", "CompletedAt", "CreatedAt", "CustomerId", "DeliveryAddress", "Notes", "OrderNumber", "PickupAddress", "QuotedPrice", "RequestedDeliveryDate", "RequestedPickupDate", "Status", "TenantId", "UpdatedAt" },
+                columns: new[] { "OrderId", "CancellationReason", "CancelledAt", "CargoDescription", "CargoWeightKg", "CompletedAt", "CreatedAt", "CustomerId", "DeliveryAddress", "Notes", "OrderNumber", "PickupAddress", "QuotedPrice", "RequestedDeliveryDate", "RequestedPickupDate", "HttpStatus", "TenantId", "UpdatedAt" },
                 values: new object[,]
                 {
                     { new Guid("0195d001-aaaa-7000-8000-000000000001"), null, null, "Nội thất gia đình — ghế sofa, bàn, ghế", 350m, null, new DateTimeOffset(new DateTime(2026, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new Guid("0195d004-cccc-7000-8000-000000000001"), "456 Lê Lợi, Quận 3, Tp. Hồ Chí Minh", "Customer requests morning pickup", "ORD-000001", "123 Nguyễn Huệ, Quận 1, Tp. Hồ Chí Minh", 2500000m, new DateTime(2026, 3, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"), null },
@@ -471,7 +471,7 @@ namespace back_end_for_TMS.Migrations
 
             migrationBuilder.InsertData(
                 table: "Trips",
-                columns: new[] { "TripId", "ActualDeliveryDate", "ActualPickupDate", "CancellationReason", "CancelledAt", "CompletedAt", "CostNotes", "CreatedAt", "DriverId", "FuelCost", "Notes", "OrderId", "OtherCost", "PlannedDeliveryDate", "PlannedPickupDate", "Status", "TenantId", "TollCost", "TripNumber", "TruckId", "UpdatedAt" },
+                columns: new[] { "TripId", "ActualDeliveryDate", "ActualPickupDate", "CancellationReason", "CancelledAt", "CompletedAt", "CostNotes", "CreatedAt", "DriverId", "FuelCost", "Notes", "OrderId", "OtherCost", "PlannedDeliveryDate", "PlannedPickupDate", "HttpStatus", "TenantId", "TollCost", "TripNumber", "TruckId", "UpdatedAt" },
                 values: new object[,]
                 {
                     { new Guid("0195d002-bbbb-7000-8000-000000000001"), null, null, null, null, null, null, new DateTimeOffset(new DateTime(2026, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new Guid("0195d003-dddd-7000-8000-000000000001"), null, "Scheduled for morning pickup", new Guid("0195d001-aaaa-7000-8000-000000000003"), null, new DateTime(2026, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"), null, "TRP-000001", new Guid("0195d005-eeee-7000-8000-000000000001"), null },

@@ -340,7 +340,7 @@ namespace back_end_for_TMS.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("HttpStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("TaxCode")
@@ -504,7 +504,7 @@ namespace back_end_for_TMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("HttpStatus")
                         .HasColumnType("int");
 
                     b.Property<Guid>("TenantId")
@@ -692,7 +692,7 @@ namespace back_end_for_TMS.Migrations
                     b.Property<DateTime?>("RequestedPickupDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("HttpStatus")
                         .HasColumnType("int");
 
                     b.Property<Guid>("TenantId")
@@ -928,7 +928,7 @@ namespace back_end_for_TMS.Migrations
                     b.Property<DateTime?>("PlannedPickupDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("HttpStatus")
                         .HasColumnType("int");
 
                     b.Property<Guid>("TenantId")

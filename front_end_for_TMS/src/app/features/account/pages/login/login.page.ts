@@ -51,7 +51,7 @@ export class LoginPage {
       next: (result) => {
         this.isLoading = false;
 
-        if (result.success) {
+        if (result.isSuccess && result.value) {
           this.successMessage = 'Login successful!';
 
           // Clear form
@@ -63,7 +63,7 @@ export class LoginPage {
             this.router.navigate(['/home']);
           }, 1000);
         } else {
-          this.errorMessage = result.errors?.[0] || 'Login failed';
+          this.errorMessage = result.message;
         }
       },
       error: (error) => {

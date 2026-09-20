@@ -1,7 +1,8 @@
-﻿using back_end_for_TMS.Example.IBusiness;
+﻿using back_end_for_TMS.Common;
+using back_end_for_TMS.Example.IBusiness;
 using Microsoft.AspNetCore.Mvc;
 
-namespace back_end_for_TMS.Example
+namespace back_end_for_TMS.Example.Api
 {
   [ApiController]
   [Route("api/work-requests")]
@@ -15,10 +16,10 @@ namespace back_end_for_TMS.Example
     }
 
     [HttpPost("start")]
-    public async Task<IActionResult> StartWork(CancellationToken cancellationToken)
+    public async Task<AppResult<bool>> StartWork(CancellationToken cancellationToken)
     {
       var result = await _workRequestService.StartWorkAsync(cancellationToken);
-      return Ok(new { Message = "Work completed successfully.", Result = result });
+      return result;
     }
   }
 }

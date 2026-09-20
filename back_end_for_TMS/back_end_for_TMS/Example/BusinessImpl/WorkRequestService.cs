@@ -1,4 +1,6 @@
-﻿using back_end_for_TMS.Example.IBusiness;
+﻿using back_end_for_TMS.Common;
+using back_end_for_TMS.Common.Error;
+using back_end_for_TMS.Example.IBusiness;
 using System.Collections.Concurrent;
 
 namespace back_end_for_TMS.Example.BusinessImpl
@@ -10,21 +12,25 @@ namespace back_end_for_TMS.Example.BusinessImpl
 
     // Simulate 30 seconds of work.
     // Task.Delay natively listens to cancellationToken and throws TaskCanceledException when aborted.
-    public async Task<bool> StartWorkAsync(CancellationToken cancellationToken)
+    public async Task<AppResult<bool>> StartWorkAsync(CancellationToken cancellationToken)
     {
       try
       {
-        var quick = false;
+        var quick = true;
         var loop = quick ? 1 : 30;
         for (int i = 0; i < loop; i++)
         {
           await Task.Delay(1000, cancellationToken);
         }
 
-        var success = true;
-        if (success == true)
+        var success = 2;
+        if (success == 1)
         {
-          return true;
+          return AppResult<bool>.FromResult(true);
+        }
+        else if (success == 2)
+        {
+          return AppResult<bool>.FromError(ExampleError.NormalError);
         }
         else
         {

@@ -16,6 +16,7 @@ import {
   ForgotPasswordDto,
   ResetPasswordDto,
   ForgotPasswordResult,
+  AppResult,
 } from './auth.models';
 import { EnvService } from '../env/env.service';
 import { CookieService } from '../cookie/cookie.service';
@@ -105,16 +106,18 @@ export class AuthService {
   /**
    * Login user
    */
-  login(credentials: LoginDto): Observable<AuthResult> {
+  login(credentials: LoginDto): Observable<AppResult<AuthResult>> {
     return this.http
-      .post<ApiResponse<AuthResult>>(`${this.apiUrl}/Login`, credentials)
+      .post<AppResult<AuthResult>>(`${this.apiUrl}/Login`, credentials)
       .pipe(
-        map(response => response.data),
+        map(response => response),
         tap((result) => {
-          if (result.success && result.token) {
-            this.setTokens(result.token, result.refreshToken);
+          if (result.isSuccess && result.value) {
+            this.setTokens(result.value.token, result.value.refreshToken);
             this.isAuthenticatedSubject.next(true);
             this.loadCurrentUser().subscribe();
+          } else {
+            this.clearAuth();
           }
         }),
         catchError((error) => {

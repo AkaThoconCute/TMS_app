@@ -1,5 +1,6 @@
 ﻿using back_end_for_TMS.Business;
 using back_end_for_TMS.Business.Types;
+using back_end_for_TMS.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,7 +35,7 @@ public class AccountController(AccountService accountService) : ControllerBase
 
   [HttpPost]
   [AllowAnonymous]
-  public async Task<ActionResult<AuthResult>> Login([FromBody] LoginDto dto)
+  public async Task<ActionResult<AppResult<AuthResult>>> Login([FromBody] LoginDto dto)
   {
     var result = await accountService.Login(dto);
     return Ok(result);

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Example\Api\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

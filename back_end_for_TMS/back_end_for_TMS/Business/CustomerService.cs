@@ -21,7 +21,7 @@ public class CustomerService(CustomerRepo customerRepository, IMapper mapper)
       throw new ArgumentException("CustomerType must be 1 (Individual) or 2 (Business)", nameof(dto.CustomerType));
 
     if (dto.Status != 1 && dto.Status != 2)
-      throw new ArgumentException("Status must be 1 (Active) or 2 (Inactive)", nameof(dto.Status));
+      throw new ArgumentException("HttpStatus must be 1 (Active) or 2 (Inactive)", nameof(dto.Status));
 
     // Check if phone number already exists for this tenant
     var existingCustomer = await customerRepository.FindAsync(c => c.PhoneNumber == dto.PhoneNumber);
@@ -119,7 +119,7 @@ public class CustomerService(CustomerRepo customerRepository, IMapper mapper)
       throw new ArgumentException("CustomerType must be 1 (Individual) or 2 (Business)", nameof(dto.CustomerType));
 
     if (dto.Status.HasValue && dto.Status != 1 && dto.Status != 2)
-      throw new ArgumentException("Status must be 1 (Active) or 2 (Inactive)", nameof(dto.Status));
+      throw new ArgumentException("HttpStatus must be 1 (Active) or 2 (Inactive)", nameof(dto.Status));
 
     mapper.Map(dto, customer);
     customer.UpdatedAt = DateTimeOffset.UtcNow;

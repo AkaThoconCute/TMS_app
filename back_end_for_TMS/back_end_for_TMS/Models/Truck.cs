@@ -29,5 +29,5 @@ public class Truck : ITenantEntity
 
   // Metadata
   public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
-  public DateTimeOffset? UpdatedAt { get; set; }          // Cập nhật mỗi khi Status hoặc Odometer thay đổi
+  public DateTimeOffset? UpdatedAt { get; set; }          // Cập nhật mỗi khi HttpStatus hoặc Odometer thay đổi
 }

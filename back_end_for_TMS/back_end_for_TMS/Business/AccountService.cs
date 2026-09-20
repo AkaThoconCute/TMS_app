@@ -1,8 +1,9 @@
 ﻿using back_end_for_TMS.Business.Types;
+using back_end_for_TMS.Common;
+using back_end_for_TMS.Common.Error;
 using back_end_for_TMS.Models;
 using back_end_for_TMS.Models.Repository;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
@@ -82,15 +83,20 @@ public class AccountService(
     };
   }
 
-  public async Task<AuthResult> Login(LoginDto dto)
+  public async Task<AppResult<AuthResult>> Login(LoginDto dto)
   {
+    return AppResult<AuthResult>.FromError(AuthError.LoginFailed);
     var user = await userManager.FindByEmailAsync(dto.Email);
     if (user == null)
-      return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
+    {
+      return AppResult<AuthResult>.FromError(AuthError.LoginFailed);
+    }
 
     var result = await signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
     if (!result.Succeeded)
-      return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
+    {
+      return AppResult<AuthResult>.FromError(AuthError.LoginFailed);
+    }
 
     var roles = await userManager.GetRolesAsync(user);
     var accessToken = tokenService.CreateToken(user, roles);
@@ -100,12 +106,12 @@ public class AccountService(
     user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
     await userManager.UpdateAsync(user);
 
-    return new AuthResult
+    return AppResult<AuthResult>.FromResult(new AuthResult
     {
       Success = true,
       Token = accessToken,
       RefreshToken = refreshToken
-    };
+    });
   }
 
   public async Task<UserProfile?> GetProfile(ClaimsPrincipal currentUser)
