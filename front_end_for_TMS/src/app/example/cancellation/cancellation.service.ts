@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ApiResponse } from "@platform/auth/auth.models";
+import { ApiResponse } from "@features/auth/model/auth.models";
 import { EnvService } from "@platform/env/env.service";
 import { catchError, map, Observable, throwError } from "rxjs";
 

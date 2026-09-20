@@ -9,8 +9,8 @@ import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AuthService } from '@platform/auth/auth.service';
-import { UpdateProfileDto, ChangePasswordDto } from '@platform/auth/auth.models';
+import { AuthService } from '@features/auth/service/auth.service';
+import { UpdateProfileDto, ChangePasswordDto } from '@features/auth/model/auth.models';
 
 @Component({
   selector: 'app-profile',

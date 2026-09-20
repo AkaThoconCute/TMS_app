@@ -19,7 +19,7 @@ export const appRoutes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('./features/account/account.routes').then(m => m.ACCOUNT_ROUTES)
+        loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
       },
     ]
   },
@@ -62,7 +62,7 @@ export const appRoutes: Routes = [
       },
       {
         path: 'profile',
-        loadComponent: () => import('./features/account/pages/profile/profile.page').then(m => m.ProfilePage)
+        loadComponent: () => import('./features/auth/pages/profile/profile.page').then(m => m.ProfilePage)
       },
       {
         path: 'under-development',

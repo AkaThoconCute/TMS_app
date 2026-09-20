@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import { appPrimeNG } from './app.prime';
 import { appRoutes } from './app.routes';
-import { AuthService } from '@platform/auth/auth.service';
+import { AuthService } from '@features/auth/service/auth.service';
 import { authInterceptor } from '@platform/auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {

@@ -2,8 +2,8 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../../platform/auth/auth.service';
-import { LoginRequest } from '../../../../platform/auth/auth.models';
+import { AuthService } from '../../service/auth.service';
+import { LoginRequest } from '../../model/auth.models';
 
 @Component({
   selector: 'app-login',

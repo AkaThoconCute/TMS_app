@@ -2,7 +2,7 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AuthService } from '@platform/auth/auth.service';
+import { AuthService } from '@features/auth/service/auth.service';
 
 interface MenuItem {
   label: string;

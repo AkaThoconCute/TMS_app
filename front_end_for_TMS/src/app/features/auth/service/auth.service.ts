@@ -17,9 +17,9 @@ import {
   ResetPasswordDto,
   ForgotPasswordResult,
   AppResult,
-} from './auth.models';
-import { EnvService } from '../env/env.service';
-import { CookieService } from '../cookie/cookie.service';
+} from '../model/auth.models';
+import { EnvService } from '../../../platform/env/env.service';
+import { CookieService } from '../../../platform/cookie/cookie.service';
 
 /**
  * Authentication Service
