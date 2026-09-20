@@ -1,5 +1,5 @@
 // Request DTOs
-export interface LoginDto {
+export interface LoginRequest {
   email: string;
   password: string;
 }
@@ -15,9 +15,9 @@ export interface TokenDto {
 }
 
 // Response DTOs
-export interface AuthResult {
+export interface AuthDTO {
   success: boolean;
-  token: string;
+  accessToken: string;
   refreshToken: string;
   errors: string[] | null;
 }
@@ -39,12 +39,12 @@ export interface ApiResponse<T> {
 }
 
 export interface AppResult<T> {
-  path: string;
-  httpStatus: number;
-  isSuccess: boolean;
-  value: T;
-  code: number;
-  message: string;
+  success: boolean;
+  result: T | null;
+  error: {
+    code: number;
+    message: string;
+  } | null;
 }
 
 // Profile update

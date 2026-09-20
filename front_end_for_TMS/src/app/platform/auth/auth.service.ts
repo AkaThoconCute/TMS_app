@@ -4,10 +4,10 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, catchError, map, take, filter } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import {
-  LoginDto,
+  LoginRequest,
   RegisterDto,
   TokenDto,
-  AuthResult,
+  AuthDTO,
   UserProfile,
   ApiResponse,
   UpdateProfileDto,
@@ -72,6 +72,27 @@ export class AuthService {
   }
 
   /**
+   * Login user
+   */
+  login(loginRequest: LoginRequest): Observable<AppResult<AuthDTO>> {
+    return this.http
+      .post<AppResult<AuthDTO>>(`${this.apiUrl}/Login`, loginRequest)
+      .pipe(
+        map(response => response),
+        tap((response) => {
+          if (response.success && response?.result) {
+            const result = response.result;
+            this.setTokens(result.accessToken, result.refreshToken);
+            this.isAuthenticatedSubject.next(true);
+            this.loadCurrentUser().subscribe();
+          } else {
+            this.clearAuth();
+          }
+        })
+      );
+  }
+
+  /**
    * Check if the current user has a specific role (case-insensitive)
    */
   hasRole(role: string): boolean {
@@ -104,40 +125,16 @@ export class AuthService {
   }
 
   /**
-   * Login user
-   */
-  login(credentials: LoginDto): Observable<AppResult<AuthResult>> {
-    return this.http
-      .post<AppResult<AuthResult>>(`${this.apiUrl}/Login`, credentials)
-      .pipe(
-        map(response => response),
-        tap((result) => {
-          if (result.isSuccess && result.value) {
-            this.setTokens(result.value.token, result.value.refreshToken);
-            this.isAuthenticatedSubject.next(true);
-            this.loadCurrentUser().subscribe();
-          } else {
-            this.clearAuth();
-          }
-        }),
-        catchError((error) => {
-          this.clearAuth();
-          return this.handleError(error);
-        })
-      );
-  }
-
-  /**
    * Register new user
    */
-  register(userData: RegisterDto): Observable<AuthResult> {
+  register(userData: RegisterDto): Observable<AuthDTO> {
     return this.http
-      .post<ApiResponse<AuthResult>>(`${this.apiUrl}/Register`, userData)
+      .post<ApiResponse<AuthDTO>>(`${this.apiUrl}/Register`, userData)
       .pipe(
         map(response => response.data),
         tap((result) => {
-          if (result.success && result.token) {
-            this.setTokens(result.token, result.refreshToken);
+          if (result.success && result.accessToken) {
+            this.setTokens(result.accessToken, result.refreshToken);
             this.isAuthenticatedSubject.next(true);
             this.loadCurrentUser().subscribe();
           }
@@ -168,7 +165,7 @@ export class AuthService {
   /**
    * Refresh authentication token
    */
-  refreshToken(): Observable<AuthResult> {
+  refreshToken(): Observable<AuthDTO> {
     const refreshToken = this.getRefreshToken();
     if (!refreshToken) {
       this.clearAuth();
@@ -176,12 +173,12 @@ export class AuthService {
     }
 
     return this.http
-      .post<ApiResponse<AuthResult>>(`${this.apiUrl}/RefreshToken`, { refreshToken })
+      .post<ApiResponse<AuthDTO>>(`${this.apiUrl}/RefreshToken`, { refreshToken })
       .pipe(
         map(response => response.data),
         tap((result) => {
-          if (result.success && result.token) {
-            this.setTokens(result.token, result.refreshToken);
+          if (result.success && result.accessToken) {
+            this.setTokens(result.accessToken, result.refreshToken);
           } else {
             this.clearAuth();
           }
@@ -204,8 +201,8 @@ export class AuthService {
       return this.refreshToken().pipe(
         map(result => {
           this.isRefreshing = false;
-          this.refreshTokenSubject.next(result.token);
-          return result.token;
+          this.refreshTokenSubject.next(result.accessToken);
+          return result.accessToken;
         }),
         catchError(err => {
           this.isRefreshing = false;
@@ -286,9 +283,9 @@ export class AuthService {
   /**
    * Reset password using token
    */
-  resetPassword(dto: ResetPasswordDto): Observable<AuthResult> {
+  resetPassword(dto: ResetPasswordDto): Observable<AuthDTO> {
     return this.http
-      .post<ApiResponse<AuthResult>>(`${this.apiUrl}/ResetPassword`, dto)
+      .post<ApiResponse<AuthDTO>>(`${this.apiUrl}/ResetPassword`, dto)
       .pipe(
         map(response => response.data),
         catchError(error => this.handleError(error))
@@ -387,7 +384,6 @@ export class AuthService {
       errorMessage = error.error?.data?.errors?.[0] || error.message || 'Unknown error';
     }
 
-    console.error('API Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 }

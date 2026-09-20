@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../platform/auth/auth.service';
-import { LoginDto } from '../../../../platform/auth/auth.models';
+import { LoginRequest } from '../../../../platform/auth/auth.models';
 
 @Component({
   selector: 'app-login',
@@ -13,63 +13,66 @@ import { LoginDto } from '../../../../platform/auth/auth.models';
   styleUrl: './login.page.css'
 })
 export class LoginPage {
-  email = '';
-  password = '';
-  isLoading = false;
-  errorMessage = '';
-  successMessage = '';
+  email = signal('');
+  password = signal('');
+  loading = signal(false);
+  errorMessage = signal('');
+  successMessage = signal('');
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
 
-  handleSubmit(): void {
+  handleSubmitLogin(): void {
     // Reset messages
-    this.errorMessage = '';
-    this.successMessage = '';
+    this.errorMessage.set('');
+    this.successMessage.set('');
 
-    // Validate inputs
-    if (!this.email || !this.password) {
-      this.errorMessage = 'Please fill in all fields';
+    // Validate and model request
+    const currentEmail = this.email();
+    const currentPassword = this.password();
+
+    if (!currentEmail || !currentPassword) {
+      this.errorMessage.set('Please fill in all fields');
       return;
     }
 
-    if (!this.isValidEmail(this.email)) {
-      this.errorMessage = 'Please enter a valid email address';
+    if (!this.isValidEmail(currentEmail)) {
+      this.errorMessage.set('Please enter a valid email address');
       return;
     }
 
-    this.isLoading = true;
-
-    const credentials: LoginDto = {
-      email: this.email,
-      password: this.password
+    const loginRequest: LoginRequest = {
+      email: currentEmail,
+      password: currentPassword
     };
 
-    this.authService.login(credentials).subscribe({
-      next: (result) => {
-        this.isLoading = false;
+    // Process login request
+    this.loading.set(true);
 
-        if (result.isSuccess && result.value) {
-          this.successMessage = 'Login successful!';
+    this.authService.login(loginRequest).subscribe({
+      next: (response) => {
+        this.loading.set(false);
 
-          // Clear form
-          this.email = '';
-          this.password = '';
+        if (response.success) {
+          // Clear up form fields
+          this.successMessage.set('Login successful! Go to home page...');
+          this.email.set('');
+          this.password.set('');
 
-          // Redirect to home/dashboard after a short delay
+          // Redirect to home/dashboard page
           setTimeout(() => {
             this.router.navigate(['/home']);
-          }, 1000);
+          }, 1 * 1000);
         } else {
-          this.errorMessage = result.message;
+          const error = response.error!;
+          this.errorMessage.set(error.message);
         }
       },
       error: (error) => {
-        this.isLoading = false;
-        this.errorMessage = error.message || 'An error occurred during login. Please try again.';
-        console.error('Login error:', error);
+        this.loading.set(false);
+        this.errorMessage.set('An error occurred during login. Please try again.');
       }
     });
   }
