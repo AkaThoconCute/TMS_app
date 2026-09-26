@@ -12,7 +12,7 @@ public class AccountController(AccountService accountService) : ControllerBase
 {
   [HttpPost]
   [AllowAnonymous]
-  public async Task<AppResult<AuthDTO>> Login([FromBody] LoginDto dto)
+  public async Task<IAppResult> Login([FromBody] LoginDto dto)
   {
     var result = await accountService.Login(dto);
     return result;

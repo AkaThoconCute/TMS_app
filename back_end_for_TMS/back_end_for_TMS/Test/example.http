@@ -1,0 +1,12 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+@baseUrl = https://localhost:9090
+
+### Login Request
+POST {{baseUrl}}/api/Account/Login
+Content-Type: application/json
+
+{
+  "email": "user1@asp.app",
+  "password": "Nhan@123"
+}
