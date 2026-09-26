@@ -340,7 +340,7 @@ namespace back_end_for_TMS.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("HttpStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("TaxCode")
@@ -362,108 +362,108 @@ namespace back_end_for_TMS.Migrations
                     b.HasData(
                         new
                         {
-                            CustomerId = new Guid("5977a2a4-c086-1d7b-657d-4e79db53e71a"),
-                            Address = "6037 Beier Fork, Harryshire, United Kingdom",
-                            ContactPerson = "Jamie Torphy",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CustomerType = 1,
-                            Name = "Stehr, Runolfsson and Weber",
-                            Notes = "Aliquid ullam earum qui eum molestiae dolorem animi.",
-                            PhoneNumber = "0949139052",
-                            Status = 1,
-                            TaxCode = "1540476821",
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
-                        },
-                        new
-                        {
-                            CustomerId = new Guid("3edc66db-dce0-de4e-4f5c-93db157673d3"),
-                            Address = "58959 Haag Islands, Ilamouth, Sao Tome and Principe",
-                            ContactPerson = "Emerald Gerlach",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000001"),
+                            Address = "123 Nguyễn Huệ, Quận 1, Tp. Hồ Chí Minh",
+                            ContactPerson = "Nguyễn Văn Toàn",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CustomerType = 2,
-                            Email = "Davin23@gmail.com",
-                            Name = "Veum, Green and Huels",
-                            PhoneNumber = "0917606082",
+                            Email = "info@thuanphat.vn",
+                            Name = "Công ty TNHH Thuận Phát",
+                            PhoneNumber = "0281234567",
+                            Status = 1,
+                            TaxCode = "0312345678",
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000002"),
+                            Address = "456 Lê Lợi, Quận 3, Tp. Hồ Chí Minh",
+                            ContactPerson = "Trần Thị Hoa",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerType = 2,
+                            Email = "contact@namviet.com.vn",
+                            Name = "Công ty CP Nam Việt",
+                            PhoneNumber = "0282345678",
+                            Status = 1,
+                            TaxCode = "0323456789",
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000003"),
+                            Address = "789 Trần Hưng Đạo, Quận 5, Tp. Hồ Chí Minh",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerType = 1,
+                            Name = "Nguyễn Minh Khoa",
+                            PhoneNumber = "0903456789",
                             Status = 1,
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
                         },
                         new
                         {
-                            CustomerId = new Guid("04d3bfa6-b46a-f416-2903-20646d4e1127"),
-                            Address = "587 Frami Vista, South Mittieburgh, Ethiopia",
-                            ContactPerson = "Vilma Williamson",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000004"),
+                            Address = "12 Đinh Tiên Hoàng, Bình Thạnh, Tp. Hồ Chí Minh",
+                            ContactPerson = "Lê Văn Hưng",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerType = 2,
+                            Email = "hungthinhlogistics@gmail.com",
+                            Name = "Doanh nghiệp Tư nhân Hưng Thịnh",
+                            PhoneNumber = "0284567890",
+                            Status = 1,
+                            TaxCode = "0334567890",
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000005"),
+                            Address = "34 Võ Văn Tần, Quận 3, Tp. Hồ Chí Minh",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CustomerType = 1,
-                            Email = "Schuyler53@hotmail.com",
-                            Name = "Willms - Paucek",
-                            PhoneNumber = "0976651161",
+                            Email = "lethu@gmail.com",
+                            Name = "Lê Thị Thu",
+                            PhoneNumber = "0905678901",
+                            Status = 1,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000006"),
+                            Address = "78 Lý Tự Trọng, Quận 1, Tp. Hồ Chí Minh",
+                            ContactPerson = "Phạm Quốc Hải",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerType = 2,
+                            Email = "hailong.transport@vnn.vn",
+                            Name = "Công ty TNHH Hải Long",
+                            Notes = "Khách hàng tạm dừng hợp đồng",
+                            PhoneNumber = "0286789012",
                             Status = 2,
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
-                        },
-                        new
-                        {
-                            CustomerId = new Guid("261eb9cd-8089-bf45-4488-002f939f4ebd"),
-                            Address = "790 Tillman Plaza, Lisettemouth, Ethiopia",
-                            ContactPerson = "Kelly Fadel",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CustomerType = 2,
-                            Name = "Pagac Inc",
-                            PhoneNumber = "0990846327",
-                            Status = 1,
+                            TaxCode = "0356789012",
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            CustomerId = new Guid("78c12a97-b692-13e6-3bf7-e28788421b75"),
-                            Address = "0132 Kuhlman Branch, Conroyburgh, Lesotho",
-                            ContactPerson = "Domenica Hansen",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CustomerType = 2,
-                            Name = "Bauch - Gorczany",
-                            PhoneNumber = "0943557763",
-                            Status = 2,
-                            TaxCode = "1939408095",
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000007"),
+                            Address = "90 Lê Văn Việt, Quận 9, Tp. Hồ Chí Minh",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerType = 1,
+                            Name = "Phạm Văn Dũng",
+                            PhoneNumber = "0907890123",
+                            Status = 1,
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
                         },
                         new
                         {
-                            CustomerId = new Guid("60e49800-498a-cf5e-836b-67a18060651f"),
-                            Address = "015 Harvey Highway, South Kali, Bosnia and Herzegovina",
-                            ContactPerson = "Travis Herzog",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CustomerType = 1,
-                            Name = "Bergstrom LLC",
-                            Notes = "Ipsa quod consequatur nesciunt odio sint quod ullam quidem.",
-                            PhoneNumber = "0986538432",
-                            Status = 1,
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
-                            CustomerId = new Guid("e7da23d9-6724-8bc7-70ad-eacbc6b149d2"),
-                            Address = "975 Barrows River, Katarinaton, Finland",
-                            ContactPerson = "Genesis Toy",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CustomerType = 1,
-                            Email = "Edgar35@hotmail.com",
-                            Name = "Kshlerin Group",
-                            PhoneNumber = "0965461423",
-                            Status = 1,
-                            TaxCode = "1490432197",
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
-                        },
-                        new
-                        {
-                            CustomerId = new Guid("541a49b7-ae45-6dbe-7ac8-2614a840c837"),
-                            Address = "19866 Cassin Passage, North Liana, Sweden",
-                            ContactPerson = "Eugene Smith",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000008"),
+                            Address = "44 Hai Bà Trưng, Quận 1, Tp. Hồ Chí Minh",
+                            ContactPerson = "Hoàng Thị Lan",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CustomerType = 2,
-                            Name = "Runte - Bode",
-                            PhoneNumber = "0970392197",
-                            Status = 2,
+                            Email = "vietmy.co@gmail.com",
+                            Name = "Công ty CP Việt Mỹ",
+                            PhoneNumber = "0288901234",
+                            Status = 1,
+                            TaxCode = "0378901234",
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
                         });
                 });
@@ -504,7 +504,7 @@ namespace back_end_for_TMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("HttpStatus")
                         .HasColumnType("int");
 
                     b.Property<Guid>("TenantId")
@@ -522,121 +522,299 @@ namespace back_end_for_TMS.Migrations
                     b.HasData(
                         new
                         {
-                            DriverId = new Guid("986b5a8f-bd55-6b0b-21e8-c413c8e7face"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 8, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1979, 11, 7, 13, 51, 33, 422, DateTimeKind.Unspecified).AddTicks(5390),
-                            FullName = "Devonte Stroman",
-                            HireDate = new DateTime(2023, 11, 29, 11, 25, 58, 998, DateTimeKind.Unspecified).AddTicks(6978),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000001"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1985, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Nguyễn Văn Minh",
+                            HireDate = new DateTime(2020, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseClass = "B2",
+                            LicenseExpiry = new DateTime(2028, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "B2-123456",
+                            PhoneNumber = "0901234567",
+                            Status = 1,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000002"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1980, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Trần Thanh Tùng",
+                            HireDate = new DateTime(2019, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LicenseClass = "FC",
-                            LicenseExpiry = new DateTime(2029, 4, 9, 0, 0, 53, 929, DateTimeKind.Unspecified).AddTicks(5003),
-                            LicenseNumber = "B3-655472",
-                            Notes = "Id atque occaecati autem aut aut mollitia sunt aut.",
-                            PhoneNumber = "0921870154",
-                            Status = 1,
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
-                            DriverId = new Guid("be330d54-4d92-9084-9d14-3db6617da349"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1950, 6, 10, 9, 57, 56, 183, DateTimeKind.Unspecified).AddTicks(528),
-                            FullName = "Larry Jakubowski",
-                            HireDate = new DateTime(2021, 8, 29, 1, 35, 29, 930, DateTimeKind.Unspecified).AddTicks(176),
-                            LicenseClass = "C",
-                            LicenseExpiry = new DateTime(2029, 12, 6, 10, 57, 35, 312, DateTimeKind.Unspecified).AddTicks(2227),
-                            LicenseNumber = "B5-416834",
-                            Notes = "Possimus laboriosam nihil porro sed aut cum doloremque.",
-                            PhoneNumber = "0937826730",
-                            Status = 1,
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
-                            DriverId = new Guid("362fc9fe-0f95-7cef-8c23-64b709074012"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1962, 3, 4, 8, 9, 37, 622, DateTimeKind.Unspecified).AddTicks(4824),
-                            FullName = "Arjun Smith",
-                            HireDate = new DateTime(2024, 8, 8, 20, 2, 15, 82, DateTimeKind.Unspecified).AddTicks(5169),
-                            LicenseClass = "C",
-                            LicenseExpiry = new DateTime(2030, 12, 17, 0, 30, 44, 97, DateTimeKind.Unspecified).AddTicks(5019),
-                            LicenseNumber = "B2-641105",
-                            Notes = "Quos voluptatem officiis qui.",
-                            PhoneNumber = "0956354895",
+                            LicenseExpiry = new DateTime(2027, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "FC-234567",
+                            PhoneNumber = "0912345678",
                             Status = 1,
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
                         },
                         new
                         {
-                            DriverId = new Guid("01cd3d4f-c42a-6a52-7cde-d4aec7b8cc6b"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1949, 8, 7, 21, 2, 17, 632, DateTimeKind.Unspecified).AddTicks(7228),
-                            FullName = "Laverna Dickinson",
-                            HireDate = new DateTime(2023, 5, 18, 13, 42, 3, 955, DateTimeKind.Unspecified).AddTicks(7824),
-                            LicenseClass = "FC",
-                            LicenseExpiry = new DateTime(2030, 2, 11, 18, 51, 28, 905, DateTimeKind.Unspecified).AddTicks(636),
-                            LicenseNumber = "B2-355779",
-                            PhoneNumber = "0910040980",
-                            Status = 1,
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
-                        },
-                        new
-                        {
-                            DriverId = new Guid("9a2dcb89-b8fb-4503-1b21-9b2941c7a483"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1979, 6, 23, 6, 24, 26, 465, DateTimeKind.Unspecified).AddTicks(3617),
-                            FullName = "George Hettinger",
-                            HireDate = new DateTime(2024, 12, 24, 22, 0, 28, 385, DateTimeKind.Unspecified).AddTicks(5062),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000003"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1990, 1, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Lê Văn Hùng",
+                            HireDate = new DateTime(2021, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LicenseClass = "C",
-                            LicenseExpiry = new DateTime(2029, 7, 26, 14, 15, 3, 322, DateTimeKind.Unspecified).AddTicks(1141),
-                            LicenseNumber = "B5-390261",
-                            PhoneNumber = "0970115468",
+                            LicenseExpiry = new DateTime(2029, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "C-345678",
+                            PhoneNumber = "0923456789",
                             Status = 1,
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
                         },
                         new
                         {
-                            DriverId = new Guid("0b32d802-f3d1-a613-14cb-00c92641dd17"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 8, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1957, 3, 25, 11, 10, 14, 383, DateTimeKind.Unspecified).AddTicks(3020),
-                            FullName = "Greg Gerhold",
-                            HireDate = new DateTime(2023, 8, 4, 11, 25, 18, 991, DateTimeKind.Unspecified).AddTicks(1497),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000004"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1978, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Phạm Quốc Bảo",
+                            HireDate = new DateTime(2018, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LicenseClass = "D",
-                            LicenseExpiry = new DateTime(2027, 2, 18, 7, 43, 32, 489, DateTimeKind.Unspecified).AddTicks(8325),
-                            LicenseNumber = "B5-368735",
-                            PhoneNumber = "0941291143",
+                            LicenseExpiry = new DateTime(2027, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "D-456789",
+                            PhoneNumber = "0934567890",
                             Status = 1,
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
                         },
                         new
                         {
-                            DriverId = new Guid("0c2228c0-194f-6849-1d6f-d490dc73afc5"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1954, 3, 23, 23, 29, 44, 150, DateTimeKind.Unspecified).AddTicks(1020),
-                            FullName = "Vince Gaylord",
-                            HireDate = new DateTime(2023, 10, 25, 14, 35, 37, 97, DateTimeKind.Unspecified).AddTicks(6395),
-                            LicenseClass = "FC",
-                            LicenseExpiry = new DateTime(2031, 1, 23, 7, 15, 6, 716, DateTimeKind.Unspecified).AddTicks(8670),
-                            LicenseNumber = "B4-642798",
-                            PhoneNumber = "0968283708",
-                            Status = 1,
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
-                            DriverId = new Guid("fda00fb1-a354-bddd-d628-93affb891e11"),
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DateOfBirth = new DateTime(1996, 11, 19, 10, 4, 49, 841, DateTimeKind.Unspecified).AddTicks(4810),
-                            FullName = "Hunter Turcotte",
-                            HireDate = new DateTime(2025, 1, 22, 1, 15, 14, 820, DateTimeKind.Unspecified).AddTicks(1323),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000005"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1992, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Hoàng Văn Nam",
+                            HireDate = new DateTime(2022, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LicenseClass = "C",
-                            LicenseExpiry = new DateTime(2027, 9, 9, 2, 5, 13, 156, DateTimeKind.Unspecified).AddTicks(7975),
-                            LicenseNumber = "B5-211756",
-                            PhoneNumber = "0984144423",
+                            LicenseExpiry = new DateTime(2026, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "C-567890",
+                            Notes = "Bằng lái sắp hết hạn — cần gia hạn trước tháng 5/2026",
+                            PhoneNumber = "0945678901",
                             Status = 1,
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000006"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1995, 3, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Nguyễn Đức Trí",
+                            HireDate = new DateTime(2023, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseClass = "B2",
+                            LicenseExpiry = new DateTime(2030, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "B2-678901",
+                            PhoneNumber = "0956789012",
+                            Status = 2,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000007"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1983, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Võ Minh Phúc",
+                            HireDate = new DateTime(2017, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseClass = "FC",
+                            LicenseExpiry = new DateTime(2028, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "FC-789012",
+                            PhoneNumber = "0967890123",
+                            Status = 1,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000008"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DateOfBirth = new DateTime(1988, 11, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "Đặng Văn Long",
+                            HireDate = new DateTime(2016, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseClass = "C",
+                            LicenseExpiry = new DateTime(2027, 4, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "C-890123",
+                            PhoneNumber = "0978901234",
+                            Status = 3,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        });
+                });
+
+            modelBuilder.Entity("back_end_for_TMS.Models.Order", b =>
+                {
+                    b.Property<Guid>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CancellationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTimeOffset?>("CancelledAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CargoDescription")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal?>("CargoWeightKg")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeliveryAddress")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PickupAddress")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal?>("QuotedPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("RequestedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RequestedPickupDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HttpStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TenantId", "OrderNumber")
+                        .IsUnique();
+
+                    b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000001"),
+                            CargoDescription = "Nội thất gia đình — ghế sofa, bàn, ghế",
+                            CargoWeightKg = 350m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000001"),
+                            DeliveryAddress = "456 Lê Lợi, Quận 3, Tp. Hồ Chí Minh",
+                            Notes = "Customer requests morning pickup",
+                            OrderNumber = "ORD-000001",
+                            PickupAddress = "123 Nguyễn Huệ, Quận 1, Tp. Hồ Chí Minh",
+                            QuotedPrice = 2500000m,
+                            RequestedDeliveryDate = new DateTime(2026, 3, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RequestedPickupDate = new DateTime(2026, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000002"),
+                            CargoDescription = "Thiết bị văn phòng — bàn làm việc, màn hình, máy in",
+                            CargoWeightKg = 500m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000002"),
+                            DeliveryAddress = "12 Phạm Văn Đồng, Thủ Đức, Tp. Hồ Chí Minh",
+                            OrderNumber = "ORD-000002",
+                            PickupAddress = "789 Trần Hưng Đạo, Quận 5, Tp. Hồ Chí Minh",
+                            QuotedPrice = 4000000m,
+                            RequestedDeliveryDate = new DateTime(2026, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RequestedPickupDate = new DateTime(2026, 3, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e")
+                        },
+                        new
+                        {
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000003"),
+                            CargoDescription = "Tủ lạnh và máy giặt",
+                            CargoWeightKg = 200m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000003"),
+                            DeliveryAddress = "56 Nguyễn Văn Linh, Quận 7, Tp. Hồ Chí Minh",
+                            OrderNumber = "ORD-000003",
+                            PickupAddress = "34 Võ Văn Tần, Quận 3, Tp. Hồ Chí Minh",
+                            QuotedPrice = 1800000m,
+                            RequestedDeliveryDate = new DateTime(2026, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RequestedPickupDate = new DateTime(2026, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 2,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000004"),
+                            CargoDescription = "Hành lý cá nhân — hộp carton, quần áo, dụng cụ nhà bếp",
+                            CargoWeightKg = 150m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000004"),
+                            DeliveryAddress = "90 Lê Văn Việt, Quận 9, Tp. Hồ Chí Minh",
+                            OrderNumber = "ORD-000004",
+                            PickupAddress = "78 Lý Tự Trọng, Quận 1, Tp. Hồ Chí Minh",
+                            QuotedPrice = 1200000m,
+                            RequestedDeliveryDate = new DateTime(2026, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RequestedPickupDate = new DateTime(2026, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 2,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000005"),
+                            CargoDescription = "Vật liệu xây dựng — xi măng, thanh thép",
+                            CargoWeightKg = 2000m,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000001"),
+                            DeliveryAddress = "200 Quang Trung, Gò Vấp, Tp. Hồ Chí Minh",
+                            OrderNumber = "ORD-000005",
+                            PickupAddress = "100 Cách Mạng Tháng 8, Quận 10, Tp. Hồ Chí Minh",
+                            QuotedPrice = 5500000m,
+                            RequestedDeliveryDate = new DateTime(2026, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RequestedPickupDate = new DateTime(2026, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 4,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000006"),
+                            CargoDescription = "Điện tử gia dụng — TV, điều hòa không khí",
+                            CargoWeightKg = 300m,
+                            CompletedAt = new DateTimeOffset(new DateTime(2026, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CustomerId = new Guid("0195d004-cccc-7000-8000-000000000002"),
+                            DeliveryAddress = "88 Nguyễn Thị Minh Khai, Quận 3, Tp. Hồ Chí Minh",
+                            Notes = "Customer paid in full",
+                            OrderNumber = "ORD-000006",
+                            PickupAddress = "44 Hai Bà Trưng, Quận 1, Tp. Hồ Chí Minh",
+                            QuotedPrice = 3200000m,
+                            RequestedDeliveryDate = new DateTime(2026, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RequestedPickupDate = new DateTime(2026, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 5,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 
@@ -697,6 +875,177 @@ namespace back_end_for_TMS.Migrations
                             CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "Echo Shipping",
                             OwnerId = "u-admin"
+                        });
+                });
+
+            modelBuilder.Entity("back_end_for_TMS.Models.Trip", b =>
+                {
+                    b.Property<Guid>("TripId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ActualDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ActualPickupDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CancellationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTimeOffset?>("CancelledAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CostNotes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("FuelCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("OtherCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("PlannedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PlannedPickupDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HttpStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("TollCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TripNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<Guid>("TruckId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("TripId");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TruckId");
+
+                    b.HasIndex("TenantId", "TripNumber")
+                        .IsUnique();
+
+                    b.ToTable("Trips");
+
+                    b.HasData(
+                        new
+                        {
+                            TripId = new Guid("0195d002-bbbb-7000-8000-000000000001"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000001"),
+                            Notes = "Scheduled for morning pickup",
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000003"),
+                            PlannedDeliveryDate = new DateTime(2026, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PlannedPickupDate = new DateTime(2026, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TripNumber = "TRP-000001",
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000001")
+                        },
+                        new
+                        {
+                            TripId = new Guid("0195d002-bbbb-7000-8000-000000000002"),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000002"),
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000004"),
+                            PlannedDeliveryDate = new DateTime(2026, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PlannedPickupDate = new DateTime(2026, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TripNumber = "TRP-000002",
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000002")
+                        },
+                        new
+                        {
+                            TripId = new Guid("0195d002-bbbb-7000-8000-000000000003"),
+                            ActualDeliveryDate = new DateTime(2026, 3, 16, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            ActualPickupDate = new DateTime(2026, 3, 15, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                            CompletedAt = new DateTimeOffset(new DateTime(2026, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CostNotes = "Highway toll + parking fee",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000003"),
+                            FuelCost = 850000m,
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000005"),
+                            OtherCost = 50000m,
+                            PlannedDeliveryDate = new DateTime(2026, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PlannedPickupDate = new DateTime(2026, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 3,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TollCost = 120000m,
+                            TripNumber = "TRP-000003",
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000003"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            TripId = new Guid("0195d002-bbbb-7000-8000-000000000004"),
+                            ActualDeliveryDate = new DateTime(2026, 3, 11, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            ActualPickupDate = new DateTime(2026, 3, 10, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompletedAt = new DateTimeOffset(new DateTime(2026, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000004"),
+                            FuelCost = 600000m,
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000006"),
+                            PlannedDeliveryDate = new DateTime(2026, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PlannedPickupDate = new DateTime(2026, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 3,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TollCost = 80000m,
+                            TripNumber = "TRP-000004",
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000004"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        },
+                        new
+                        {
+                            TripId = new Guid("0195d002-bbbb-7000-8000-000000000005"),
+                            CancellationReason = "Truck broke down before pickup",
+                            CancelledAt = new DateTimeOffset(new DateTime(2026, 3, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 3, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            DriverId = new Guid("0195d003-dddd-7000-8000-000000000005"),
+                            OrderId = new Guid("0195d001-aaaa-7000-8000-000000000005"),
+                            PlannedDeliveryDate = new DateTime(2026, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PlannedPickupDate = new DateTime(2026, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 4,
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TripNumber = "TRP-000005",
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000005"),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 3, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 
@@ -772,218 +1121,189 @@ namespace back_end_for_TMS.Migrations
                     b.HasData(
                         new
                         {
-                            TruckId = new Guid("c4889f9e-759c-efc3-070c-02ceb8cd064a"),
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000001"),
+                            Brand = "Hino",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CurrentStatus = 1,
+                            EngineNumber = "J08ETUA01234",
+                            HeightMm = 2800,
+                            LastMaintenanceDate = new DateTime(2026, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 9600,
+                            LicensePlate = "51C-123.45",
+                            MaxPayloadKg = 8000m,
+                            ModelYear = 2020,
+                            OdometerReading = 85000m,
+                            OwnershipType = 1,
+                            PurchaseDate = new DateTime(2020, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TruckType = "Thùng kín",
+                            VinNumber = "JHLRE4H77BC001234",
+                            WidthMm = 2490
+                        },
+                        new
+                        {
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000002"),
+                            Brand = "Isuzu",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CurrentStatus = 1,
+                            EngineNumber = "6HK1AUUA02345",
+                            LastMaintenanceDate = new DateTime(2025, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 8200,
+                            LicensePlate = "51C-234.56",
+                            MaxPayloadKg = 7500m,
+                            ModelYear = 2019,
+                            OdometerReading = 120000m,
+                            OwnershipType = 1,
+                            PurchaseDate = new DateTime(2019, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TruckType = "Mui bạt",
+                            VinNumber = "JAATV6512KA002345",
+                            WidthMm = 2490
+                        },
+                        new
+                        {
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000003"),
                             Brand = "Howo",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 8, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 5,
-                            EngineNumber = "0RZK45ET2Q1F",
-                            HeightMm = 2531,
-                            LastMaintenanceDate = new DateTime(2024, 11, 8, 5, 15, 31, 994, DateTimeKind.Unspecified).AddTicks(9268),
-                            LengthMm = 7271,
-                            LicensePlate = "2917-WJ65",
-                            MaxPayloadKg = 14910.21m,
-                            ModelYear = 2015,
-                            OdometerReading = 69673.32m,
-                            OwnershipType = 1,
-                            PurchaseDate = new DateTime(2025, 10, 19, 16, 9, 53, 115, DateTimeKind.Unspecified).AddTicks(2034),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            TruckType = "Cẩu",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            VinNumber = "9GZ4DNTSWGWL93896",
-                            WidthMm = 2557
-                        },
-                        new
-                        {
-                            TruckId = new Guid("3a5c6033-a167-8abb-9156-2d55bbd81297"),
-                            Brand = "Isuzu",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 2, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 4,
-                            EngineNumber = "XSLI9KHOAOGI",
-                            HeightMm = 3354,
-                            LastMaintenanceDate = new DateTime(2026, 1, 11, 9, 1, 2, 593, DateTimeKind.Unspecified).AddTicks(7211),
-                            LengthMm = 7837,
-                            LicensePlate = "7448-YP20",
-                            MaxPayloadKg = 19024.92m,
-                            ModelYear = 2015,
-                            OdometerReading = 419693.81m,
-                            OwnershipType = 1,
-                            PurchaseDate = new DateTime(2017, 3, 22, 6, 6, 49, 619, DateTimeKind.Unspecified).AddTicks(2731),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            TruckType = "Cẩu",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            VinNumber = "LR5H42KG7NI092672",
-                            WidthMm = 2542
-                        },
-                        new
-                        {
-                            TruckId = new Guid("2df255c4-273c-da52-1071-9ed79e5f13e0"),
-                            Brand = "Daf",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CurrentStatus = 2,
-                            EngineNumber = "65JQZKK27JHW",
-                            HeightMm = 2595,
-                            LastMaintenanceDate = new DateTime(2025, 6, 25, 7, 26, 30, 743, DateTimeKind.Unspecified).AddTicks(5736),
-                            LengthMm = 10235,
-                            LicensePlate = "1795-PY91",
-                            MaxPayloadKg = 12589.03m,
-                            ModelYear = 2018,
-                            OdometerReading = 345576.58m,
+                            EngineNumber = "WD615AUUA03456",
+                            HeightMm = 3200,
+                            LastMaintenanceDate = new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 12000,
+                            LicensePlate = "51D-345.67",
+                            MaxPayloadKg = 15000m,
+                            ModelYear = 2021,
+                            OdometerReading = 65000m,
                             OwnershipType = 1,
-                            PurchaseDate = new DateTime(2019, 9, 7, 5, 38, 14, 623, DateTimeKind.Unspecified).AddTicks(5856),
+                            PurchaseDate = new DateTime(2021, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            TruckType = "Cẩu",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            VinNumber = "1OSM8M5T9YNG92381",
-                            WidthMm = 2474
+                            TruckType = "Thùng kín",
+                            VinNumber = "LZGAAHBN0M1003456",
+                            WidthMm = 2550
                         },
                         new
                         {
-                            TruckId = new Guid("d20513a0-3f37-4c43-ebb3-bbca0ca8bdb0"),
-                            Brand = "Mercedes-Benz",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 7, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 5,
-                            EngineNumber = "ATQN5TNE4LRT",
-                            HeightMm = 2716,
-                            LastMaintenanceDate = new DateTime(2025, 10, 21, 21, 29, 16, 263, DateTimeKind.Unspecified).AddTicks(909),
-                            LengthMm = 8943,
-                            LicensePlate = "2093-BP36",
-                            MaxPayloadKg = 17234.84m,
-                            ModelYear = 2017,
-                            OdometerReading = 129874.43m,
-                            OwnershipType = 1,
-                            PurchaseDate = new DateTime(2019, 2, 15, 12, 55, 23, 370, DateTimeKind.Unspecified).AddTicks(1670),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            TruckType = "Cẩu",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            VinNumber = "AI6X76CHTGFT55593",
-                            WidthMm = 2405
-                        },
-                        new
-                        {
-                            TruckId = new Guid("08a20656-efdc-ce61-cf1f-e0cfb319623e"),
-                            Brand = "Scania",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 3,
-                            EngineNumber = "CRBRZ130E4IC",
-                            HeightMm = 3026,
-                            LastMaintenanceDate = new DateTime(2025, 10, 5, 7, 45, 43, 232, DateTimeKind.Unspecified).AddTicks(8369),
-                            LengthMm = 7197,
-                            LicensePlate = "9376-E361",
-                            MaxPayloadKg = 25695.97m,
-                            ModelYear = 2020,
-                            OdometerReading = 125867.50m,
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000004"),
+                            Brand = "Volvo",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CurrentStatus = 1,
+                            EngineNumber = "D13KAUUA04567",
+                            HeightMm = 3800,
+                            LastMaintenanceDate = new DateTime(2026, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 11500,
+                            LicensePlate = "51D-456.78",
+                            MaxPayloadKg = 20000m,
+                            ModelYear = 2022,
+                            OdometerReading = 40000m,
                             OwnershipType = 2,
-                            PurchaseDate = new DateTime(2024, 7, 14, 16, 40, 36, 809, DateTimeKind.Unspecified).AddTicks(6497),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            TruckType = "Mui bạt",
-                            VinNumber = "XNVAW6LCBKO098514",
-                            WidthMm = 2553
-                        },
-                        new
-                        {
-                            TruckId = new Guid("617b43e9-052f-826b-454f-dd540671ba7f"),
-                            Brand = "Volvo",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 3,
-                            EngineNumber = "9IZRW4X7MEVO",
-                            HeightMm = 3334,
-                            LastMaintenanceDate = new DateTime(2024, 10, 21, 11, 44, 2, 924, DateTimeKind.Unspecified).AddTicks(8649),
-                            LengthMm = 5252,
-                            LicensePlate = "5666-ID94",
-                            MaxPayloadKg = 4558.34m,
-                            ModelYear = 2018,
-                            OdometerReading = 459416.72m,
-                            OwnershipType = 1,
-                            PurchaseDate = new DateTime(2022, 4, 15, 12, 3, 47, 86, DateTimeKind.Unspecified).AddTicks(7788),
+                            PurchaseDate = new DateTime(2022, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Bồn",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 2, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            VinNumber = "AMF2H9SHDSN471834",
-                            WidthMm = 2544
+                            VinNumber = "YV2R4A2A4NA004567",
+                            WidthMm = 2550
                         },
                         new
                         {
-                            TruckId = new Guid("1c7617df-b9c2-fa5a-3a7d-3f4b4bb7ee18"),
-                            Brand = "Volvo",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 5,
-                            EngineNumber = "E5J1248ROIH9",
-                            HeightMm = 3328,
-                            LastMaintenanceDate = new DateTime(2024, 10, 26, 19, 22, 50, 806, DateTimeKind.Unspecified).AddTicks(7459),
-                            LengthMm = 9892,
-                            LicensePlate = "2965-KD11",
-                            MaxPayloadKg = 23643.01m,
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000005"),
+                            Brand = "Scania",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CurrentStatus = 3,
+                            EngineNumber = "DC13AUUA05678",
+                            LastMaintenanceDate = new DateTime(2026, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 12000,
+                            LicensePlate = "51C-567.89",
+                            MaxPayloadKg = 18000m,
                             ModelYear = 2018,
-                            OdometerReading = 195850.70m,
+                            OdometerReading = 210000m,
                             OwnershipType = 1,
-                            PurchaseDate = new DateTime(2022, 2, 2, 12, 24, 39, 865, DateTimeKind.Unspecified).AddTicks(8222),
+                            PurchaseDate = new DateTime(2018, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Mui bạt",
-                            VinNumber = "WEZBRTAJULHJ86716",
-                            WidthMm = 2424
+                            VinNumber = "XLERX441XKA005678",
+                            WidthMm = 2550
                         },
                         new
                         {
-                            TruckId = new Guid("4eb6cb58-dc2b-89b4-1223-5ae808fbfdbb"),
-                            Brand = "Isuzu",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 2,
-                            EngineNumber = "G72MT8Q1ND57",
-                            HeightMm = 2661,
-                            LastMaintenanceDate = new DateTime(2025, 8, 7, 23, 51, 10, 902, DateTimeKind.Unspecified).AddTicks(2862),
-                            LengthMm = 9169,
-                            LicensePlate = "3108-VI14",
-                            MaxPayloadKg = 23866.81m,
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000006"),
+                            Brand = "Mercedes-Benz",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CurrentStatus = 1,
+                            EngineNumber = "OM471AUUA06789",
+                            HeightMm = 3500,
+                            LastMaintenanceDate = new DateTime(2026, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 12000,
+                            LicensePlate = "29H-678.90",
+                            MaxPayloadKg = 25000m,
+                            ModelYear = 2023,
+                            OdometerReading = 18000m,
+                            OwnershipType = 2,
+                            PurchaseDate = new DateTime(2023, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TruckType = "Thùng kín",
+                            VinNumber = "WDB96300312006789",
+                            WidthMm = 2550
+                        },
+                        new
+                        {
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000007"),
+                            Brand = "Man",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CurrentStatus = 1,
+                            EngineNumber = "D2676AUUA07890",
+                            HeightMm = 3600,
+                            LastMaintenanceDate = new DateTime(2025, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 11000,
+                            LicensePlate = "29H-789.01",
+                            MaxPayloadKg = 22000m,
                             ModelYear = 2020,
-                            OdometerReading = 229930.14m,
+                            OdometerReading = 92000m,
                             OwnershipType = 1,
-                            PurchaseDate = new DateTime(2019, 2, 27, 0, 45, 11, 257, DateTimeKind.Unspecified).AddTicks(4336),
+                            PurchaseDate = new DateTime(2020, 7, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Cẩu",
-                            VinNumber = "CHV52V6QTKUV78068",
-                            WidthMm = 2499
+                            VinNumber = "WMA06XZZ0KM007890",
+                            WidthMm = 2550
                         },
                         new
                         {
-                            TruckId = new Guid("af57e96b-cbd7-e3f1-de60-408edf3ff3fd"),
-                            Brand = "Isuzu",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000008"),
+                            Brand = "Daf",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CurrentStatus = 4,
+                            EngineNumber = "MX13AUUA08901",
+                            HeightMm = 3200,
+                            LastMaintenanceDate = new DateTime(2026, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 10500,
+                            LicensePlate = "29C-890.12",
+                            MaxPayloadKg = 30000m,
+                            ModelYear = 2021,
+                            OdometerReading = 155000m,
+                            OwnershipType = 2,
+                            PurchaseDate = new DateTime(2021, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
+                            TruckType = "Tự đổ",
+                            VinNumber = "XLRTE45MS0E008901",
+                            WidthMm = 2550
+                        },
+                        new
+                        {
+                            TruckId = new Guid("0195d005-eeee-7000-8000-000000000009"),
+                            Brand = "Hino",
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             CurrentStatus = 5,
-                            EngineNumber = "1T5IPYOV9UHM",
-                            HeightMm = 3045,
-                            LastMaintenanceDate = new DateTime(2025, 12, 21, 15, 9, 19, 279, DateTimeKind.Unspecified).AddTicks(6312),
-                            LengthMm = 8840,
-                            LicensePlate = "7310-3Q96",
-                            MaxPayloadKg = 8310.22m,
-                            ModelYear = 2016,
-                            OdometerReading = 39006.62m,
+                            EngineNumber = "J08ETUA09012",
+                            LastMaintenanceDate = new DateTime(2025, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LengthMm = 9200,
+                            LicensePlate = "43A-901.23",
+                            MaxPayloadKg = 9000m,
+                            ModelYear = 2019,
+                            OdometerReading = 280000m,
                             OwnershipType = 1,
-                            PurchaseDate = new DateTime(2017, 10, 11, 7, 38, 22, 846, DateTimeKind.Unspecified).AddTicks(3298),
+                            PurchaseDate = new DateTime(2019, 8, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
                             TruckType = "Mui bạt",
-                            VinNumber = "XCH11ZAPJ7TS67845",
-                            WidthMm = 2468
-                        },
-                        new
-                        {
-                            TruckId = new Guid("40b25403-8b4a-d9de-148e-cf8707e18517"),
-                            Brand = "Mercedes-Benz",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            CurrentStatus = 5,
-                            EngineNumber = "SKH9XD1C5SZR",
-                            HeightMm = 2613,
-                            LastMaintenanceDate = new DateTime(2024, 9, 12, 5, 5, 53, 19, DateTimeKind.Unspecified).AddTicks(5515),
-                            LengthMm = 6198,
-                            LicensePlate = "7061-IZ47",
-                            MaxPayloadKg = 27952.52m,
-                            ModelYear = 2020,
-                            OdometerReading = 308775.86m,
-                            OwnershipType = 1,
-                            PurchaseDate = new DateTime(2024, 3, 1, 19, 29, 37, 763, DateTimeKind.Unspecified).AddTicks(4202),
-                            TenantId = new Guid("0195c63a-727b-7f32-8e2d-3f4a5b6c7d8e"),
-                            TruckType = "Bồn",
-                            VinNumber = "WTGBCOF8M6T213769",
-                            WidthMm = 2512
+                            VinNumber = "JHLRE4H52KA009012",
+                            WidthMm = 2490
                         });
                 });
 
@@ -1064,6 +1384,56 @@ namespace back_end_for_TMS.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("back_end_for_TMS.Models.Order", b =>
+                {
+                    b.HasOne("back_end_for_TMS.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("back_end_for_TMS.Models.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("back_end_for_TMS.Models.Trip", b =>
+                {
+                    b.HasOne("back_end_for_TMS.Models.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("back_end_for_TMS.Models.Order", "Order")
+                        .WithMany("Trips")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("back_end_for_TMS.Models.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("back_end_for_TMS.Models.Truck", "Truck")
+                        .WithMany()
+                        .HasForeignKey("TruckId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Truck");
+                });
+
             modelBuilder.Entity("back_end_for_TMS.Models.Truck", b =>
                 {
                     b.HasOne("back_end_for_TMS.Models.Tenant", null)
@@ -1071,6 +1441,11 @@ namespace back_end_for_TMS.Migrations
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("back_end_for_TMS.Models.Order", b =>
+                {
+                    b.Navigation("Trips");
                 });
 #pragma warning restore 612, 618
         }

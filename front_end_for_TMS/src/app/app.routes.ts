@@ -19,7 +19,7 @@ export const appRoutes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('./features/account/account.routes').then(m => m.ACCOUNT_ROUTES)
+        loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
       },
     ]
   },
@@ -45,6 +45,10 @@ export const appRoutes: Routes = [
         loadChildren: () => import('./features/customer/customer.routes').then(m => m.CUSTOMER_ROUTES)
       },
       {
+        path: 'orders',
+        loadChildren: () => import('./features/order/order.routes').then(m => m.ORDER_ROUTES)
+      },
+      {
         path: 'demo/button',
         loadComponent: () => import('./common/button/button-demo.component').then(m => m.ButtonDemo)
       },
@@ -53,8 +57,12 @@ export const appRoutes: Routes = [
         loadComponent: () => import('./common/development/development.page').then(m => m.DevelopmentPage)
       },
       {
+        path: 'example/cancellation',
+        loadComponent: () => import('./example/cancellation/cancellation.component').then(m => m.CancellationComponent)
+      },
+      {
         path: 'profile',
-        loadComponent: () => import('./features/account/pages/profile/profile.page').then(m => m.ProfilePage)
+        loadComponent: () => import('./features/auth/pages/profile/profile.page').then(m => m.ProfilePage)
       },
       {
         path: 'under-development',

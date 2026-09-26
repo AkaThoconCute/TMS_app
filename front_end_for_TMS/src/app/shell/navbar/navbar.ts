@@ -2,7 +2,7 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AuthService } from '@platform/auth/auth.service';
+import { AuthService } from '@features/auth/service/auth.service';
 
 interface MenuItem {
   label: string;
@@ -56,11 +56,25 @@ export class Navbar {
       ]
     },
     {
+      label: 'Order',
+      icon: 'receipt_long',
+      items: [
+        { label: 'List order', route: '/orders/list' }
+      ]
+    },
+    {
       label: 'Demo',
       icon: 'person',
       items: [
         { label: 'Button', route: '/demo/button' },
         { label: 'Upcoming', route: '/demo/upcoming' }
+      ]
+    },
+    {
+      label: 'Example',
+      icon: 'person',
+      items: [
+        { label: 'Cancellation', route: '/example/cancellation' }
       ]
     },
     {

@@ -1,0 +1,20 @@
+.uppercase-text {
+  text-transform: uppercase;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title-style {
+  font-size: 24px;
+  font-weight: semi-bold;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,100 @@
+<p-dialog
+  [header]="dialogTitle"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [style]="{ width: '42rem' }"
+  (onHide)="onDialogHide()"
+>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-x-5 gap-y-4 pt-2">
+    <!-- Actual Delivery Date -->
+    <div class="flex flex-col gap-1">
+      <label for="actualDeliveryDate" class="font-medium text-sm"
+        >Delivery Date <span class="text-red-500">*</span></label
+      >
+      <p-datepicker
+        id="actualDeliveryDate"
+        formControlName="actualDeliveryDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Spacer -->
+    <div></div>
+
+    <!-- Fuel Cost -->
+    <div class="flex flex-col gap-1">
+      <label for="fuelCost" class="font-medium text-sm">Fuel Cost</label>
+      <p-inputNumber
+        id="fuelCost"
+        formControlName="fuelCost"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        placeholder="0"
+        [min]="0"
+      />
+    </div>
+
+    <!-- Toll Cost -->
+    <div class="flex flex-col gap-1">
+      <label for="tollCost" class="font-medium text-sm">Toll Cost</label>
+      <p-inputNumber
+        id="tollCost"
+        formControlName="tollCost"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        placeholder="0"
+        [min]="0"
+      />
+    </div>
+
+    <!-- Other Cost -->
+    <div class="flex flex-col gap-1">
+      <label for="otherCost" class="font-medium text-sm">Other Cost</label>
+      <p-inputNumber
+        id="otherCost"
+        formControlName="otherCost"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        placeholder="0"
+        [min]="0"
+      />
+    </div>
+
+    <!-- Cost Notes -->
+    <div class="flex flex-col gap-1">
+      <label for="costNotes" class="font-medium text-sm">Cost Notes</label>
+      <input pInputText id="costNotes" formControlName="costNotes" placeholder="e.g. Parking fee" />
+    </div>
+
+    <!-- Notes (full width) -->
+    <div class="flex flex-col gap-1 col-span-2">
+      <label for="completeNotes" class="font-medium text-sm">Notes</label>
+      <textarea
+        pTextarea
+        id="completeNotes"
+        formControlName="notes"
+        rows="2"
+        placeholder="Completion notes..."
+      ></textarea>
+    </div>
+  </form>
+
+  <ng-template #footer>
+    <div class="flex justify-end gap-2">
+      <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="visible.set(false)" />
+      <p-button
+        label="Complete Trip"
+        icon="pi pi-check"
+        severity="success"
+        [loading]="submitting()"
+        [disabled]="form.invalid || submitting()"
+        (onClick)="onSubmit()"
+      />
+    </div>
+  </ng-template>
+</p-dialog>

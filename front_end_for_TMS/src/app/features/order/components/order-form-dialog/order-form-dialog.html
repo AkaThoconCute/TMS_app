@@ -1,0 +1,153 @@
+<p-dialog
+  [header]="dialogTitle"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [style]="{ width: '52rem' }"
+  (onHide)="onDialogHide()"
+>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-x-5 gap-y-4 pt-2">
+    <!-- Customer -->
+    <div class="flex flex-col gap-1 col-span-2">
+      <label for="customerId" class="font-medium text-sm"
+        >Customer <span class="text-red-500">*</span></label
+      >
+      <p-select
+        id="customerId"
+        formControlName="customerId"
+        [options]="activeCustomers()"
+        optionLabel="name"
+        optionValue="customerId"
+        placeholder="Select customer"
+        [filter]="true"
+        filterPlaceholder="Search customers..."
+        [appendTo]="'body'"
+      />
+    </div>
+
+    <!-- Status (edit mode only, read-only) -->
+    <div class="flex flex-col gap-1 col-span-2" *ngIf="isEditMode">
+      <label class="font-medium text-sm">Status</label>
+      <div>
+        <p-tag [value]="order()!.statusLabel" [severity]="getStatusSeverity(order()!.status)" />
+      </div>
+    </div>
+
+    <!-- Pickup Address -->
+    <div class="flex flex-col gap-1">
+      <label for="pickupAddress" class="font-medium text-sm"
+        >Pickup Address <span class="text-red-500">*</span></label
+      >
+      <input
+        pInputText
+        id="pickupAddress"
+        formControlName="pickupAddress"
+        placeholder="e.g. 123 Đường Lê Lợi, Q.1"
+      />
+    </div>
+
+    <!-- Delivery Address -->
+    <div class="flex flex-col gap-1">
+      <label for="deliveryAddress" class="font-medium text-sm"
+        >Delivery Address <span class="text-red-500">*</span></label
+      >
+      <input
+        pInputText
+        id="deliveryAddress"
+        formControlName="deliveryAddress"
+        placeholder="e.g. 456 Đường Hai Bà Trưng, Q.3"
+      />
+    </div>
+
+    <!-- Cargo Description (full width) -->
+    <div class="flex flex-col gap-1 col-span-2">
+      <label for="cargoDescription" class="font-medium text-sm"
+        >Cargo Description <span class="text-red-500">*</span></label
+      >
+      <input
+        pInputText
+        id="cargoDescription"
+        formControlName="cargoDescription"
+        placeholder="e.g. Household furniture, 20 boxes"
+      />
+    </div>
+
+    <!-- Cargo Weight -->
+    <div class="flex flex-col gap-1">
+      <label for="cargoWeightKg" class="font-medium text-sm">Cargo Weight (kg)</label>
+      <p-inputNumber
+        id="cargoWeightKg"
+        formControlName="cargoWeightKg"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="2"
+        placeholder="e.g. 500"
+        [min]="0"
+      />
+    </div>
+
+    <!-- Quoted Price -->
+    <div class="flex flex-col gap-1">
+      <label for="quotedPrice" class="font-medium text-sm">Quoted Price</label>
+      <p-inputNumber
+        id="quotedPrice"
+        formControlName="quotedPrice"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        placeholder="e.g. 5000000"
+        [min]="0"
+      />
+    </div>
+
+    <!-- Requested Pickup Date -->
+    <div class="flex flex-col gap-1">
+      <label for="requestedPickupDate" class="font-medium text-sm">Requested Pickup Date</label>
+      <p-datepicker
+        id="requestedPickupDate"
+        formControlName="requestedPickupDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Requested Delivery Date -->
+    <div class="flex flex-col gap-1">
+      <label for="requestedDeliveryDate" class="font-medium text-sm">Requested Delivery Date</label>
+      <p-datepicker
+        id="requestedDeliveryDate"
+        formControlName="requestedDeliveryDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [appendTo]="'body'"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- Notes (full width) -->
+    <div class="flex flex-col gap-1 col-span-2">
+      <label for="notes" class="font-medium text-sm">Notes</label>
+      <textarea
+        pTextarea
+        id="notes"
+        formControlName="notes"
+        rows="3"
+        placeholder="Additional notes..."
+      ></textarea>
+    </div>
+  </form>
+
+  <ng-template #footer>
+    <div class="flex justify-end gap-2">
+      <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="visible.set(false)" />
+      <p-button
+        [label]="isEditMode ? 'Update' : 'Create'"
+        icon="pi pi-check"
+        [loading]="submitting()"
+        [disabled]="form.invalid || submitting() || isTerminal"
+        (onClick)="onSubmit()"
+      />
+    </div>
+  </ng-template>
+</p-dialog>

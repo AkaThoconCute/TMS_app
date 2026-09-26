@@ -1,8 +1,9 @@
 ﻿using back_end_for_TMS.Business.Types;
+using back_end_for_TMS.Common;
+using back_end_for_TMS.Common.Error;
 using back_end_for_TMS.Models;
 using back_end_for_TMS.Models.Repository;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
@@ -15,7 +16,36 @@ public class AccountService(
     TenantRepo tenantRepo,
     ILogger<AccountService> logger)
 {
-  public async Task<AuthResult> RefreshToken(TokenDto dto)
+  public async Task<AppResult<AuthDTO>> Login(LoginDto dto)
+  {
+    var user = await userManager.FindByEmailAsync(dto.Email);
+    if (user == null)
+    {
+      return AppResult<AuthDTO>.FromError(AuthError.LoginFailed);
+    }
+
+    var result = await signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
+    if (!result.Succeeded)
+    {
+      return AppResult<AuthDTO>.FromError(AuthError.LoginFailed);
+    }
+
+    var roles = await userManager.GetRolesAsync(user);
+    var accessToken = tokenService.CreateToken(user, roles);
+    var refreshToken = tokenService.GenerateRefreshToken();
+
+    user.RefreshToken = refreshToken;
+    user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+    await userManager.UpdateAsync(user);
+
+    return AppResult<AuthDTO>.FromResult(new AuthDTO
+    {
+      Success = true,
+      AccessToken = accessToken,
+      RefreshToken = refreshToken
+    });
+  }
+  public async Task<AuthDTO> RefreshToken(TokenDto dto)
   {
     var principal = tokenService.GetPrincipalFromExpiredToken(dto.Token);
     var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -36,21 +66,21 @@ public class AccountService(
     user.RefreshToken = newRefreshToken;
     await userManager.UpdateAsync(user);
 
-    return new AuthResult
+    return new AuthDTO
     {
       Success = true,
-      Token = newAccessToken,
+      AccessToken = newAccessToken,
       RefreshToken = newRefreshToken
     };
   }
 
-  public async Task<AuthResult> Register(RegisterDto dto)
+  public async Task<AuthDTO> Register(RegisterDto dto)
   {
     var user = new AppUser { UserName = dto.Email, Email = dto.Email };
 
     var result = await userManager.CreateAsync(user, dto.Password);
     if (!result.Succeeded)
-      return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
+      return new AuthDTO { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
 
     await userManager.AddToRoleAsync(user, "User");
 
@@ -74,36 +104,10 @@ public class AccountService(
     user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
     await userManager.UpdateAsync(user);
 
-    return new AuthResult
+    return new AuthDTO
     {
       Success = true,
-      Token = accessToken,
-      RefreshToken = refreshToken
-    };
-  }
-
-  public async Task<AuthResult> Login(LoginDto dto)
-  {
-    var user = await userManager.FindByEmailAsync(dto.Email);
-    if (user == null)
-      return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
-
-    var result = await signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
-    if (!result.Succeeded)
-      return new AuthResult { Success = false, Errors = ["Invalid email or password"] };
-
-    var roles = await userManager.GetRolesAsync(user);
-    var accessToken = tokenService.CreateToken(user, roles);
-    var refreshToken = tokenService.GenerateRefreshToken();
-
-    user.RefreshToken = refreshToken;
-    user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
-    await userManager.UpdateAsync(user);
-
-    return new AuthResult
-    {
-      Success = true,
-      Token = accessToken,
+      AccessToken = accessToken,
       RefreshToken = refreshToken
     };
   }
@@ -173,7 +177,7 @@ public class AccountService(
     };
   }
 
-  public async Task<AuthResult> ChangePasswordAsync(ClaimsPrincipal currentUser, ChangePasswordDto dto)
+  public async Task<AuthDTO> ChangePasswordAsync(ClaimsPrincipal currentUser, ChangePasswordDto dto)
   {
     var email = currentUser.FindFirstValue(ClaimTypes.Email);
     if (string.IsNullOrEmpty(email))
@@ -185,9 +189,9 @@ public class AccountService(
 
     var result = await userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
     if (!result.Succeeded)
-      return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
+      return new AuthDTO { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
 
-    return new AuthResult { Success = true };
+    return new AuthDTO { Success = true };
   }
 
   public async Task<ForgotPasswordResult> ForgotPasswordAsync(ForgotPasswordDto dto)
@@ -206,17 +210,17 @@ public class AccountService(
     };
   }
 
-  public async Task<AuthResult> ResetPasswordAsync(ResetPasswordDto dto)
+  public async Task<AuthDTO> ResetPasswordAsync(ResetPasswordDto dto)
   {
     var user = await userManager.FindByEmailAsync(dto.Email);
     if (user == null)
-      return new AuthResult { Success = false, Errors = ["Invalid request"] };
+      return new AuthDTO { Success = false, Errors = ["Invalid request"] };
 
     var result = await userManager.ResetPasswordAsync(user, dto.Token, dto.NewPassword);
     if (!result.Succeeded)
-      return new AuthResult { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
+      return new AuthDTO { Success = false, Errors = [.. result.Errors.Select(e => e.Description)] };
 
-    return new AuthResult { Success = true };
+    return new AuthDTO { Success = true };
   }
 
   private static string GenerateTenantName(string email)
